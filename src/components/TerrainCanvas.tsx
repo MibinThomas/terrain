@@ -1,0 +1,55 @@
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Center } from '@react-three/drei';
+import InteractiveTerrain from './InteractiveTerrain';
+
+export default function TerrainCanvas() {
+  return (
+    <div className="canvas-container">
+      <Canvas
+        shadows
+        camera={{ position: [0, 8, 12], fov: 38 }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        {/* Light theme background color matching brand guideline #e6e7e8 */}
+        <color attach="background" args={['#e6e7e8']} />
+        
+        {/* Soft atmospheric ambient light */}
+        <ambientLight intensity={0.7} />
+        
+        {/* Main directional key light casting clean corporate shadows */}
+        <directionalLight
+          castShadow
+          position={[6, 12, 4]}
+          intensity={1.9}
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
+          shadow-bias={-0.0001}
+        />
+        
+        {/* Subtle secondary fill lights */}
+        <pointLight position={[-6, 4, -4]} intensity={0.6} color="#ffffff" />
+        <pointLight position={[0, 5, 8]} intensity={0.5} color="#a7a9ac" />
+        
+        <Center>
+          <InteractiveTerrain />
+        </Center>
+        
+        {/* Shadow Catcher Ground Plane */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.65, 0]} receiveShadow>
+          <planeGeometry args={[100, 100]} />
+          <shadowMaterial opacity={0.11} />
+        </mesh>
+        
+        {/* Orbit camera limits */}
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          minPolarAngle={Math.PI / 6}
+          maxPolarAngle={Math.PI / 2.2}
+          dampingFactor={0.05}
+          enableDamping
+        />
+      </Canvas>
+    </div>
+  );
+}
