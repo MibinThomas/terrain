@@ -15,6 +15,35 @@ export default function HeroOverlay() {
   const y = useTransform(scrollY, [0, 450], [0, -60]);
   const scale = useTransform(scrollY, [0, 450], [1, 0.95]);
 
+  const line1 = "Building Smarter".split(" ");
+  const line2 = "Business Landscapes.".split(" ");
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      }
+    }
+  };
+
+  const wordVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: "100%",
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.85,
+        ease: [0.16, 1, 0.3, 1] as any,
+      }
+    }
+  };
+
   return (
     <section className="hero-section" id="hero">
       <motion.div style={{ opacity, y, scale }} className="content-hero">
@@ -24,11 +53,39 @@ export default function HeroOverlay() {
           INTELLIGENT BUSINESS ARCHITECTURE
         </div>
 
-        {/* Hero Title */}
-        <h1 style={styles.title} className="text-gradient hero-title">
-          Building Smarter<br />
-          Business Landscapes.
-        </h1>
+        {/* Hero Title with Smooth Staggered Word Reveal */}
+        <motion.h1 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          style={styles.title} 
+          className="text-gradient hero-title"
+        >
+          <span style={{ display: 'block', overflow: 'hidden' }}>
+            {line1.map((word, i) => (
+              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', overflow: 'hidden', verticalAlign: 'bottom' }}>
+                <motion.span 
+                  variants={wordVariants}
+                  style={{ display: 'inline-block' }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+          <span style={{ display: 'block', overflow: 'hidden' }}>
+            {line2.map((word, i) => (
+              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', overflow: 'hidden', verticalAlign: 'bottom' }}>
+                <motion.span 
+                  variants={wordVariants}
+                  style={{ display: 'inline-block' }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+        </motion.h1>
 
         {/* Hero Description */}
         <p style={styles.description}>
@@ -37,7 +94,7 @@ export default function HeroOverlay() {
         </p>
 
         {/* Call to Action Button */}
-        <div style={styles.ctaWrapper} className="interactive-element">
+        <div className="hero-cta-wrapper interactive-element">
           <button 
             onClick={scrollToSolutions} 
             style={styles.ctaButton}
@@ -104,13 +161,7 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: '650px',
     fontWeight: '400',
   },
-  ctaWrapper: {
-    marginTop: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: '12px',
-  },
+
   ctaButton: {
     backgroundColor: 'var(--color-black)',
     color: 'var(--color-light)',
