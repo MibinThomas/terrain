@@ -12,7 +12,7 @@ interface LogoPoint {
   b: number;
 }
 
-const SPACING = 0.08; // spacing between columns
+const SPACING = 0.046; // spacing between columns
 const RADIUS_HOVER = 2.2; // radius of pointer interaction
 
 // Spring parameters for anti-gravity float
@@ -44,7 +44,7 @@ export default function InteractiveTerrain() {
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      const size = 84; // Resolution of the logo scan
+      const size = 145; // Resolution of the logo scan
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d');
@@ -352,7 +352,7 @@ export default function InteractiveTerrain() {
       receiveShadow
     >
       {/* Tall rectangular columns for corporate cityscape relief */}
-      <boxGeometry args={[0.058, 0.24, 0.058]} />
+      <boxGeometry args={[0.033, 0.16, 0.033]} />
       <meshStandardMaterial
         roughness={0.08}
         metalness={0.96}
