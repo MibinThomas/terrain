@@ -15,36 +15,55 @@ export default function HeroOverlay() {
   const y = useTransform(scrollY, [0, 450], [0, -60]);
   const scale = useTransform(scrollY, [0, 450], [1, 0.95]);
 
-  const line1 = "Building Smarter".split(" ");
-  const line2 = "Business Landscapes.".split(" ");
+  const line1Text = "Building Smarter";
+  const line2Text = "Business Landscapes.";
 
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.12,
+        staggerChildren: 0.035, // smooth, fast flowing wave stagger
         delayChildren: 0.15,
       }
     }
   };
 
-  const wordVariants = {
+  const letterVariants = {
     hidden: { 
       opacity: 0, 
-      y: 12,
-      scale: 0.94,
-      filter: "blur(12px)",
+      y: 22,
+      scale: 0.8,
+      rotate: 8,
     },
     visible: { 
       opacity: 1, 
       y: 0,
       scale: 1,
-      filter: "blur(0px)",
+      rotate: 0,
       transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] as any,
+        duration: 0.55,
+        ease: [0.34, 1.56, 0.64, 1] as any, // Easing curve with subtle bounce
       }
     }
+  };
+
+  const renderWaveText = (text: string) => {
+    return text.split(" ").map((word, wordIndex) => (
+      <span 
+        key={wordIndex} 
+        style={{ display: 'inline-block', whiteSpace: 'nowrap', marginRight: '0.24em' }}
+      >
+        {word.split("").map((char, charIndex) => (
+          <motion.span
+            key={charIndex}
+            variants={letterVariants}
+            style={{ display: 'inline-block', originY: 0.8 }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </span>
+    ));
   };
 
   return (
@@ -56,7 +75,7 @@ export default function HeroOverlay() {
           INTELLIGENT BUSINESS ARCHITECTURE
         </div>
 
-        {/* Hero Title with Smooth Staggered Word Reveal */}
+        {/* Hero Title with Wave Character Animation */}
         <motion.h1 
           variants={containerVariants}
           initial="hidden"
@@ -65,28 +84,10 @@ export default function HeroOverlay() {
           className="text-gradient hero-title"
         >
           <span style={{ display: 'block' }}>
-            {line1.map((word, i) => (
-              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', verticalAlign: 'bottom' }}>
-                <motion.span 
-                  variants={wordVariants}
-                  style={{ display: 'inline-block' }}
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
+            {renderWaveText(line1Text)}
           </span>
           <span style={{ display: 'block' }}>
-            {line2.map((word, i) => (
-              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', verticalAlign: 'bottom' }}>
-                <motion.span 
-                  variants={wordVariants}
-                  style={{ display: 'inline-block' }}
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
+            {renderWaveText(line2Text)}
           </span>
         </motion.h1>
 
