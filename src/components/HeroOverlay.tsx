@@ -15,9 +15,6 @@ export default function HeroOverlay() {
   const y = useTransform(scrollY, [0, 450], [0, -60]);
   const scale = useTransform(scrollY, [0, 450], [1, 0.95]);
 
-  const line1Text = "Building Smarter";
-  const line2Text = "Business Landscapes.";
-
   const containerVariants = {
     hidden: {},
     visible: {
@@ -29,14 +26,14 @@ export default function HeroOverlay() {
   };
 
   const letterVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 22,
       scale: 0.8,
       rotate: 8,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       rotate: 0,
@@ -52,8 +49,8 @@ export default function HeroOverlay() {
 
   const renderWaveText = (text: string) => {
     return text.split(" ").map((word, wordIndex) => (
-      <span 
-        key={wordIndex} 
+      <span
+        key={wordIndex}
         style={{ display: 'inline-block', whiteSpace: 'nowrap', marginRight: '0.24em' }}
       >
         {word.split("").map((char, charIndex) => (
@@ -73,42 +70,45 @@ export default function HeroOverlay() {
     <section className="hero-section" id="hero">
       <motion.div style={{ opacity, y, scale }} className="content-hero">
         {/* Subtle top indicator */}
-        <div style={styles.badge}>
+        <div className="hero-badge">
           <span style={styles.badgeDot}></span>
           INTELLIGENT BUSINESS ARCHITECTURE
         </div>
 
         {/* Hero Title with Wave Character Animation */}
-        <motion.h1 
+        <motion.h1
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={styles.title} 
+          style={styles.title}
           className="text-gradient hero-title"
         >
-          <span style={{ display: 'block' }}>
-            {renderWaveText(line1Text)}
+          <span className="hero-title-line-1">
+            {renderWaveText("BUILDING")}
+          </span>{" "}
+          <span className="hero-title-line-2">
+            {renderWaveText("SMARTER")}
           </span>
-          <span style={{ display: 'block' }}>
-            {renderWaveText(line2Text)}
+          <span className="hero-title-line-3">
+            {renderWaveText("BUSINESS LANDSCAPES")}
           </span>
         </motion.h1>
 
         {/* Hero Description */}
         <p style={styles.description}>
-          We transform ideas, technology, and strategy into intelligent, tailor-made business 
+          We transform ideas, technology, and strategy into intelligent, tailor-made business
           solutions designed for sustainable growth, operational optimization, and measurable impact.
         </p>
 
         {/* Call to Action Button */}
         <div className="hero-cta-wrapper interactive-element">
-          <button 
-            onClick={scrollToSolutions} 
+          <button
+            onClick={scrollToSolutions}
             style={styles.ctaButton}
           >
             Explore Solutions
           </button>
-          
+
           <div style={styles.ctaSubtext}>
             Deploying efficient, scalable, and future-ready business ecosystems.
           </div>
@@ -116,7 +116,7 @@ export default function HeroOverlay() {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         style={{ opacity }}
         className="scroll-indicator-container"
       >
@@ -132,27 +132,12 @@ export default function HeroOverlay() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  badge: {
-    alignSelf: 'flex-start',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    fontSize: '11px',
-    fontWeight: '600',
-    letterSpacing: '0.15em',
-    color: 'var(--color-text-secondary)',
-    padding: '6px 12px',
-    borderRadius: '20px',
-    border: '1px solid rgba(0, 0, 0, 0.08)',
-    background: 'rgba(255, 255, 255, 0.5)',
-    backdropFilter: 'blur(4px)',
-  },
   badgeDot: {
-    width: '6px',
-    height: '6px',
+    width: '5px',
+    height: '5px',
     borderRadius: '50%',
     backgroundColor: 'var(--color-black)',
-    boxShadow: '0 0 4px var(--color-black)',
+    boxShadow: '0 0 3px var(--color-black)',
   },
   title: {
     fontSize: 'clamp(36px, 6vw, 64px)',

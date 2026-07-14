@@ -241,7 +241,7 @@ export default function InteractiveTerrain() {
     }
 
     const count = points.length;
-    const { currX, currY, currZ, velX, velY, velZ, targetX, targetY, targetZ, currColor, baseColor } = physicsData;
+    const { currX, currY, currZ, velX, velY, velZ, targetX, targetY, targetZ, currColor } = physicsData;
 
     for (let i = 0; i < count; i++) {
       const p = points[i];
@@ -279,10 +279,25 @@ export default function InteractiveTerrain() {
         targetZ[i] = 0;
       }
 
-      // Keep base colors (pure solid blackish onyx) constant, no hover color gradient circle
-      currColor[i * 3] += (baseColor[i * 3] - currColor[i * 3]) * 0.08;
-      currColor[i * 3 + 1] += (baseColor[i * 3 + 1] - currColor[i * 3 + 1]) * 0.08;
-      currColor[i * 3 + 2] += (baseColor[i * 3 + 2] - currColor[i * 3 + 2]) * 0.08;
+      // Shaded black colors for desktop/tablet, base metallic slate for mobile
+      const distFromCenter = Math.sqrt(p.x * p.x + p.z * p.z);
+      const isMobileViewport = state.size.width < 576;
+
+      let targetR = p.r;
+      let targetG = p.g;
+      let targetB = p.b;
+
+      if (!isMobileViewport) {
+        // Desktop black shaded gradient (very deep black/onyx)
+        const normDist = Math.min(1.0, distFromCenter / 2.8);
+        targetR = 0.002 + (1.0 - normDist) * 0.008;
+        targetG = 0.002 + (1.0 - normDist) * 0.008;
+        targetB = 0.002 + (1.0 - normDist) * 0.01;
+      }
+
+      currColor[i * 3] += (targetR - currColor[i * 3]) * 0.08;
+      currColor[i * 3 + 1] += (targetG - currColor[i * 3 + 1]) * 0.08;
+      currColor[i * 3 + 2] += (targetB - currColor[i * 3 + 2]) * 0.08;
 
       // Update spring physics velocities
       const fx = (targetX[i] - currX[i]) * STIFFNESS - velX[i] * DAMPING;
@@ -363,6 +378,7 @@ export default function InteractiveTerrain() {
       <meshStandardMaterial
         roughness={0.08}
         metalness={0.96}
+        envMapIntensity={0.25}
       />
     </instancedMesh>
   );
