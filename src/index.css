@@ -134,6 +134,13 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
+/* Main Layout */
+.main-layout {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
 /* Sections Styling (Stacked single page) */
 .hero-section {
   position: relative;
@@ -356,10 +363,24 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 @media (max-width: 991px) {
+  .app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+  }
   .canvas-container {
     position: relative;
+    flex: 1;
     width: 100%;
-    height: 48vh;
+    height: 100%;
     z-index: 1;
     pointer-events: auto;
   }
@@ -370,49 +391,63 @@ h1, h2, h3, h4, h5, h6 {
     pointer-events: auto;
   }
   .site-header {
+    position: relative;
+    top: 0;
     width: 100%;
-    padding: 0 6%;
-    height: 70px;
+    padding: 0 24px;
+    height: 60px;
   }
   .logo-img {
-    height: 44px;
+    height: 38px;
   }
-  .hero-section, .services-section {
-    padding: 40px 6% 60px 6%;
+  .menu-toggle-btn {
+    width: 40px;
+    height: 40px;
   }
   .hero-section {
     position: relative;
+    flex: 1;
     width: 100%;
+    height: 100%;
     min-height: auto;
+    padding: 16px 20px 24px 20px;
     background: var(--color-light); /* Solid background, text sits below canvas */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     text-align: center;
+    box-sizing: border-box;
+    z-index: 2;
   }
   .content-hero {
     align-items: center;
     text-align: center;
     max-width: 100%;
     margin-top: 0;
+    gap: 12px;
+  }
+  .hero-title {
+    font-size: clamp(20px, 4.5vw, 30px) !important;
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+  .content-hero p {
+    font-size: 13px !important;
+    line-height: 1.5;
+    margin-bottom: 2px;
+    max-width: 95%;
+  }
+  .hero-section button {
+    padding: 10px 24px !important;
+    font-size: 11px !important;
+  }
+  .scroll-indicator-container {
+    display: none !important;
   }
 }
 
 @media (max-width: 768px) {
-  .site-header {
-    top: 16px;
-    width: 100%;
-    padding: 0 24px;
-    height: 60px;
-  }
-  
-  .logo-img {
-    height: 38px;
-  }
-
-  .menu-toggle-btn {
-    width: 40px;
-    height: 40px;
-  }
-
   /* Drawer Responsive Overrides */
   .drawer-close-btn {
     top: 16px;
@@ -459,8 +494,6 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 480px) {
   .site-header {
-    top: 12px;
-    width: 100%;
     padding: 0 16px;
   }
   
@@ -469,15 +502,16 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .hero-section, .services-section {
-    padding: 80px 16px;
+    padding: 12px 16px 20px 16px;
   }
 
   .content-hero h1 {
-    font-size: 28px !important;
+    font-size: 18px !important;
   }
 
   .content-hero p {
-    font-size: 14px !important;
+    font-size: 12px !important;
+    max-width: 100%;
   }
 
   .service-card {

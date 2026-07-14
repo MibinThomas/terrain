@@ -7,15 +7,16 @@ import HeroOverlay from './components/HeroOverlay';
 function App() {
   return (
     <div className="app-container">
-      {/* 3D R3F Canvas in fixed background */}
-      <TerrainCanvas />
+      {/* Header floats on top on desktop, stacks on mobile */}
+      <Header />
 
-      {/* HTML overlay content stacked vertically */}
-      <div className="ui-overlay">
-        <Header />
+      {/* Main Layout containing Canvas and Hero Overlay */}
+      <div className="main-layout">
+        {/* 3D R3F Canvas */}
+        <TerrainCanvas />
+
+        {/* Hero Overlay section */}
         <HeroOverlay />
-        {/* <Services /> */}
-        {/* <Footer /> */}
       </div>
     </div>
   );
