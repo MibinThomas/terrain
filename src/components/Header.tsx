@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
@@ -35,7 +34,10 @@ export default function Header() {
           className="menu-toggle-btn"
           aria-label="Open Navigation Menu"
         >
-          <Menu size={22} color="var(--color-black)" />
+          <div className="custom-hamburger">
+            <span className="hamburger-line line-1"></span>
+            <span className="hamburger-line line-2"></span>
+          </div>
         </button>
       </header>
 
@@ -55,7 +57,10 @@ export default function Header() {
               className="drawer-close-btn"
               aria-label="Close Navigation Menu"
             >
-              <X size={22} color="var(--color-black)" />
+              <div className="custom-close">
+                <span className="close-line line-1"></span>
+                <span className="close-line line-2"></span>
+              </div>
             </button>
 
             {/* Centered Navigation Menu */}
