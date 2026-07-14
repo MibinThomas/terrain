@@ -200,11 +200,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .menu-toggle-btn {
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 50%;
-  width: 46px;
-  height: 46px;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,8 +214,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .menu-toggle-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-  transform: scale(1.05);
+  background: none;
+  transform: scale(1.1);
 }
 
 /* Fullscreen Nav Drawer Layout */
