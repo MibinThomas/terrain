@@ -193,14 +193,28 @@ export default function InteractiveTerrain() {
     const scaleForce = (targetScale - meshScale.current) * 0.12 - meshScaleVelocity.current * 0.72;
     meshScaleVelocity.current += scaleForce;
     meshScale.current += meshScaleVelocity.current;
-    meshRef.current.scale.setScalar(meshScale.current);
+
+    // Responsive scale & position factors based on canvas viewport width
+    const canvasWidth = state.size.width;
+    let responsiveScale = 1.0;
+    let posXOffset = 1.6; // Shift logo to the right on desktop to separate from left-aligned text
+
+    if (canvasWidth < 576) {
+      responsiveScale = 0.52; // Mobile
+      posXOffset = 0;        // Centered
+    } else if (canvasWidth < 992) {
+      responsiveScale = 0.72; // Tablet
+      posXOffset = 0;        // Centered
+    }
+
+    meshRef.current.scale.setScalar(meshScale.current * responsiveScale);
 
     // Simple, clean scroll parallax: slide down and fade out
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     smoothScroll.current += (scrollY - smoothScroll.current) * 0.085;
 
-    // Apply y-translation and z-translation (moves down and back as user scrolls)
-    meshRef.current.position.set(0, -smoothScroll.current * 0.0035, -smoothScroll.current * 0.0018);
+    // Apply translations (X shifts to the right on desktop, Y/Z glide down/back on scroll)
+    meshRef.current.position.set(posXOffset, -smoothScroll.current * 0.0035, -smoothScroll.current * 0.0018);
 
     // Static Y orientation + scroll-linked vertical tilt
     meshRef.current.rotation.y = 0;
