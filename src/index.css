@@ -139,6 +139,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   z-index: 2;
+  pointer-events: none; /* Let pointer events pass through to fixed canvas */
 }
 
 /* Sections Styling (Stacked single page) */
@@ -151,6 +152,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 120px 8% 80px 8%;
   box-sizing: border-box;
   z-index: 2;
+  pointer-events: none; /* Let pointer events pass through to fixed canvas */
   /* Left-to-right gradient overlay to ensure text readability on top of R3F canvas */
   background: linear-gradient(
     100deg, 
@@ -383,6 +385,7 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
     width: 100%;
     overflow: hidden;
+    pointer-events: auto; /* Restore normal interaction when stacked */
   }
   .canvas-container {
     position: relative;
@@ -427,6 +430,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     box-sizing: border-box;
     z-index: 2;
+    pointer-events: auto; /* Restore normal interaction when stacked */
   }
   .content-hero {
     align-items: center;
