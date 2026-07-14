@@ -354,8 +354,8 @@ export default function InteractiveTerrain() {
       {/* Tall rectangular columns for corporate cityscape relief */}
       <boxGeometry args={[0.095, 0.32, 0.095]} />
       <meshStandardMaterial
-        roughness={0.16}
-        metalness={0.92}
+        roughness={0.08}
+        metalness={0.96}
       />
     </instancedMesh>
   );

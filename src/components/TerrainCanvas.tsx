@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Center } from '@react-three/drei';
+import { OrbitControls, Center, Environment } from '@react-three/drei';
 import InteractiveTerrain from './InteractiveTerrain';
 
 export default function TerrainCanvas() {
@@ -10,6 +10,9 @@ export default function TerrainCanvas() {
         camera={{ position: [0, 8, 12], fov: 38 }}
         gl={{ antialias: true, alpha: true }}
       >
+        {/* Environment Map for photorealistic metallic reflections */}
+        <Environment preset="city" />
+
         {/* Light theme background color matching brand guideline #e6e7e8 */}
         <color attach="background" args={['#e6e7e8']} />
         
