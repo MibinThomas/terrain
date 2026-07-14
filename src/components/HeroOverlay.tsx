@@ -47,7 +47,7 @@ export default function HeroOverlay() {
       line1: "ENGINEERED",
       line2: "FOR",
       line3: "SCALABILITY & EFFICIENCY",
-      description: "We build digital foundations that empower modern workflows. By leveraging modern software patterns, reliable cloud architectures, and future-ready technology stacks, we streamline complex operations.",
+      description: "We build digital foundations that empower modern workflows. By leveraging reliable cloud architectures and future-ready technology stacks, we streamline complex operations. Hover the canvas to see scattered data particles consolidate into a structured workstation.",
       btnText: "Explore Strategy Phase",
       btnAction: () => setCurrentPage('strategy'),
       subtext: "Deploying system integrations, scalable clouds, and custom AI solutions."

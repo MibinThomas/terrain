@@ -3,74 +3,125 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useStore } from '../store/useStore';
 
-interface Point3D {
+interface DesktopPoint {
   x: number;
+  y: number;
   z: number;
   r: number;
   g: number;
   b: number;
 }
 
-const STIFFNESS = 0.06;
-const DAMPING = 0.82;
-const RADIUS_HOVER = 2.0;
-const GRID_SIZE = 26; // 26x26 grid = 676 voxels
-const SPACING = 0.09;
+interface ScatterPoint {
+  x: number;
+  y: number;
+  z: number;
+  driftSpeed: number;
+  driftOffset: number;
+}
+
+const STIFFNESS = 0.05;
+const DAMPING = 0.86;
 
 export default function InteractiveTech() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const isHovered = useStore((state) => state.isHovered);
-  const setHovered = useStore((state) => state.setHovered);
 
-  const hoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
-  const activeHover = useRef<boolean>(false);
+  const morphFactor = useRef<number>(0.0); // 0.0 = scattered, 1.0 = 3D desktop shape
 
-  // Generate microprocessor grid coordinates
+  // Generate 3D desktop computer shape coordinates procedurally
   const points = useMemo(() => {
-    const list: Point3D[] = [];
-    const half = (GRID_SIZE - 1) / 2;
-    for (let r = 0; r < GRID_SIZE; r++) {
-      for (let c = 0; c < GRID_SIZE; c++) {
-        const px = (c - half) * SPACING;
-        const pz = (r - half) * SPACING;
+    const list: DesktopPoint[] = [];
+    
+    // 1. Screen (360 points) - Cyan tech glass screen
+    const screenWidth = 2.2;
+    const screenHeight = 1.35;
+    const screenYOffset = 0.35;
+    for (let i = 0; i < 360; i++) {
+      const isFrame = Math.random() > 0.65;
+      let px = 0;
+      let py = 0;
+      let pz = 0;
 
-        // Skip outer corners to give it a rounded circuit board appearance
-        const distFromCenter = Math.sqrt(px * px + pz * pz);
-        if (distFromCenter > half * SPACING * 1.3) continue;
-
-        // Define colors representing circuits (gold tracks vs dark silicon base)
-        const isCenterTrack = Math.abs(px) < 0.1 || Math.abs(pz) < 0.1;
-        const isOuterRing = Math.abs(distFromCenter - 0.8) < 0.15;
-        
-        let red = 0.05;
-        let green = 0.05;
-        let blue = 0.05;
-
-        if (isCenterTrack) {
-          // Glowing Gold/Copper traces
-          red = 0.95;
-          green = 0.6;
-          blue = 0.1;
-        } else if (isOuterRing) {
-          // Metallic Tech Blue accent
-          red = 0.1;
-          green = 0.35;
-          blue = 0.9;
-        } else {
-          // Silicon grey/black base
-          red = 0.12;
-          green = 0.12;
-          blue = 0.12;
+      if (isFrame) {
+        // Outline frame border
+        const side = Math.floor(Math.random() * 4);
+        const t = Math.random();
+        if (side === 0) { // Top
+          px = (t - 0.5) * screenWidth;
+          py = screenYOffset + screenHeight / 2;
+        } else if (side === 1) { // Bottom
+          px = (t - 0.5) * screenWidth;
+          py = screenYOffset - screenHeight / 2;
+        } else if (side === 2) { // Left
+          px = -screenWidth / 2;
+          py = screenYOffset + (t - 0.5) * screenHeight;
+        } else { // Right
+          px = screenWidth / 2;
+          py = screenYOffset + (t - 0.5) * screenHeight;
         }
-
-        list.push({ x: px, z: pz, r: red, g: green, b: blue });
+      } else {
+        // Panel face grid
+        px = (Math.random() - 0.5) * (screenWidth - 0.08);
+        py = screenYOffset + (Math.random() - 0.5) * (screenHeight - 0.08);
       }
+      pz = (Math.random() - 0.5) * 0.06;
+
+      // Color: Tech cyan/blue screen panel
+      list.push({ x: px, y: py, z: pz, r: 0.08, g: 0.76, b: 0.98 });
     }
+
+    // 2. Stand (70 points) - Charcoal screen stem
+    for (let i = 0; i < 70; i++) {
+      const px = (Math.random() - 0.5) * 0.16;
+      const py = -0.32 - Math.random() * 0.38; // Y range: -0.32 to -0.7
+      const pz = -0.08 + Math.random() * 0.16;
+      
+      // Color: Dark titanium stem
+      list.push({ x: px, y: py, z: pz, r: 0.22, g: 0.22, b: 0.24 });
+    }
+
+    // 3. Base (100 points) - Solid monitor platform
+    for (let i = 0; i < 100; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = Math.random() * 0.38;
+      const px = Math.cos(angle) * radius;
+      const py = -0.7 + (Math.random() - 0.5) * 0.02;
+      const pz = Math.sin(angle) * radius * 0.8 - 0.04;
+      
+      // Color: Dark charcoal base
+      list.push({ x: px, y: py, z: pz, r: 0.16, g: 0.16, b: 0.18 });
+    }
+
+    // 4. Keyboard (200 points) - Slanted input board
+    const kbWidth = 1.7;
+    const kbDepth = 0.55;
+    const kbCenterZ = 0.75;
+    for (let i = 0; i < 200; i++) {
+      const px = (Math.random() - 0.5) * kbWidth;
+      const pz = kbCenterZ + (Math.random() - 0.5) * kbDepth;
+      const py = -0.7 + (kbCenterZ - pz) * 0.12; // sloped key layout
+      
+      // Color: Silver-grey keycaps
+      list.push({ x: px, y: py, z: pz, r: 0.6, g: 0.65, b: 0.7 });
+    }
+
     return list;
   }, []);
 
-  // Set instance colors on mount
+  // Generate random drifting points for unhovered state
+  const scatteredPoints = useMemo<ScatterPoint[]>(() => {
+    return points.map(() => ({
+      x: (Math.random() - 0.5) * 7.5,
+      y: (Math.random() - 0.5) * 5.0,
+      z: (Math.random() - 0.5) * 5.5,
+      driftSpeed: 0.3 + Math.random() * 0.7,
+      driftOffset: Math.random() * Math.PI * 2,
+    }));
+  }, [points]);
+
+  // Set colors on mount
   useEffect(() => {
     if (!meshRef.current) return;
     const tempColor = new THREE.Color();
@@ -81,127 +132,157 @@ export default function InteractiveTech() {
     meshRef.current.instanceColor!.needsUpdate = true;
   }, [points]);
 
-  // Spring physics storage
+  // Physics arrays
   const physicsData = useMemo(() => {
     const count = points.length;
     return {
+      currX: new Float32Array(count),
       currY: new Float32Array(count),
+      currZ: new Float32Array(count),
+      velX: new Float32Array(count),
       velY: new Float32Array(count),
-      targetY: new Float32Array(count),
+      velZ: new Float32Array(count),
     };
   }, [points]);
 
   // Temporary math helpers
   const tempMatrix = useMemo(() => new THREE.Matrix4(), []);
   const tempPosition = useMemo(() => new THREE.Vector3(), []);
-  const tempRotation = useMemo(() => new THREE.Matrix4(), []);
-  const tempEuler = useMemo(() => new THREE.Euler(), []);
+  const tempColor = useMemo(() => new THREE.Color(), []);
 
   useFrame((state) => {
     if (!meshRef.current || points.length === 0) return;
 
-    // Smoothly interpolate pointer coordinate for wave ripples
-    if (activeHover.current) {
-      if (smoothHoverPoint.current.y < -900) {
-        smoothHoverPoint.current.copy(hoverPoint.current);
-      } else {
-        smoothHoverPoint.current.lerp(hoverPoint.current, 0.14);
-      }
+    // Detect mouse coordinates on the horizontal plane (Y=0) where the desktop sits
+    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.2);
+    const hoverTarget = new THREE.Vector3();
+    
+    if (isHovered && state.raycaster.ray.intersectPlane(plane, hoverTarget)) {
+      smoothHoverPoint.current.lerp(hoverTarget, 0.12);
+      morphFactor.current += (1.0 - morphFactor.current) * 0.055; // morph into desktop
     } else {
-      smoothHoverPoint.current.lerp(new THREE.Vector3(0, -999, 0), 0.12);
+      smoothHoverPoint.current.lerp(new THREE.Vector3(0, -999, 0), 0.1);
+      morphFactor.current += (0.0 - morphFactor.current) * 0.055; // scatter back
     }
 
     const time = state.clock.getElapsedTime();
     const count = points.length;
-    const { currY, velY, targetY } = physicsData;
+    const { currX, currY, currZ, velX, velY, velZ } = physicsData;
 
-    // Perspective tilted angle for the CPU board
-    const rotX = Math.PI / 3.8;
-    const rotY = Math.PI / 10;
-    const rotZ = time * 0.04; // slow continuous revolve
+    // Center offset to push model right
+    const canvasWidth = state.size.width;
+    const posXOffset = canvasWidth < 576 ? 0 : 1.6;
 
     for (let i = 0; i < count; i++) {
       const p = points[i];
+      const s = scatteredPoints[i];
 
-      // Base microprocessor surface wave (breathing data flow)
-      const dataWave = Math.sin(p.x * 2.5 + p.z * 2.5 + time * 2.0) * 0.02;
+      // Weightless drift vectors
+      const driftX = Math.sin(time * s.driftSpeed + s.driftOffset) * 0.22;
+      const driftY = Math.cos(time * s.driftSpeed + s.driftOffset) * 0.20;
+      const driftZ = Math.sin(time * s.driftSpeed * 0.8 + s.driftOffset) * 0.22;
 
-      // Project grid point into world space for hover test
-      tempPosition.set(p.x, dataWave + currY[i], p.z);
-      
-      // Apply perspective transforms
-      tempEuler.set(rotX, rotY, rotZ);
-      tempRotation.makeRotationFromEuler(tempEuler);
-      tempPosition.applyMatrix4(tempRotation);
+      const sx = s.x + driftX;
+      const sy = s.y + driftY;
+      const sz = s.z + driftZ;
 
-      // Align to layout section positioning
-      const canvasWidth = state.size.width;
-      const posXOffset = canvasWidth < 576 ? 0 : 1.6;
-      tempPosition.x += posXOffset;
+      // Morph target coordinates
+      let tx = THREE.MathUtils.lerp(sx, p.x, morphFactor.current);
+      let ty = THREE.MathUtils.lerp(sy, p.y, morphFactor.current);
+      let tz = THREE.MathUtils.lerp(sz, p.z, morphFactor.current);
 
-      const worldPos = tempPosition.clone().applyMatrix4(meshRef.current.matrixWorld);
-      const dist = worldPos.distanceTo(smoothHoverPoint.current);
+      // Gravitational attraction wave pulling particles during morph
+      if (morphFactor.current > 0.02 && morphFactor.current < 0.98) {
+        const pullStrength = Math.sin(morphFactor.current * Math.PI) * 0.38;
+        const localHover = smoothHoverPoint.current.y > -900
+          ? smoothHoverPoint.current.clone().sub(new THREE.Vector3(posXOffset, 0, 0))
+          : new THREE.Vector3(0, 0, 0);
 
-      if (isHovered && activeHover.current && dist < RADIUS_HOVER) {
-        const factor = Math.pow((RADIUS_HOVER - dist) / RADIUS_HOVER, 2.0);
-        // Hover lifts elements up along Y axis (normal of the board plane)
-        targetY[i] = factor * 0.6; 
-      } else {
-        targetY[i] = 0;
+        tx += (localHover.x - tx) * pullStrength;
+        ty += (localHover.y - ty) * pullStrength;
+        tz += (localHover.z - tz) * pullStrength;
       }
 
-      // Spring physics
-      const fy = (targetY[i] - currY[i]) * STIFFNESS - velY[i] * DAMPING;
+      // Ripple repulsion when fully assembled and hovered
+      if (morphFactor.current >= 0.95 && smoothHoverPoint.current.y > -900) {
+        const voxelPos = new THREE.Vector3(p.x + posXOffset, p.y, p.z);
+        const dist = voxelPos.distanceTo(smoothHoverPoint.current);
+
+        if (dist < 2.0) {
+          const factor = Math.pow((2.0 - dist) / 2.0, 2.0);
+          
+          // Repulsive force: push away in 3D
+          const pushDir = voxelPos.clone().sub(smoothHoverPoint.current).normalize();
+          
+          tx += pushDir.x * factor * 0.3;
+          ty += pushDir.y * factor * 0.35;
+          tz += pushDir.z * factor * 0.3;
+        }
+      }
+
+      // Spring Euler integration
+      const fx = (tx - currX[i]) * STIFFNESS - velX[i] * DAMPING;
+      velX[i] += fx;
+      currX[i] += velX[i];
+
+      const fy = (ty - currY[i]) * STIFFNESS - velY[i] * DAMPING;
       velY[i] += fy;
       currY[i] += velY[i];
 
-      // Assemble final instanced matrix
-      tempPosition.set(p.x, dataWave + currY[i], p.z);
-      tempRotation.makeRotationFromEuler(tempEuler);
+      const fz = (tz - currZ[i]) * STIFFNESS - velZ[i] * DAMPING;
+      velZ[i] += fz;
+      currZ[i] += velZ[i];
 
-      tempMatrix.compose(
-        tempPosition,
-        new THREE.Quaternion().setFromRotationMatrix(tempRotation),
-        new THREE.Vector3(1, 1, 1)
-      );
+      // Dynamic color: blend colors during morph
+      const baseR = THREE.MathUtils.lerp(0.04, p.r, morphFactor.current);
+      const baseG = THREE.MathUtils.lerp(0.12, p.g, morphFactor.current);
+      const baseB = THREE.MathUtils.lerp(0.2, p.b, morphFactor.current);
+
+      // Glowing data highlights near cursor
+      let glowR = 0;
+      let glowG = 0;
+      let glowB = 0;
+
+      if (isHovered && smoothHoverPoint.current.y > -900) {
+        tempPosition.set(currX[i] + posXOffset, currY[i], currZ[i]);
+        const distToMouse = tempPosition.distanceTo(smoothHoverPoint.current);
+        if (distToMouse < 1.0) {
+          const glowFactor = Math.pow((1.0 - distToMouse) / 1.0, 2) * 0.5;
+          glowR = glowFactor * 0.2;
+          glowG = glowFactor * 0.7; // glowing cyan/greenish tech wave
+          glowB = glowFactor * 0.9;
+        }
+      }
+
+      tempColor.setRGB(baseR + glowR, baseG + glowG, baseB + glowB);
+      meshRef.current.setColorAt(i, tempColor);
+
+      // Apply matrix translation
+      tempPosition.set(currX[i] + posXOffset, currY[i], currZ[i]);
+      tempMatrix.makeTranslation(tempPosition.x, tempPosition.y, tempPosition.z);
 
       meshRef.current.setMatrixAt(i, tempMatrix);
     }
 
     meshRef.current.instanceMatrix.needsUpdate = true;
-  });
-
-  const handlePointerOver = () => setHovered(true);
-  const handlePointerOut = () => {
-    setHovered(false);
-    activeHover.current = false;
-    hoverPoint.current.set(0, -999, 0);
-  };
-  
-  const handlePointerMove = (e: any) => {
-    e.stopPropagation();
-    if (e.point) {
-      hoverPoint.current.copy(e.point);
-      activeHover.current = true;
+    if (meshRef.current.instanceColor) {
+      meshRef.current.instanceColor.needsUpdate = true;
     }
-  };
+  });
 
   return (
     <instancedMesh
       ref={meshRef}
       args={[null as any, null as any, points.length]}
-      onPointerOver={handlePointerOver}
-      onPointerOut={handlePointerOut}
-      onPointerMove={handlePointerMove}
       castShadow
       receiveShadow
     >
-      {/* Rectangular block voxels simulating microchip transistors */}
-      <boxGeometry args={[0.038, 0.05, 0.038]} />
+      {/* Voxel column matching page resolution */}
+      <boxGeometry args={[0.018, 0.08, 0.018]} />
       <meshStandardMaterial
-        roughness={0.15}
-        metalness={0.94}
-        envMapIntensity={0.3}
+        roughness={0.12}
+        metalness={0.96}
+        envMapIntensity={0.25}
       />
     </instancedMesh>
   );
