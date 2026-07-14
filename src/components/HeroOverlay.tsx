@@ -19,11 +19,10 @@ export default function HeroOverlay() {
   const line2 = "Business Landscapes.".split(" ");
 
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: {
-        staggerChildren: 0.08,
+        staggerChildren: 0.12,
         delayChildren: 0.15,
       }
     }
@@ -32,13 +31,17 @@ export default function HeroOverlay() {
   const wordVariants = {
     hidden: { 
       opacity: 0, 
-      y: "100%",
+      y: 12,
+      scale: 0.94,
+      filter: "blur(12px)",
     },
     visible: { 
       opacity: 1, 
       y: 0,
+      scale: 1,
+      filter: "blur(0px)",
       transition: {
-        duration: 0.85,
+        duration: 0.8,
         ease: [0.16, 1, 0.3, 1] as any,
       }
     }
@@ -61,9 +64,9 @@ export default function HeroOverlay() {
           style={styles.title} 
           className="text-gradient hero-title"
         >
-          <span style={{ display: 'block', overflow: 'hidden' }}>
+          <span style={{ display: 'block' }}>
             {line1.map((word, i) => (
-              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', overflow: 'hidden', verticalAlign: 'bottom' }}>
+              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', verticalAlign: 'bottom' }}>
                 <motion.span 
                   variants={wordVariants}
                   style={{ display: 'inline-block' }}
@@ -73,9 +76,9 @@ export default function HeroOverlay() {
               </span>
             ))}
           </span>
-          <span style={{ display: 'block', overflow: 'hidden' }}>
+          <span style={{ display: 'block' }}>
             {line2.map((word, i) => (
-              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', overflow: 'hidden', verticalAlign: 'bottom' }}>
+              <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', verticalAlign: 'bottom' }}>
                 <motion.span 
                   variants={wordVariants}
                   style={{ display: 'inline-block' }}
