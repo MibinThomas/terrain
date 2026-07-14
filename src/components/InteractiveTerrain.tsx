@@ -79,11 +79,11 @@ export default function InteractiveTerrain() {
             let h = Math.sin(px * 1.8) * Math.cos(pz * 1.8) * 0.25;
             h += (1.0 - Math.min(1.0, distFromCenter / 3.5)) * 0.4; // Slightly domed center
 
-            // Default base color: dark metallic slate blending into accent gray
+            // Default base color: darker metallic slate blending into deep charcoal
             const normDist = Math.min(1.0, distFromCenter / 2.8);
-            const r = 0.08 + (1.0 - normDist) * 0.18;
-            const g = 0.08 + (1.0 - normDist) * 0.18;
-            const b = 0.08 + (1.0 - normDist) * 0.22;
+            const r = 0.025 + (1.0 - normDist) * 0.07;
+            const g = 0.025 + (1.0 - normDist) * 0.07;
+            const b = 0.025 + (1.0 - normDist) * 0.09;
 
             loadedPoints.push({ x: px, z: pz, h, r, g, b });
           }
@@ -124,9 +124,9 @@ export default function InteractiveTerrain() {
               x: px,
               z: pz,
               h,
-              r: onDot ? 0.35 : 0.12,
-              g: onDot ? 0.35 : 0.12,
-              b: onDot ? 0.4 : 0.14
+              r: onDot ? 0.12 : 0.04,
+              g: onDot ? 0.12 : 0.04,
+              b: onDot ? 0.15 : 0.05
             });
           }
         }
