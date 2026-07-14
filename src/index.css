@@ -269,9 +269,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .custom-hamburger .hamburger-line {
   display: block;
-  height: 2px;
+  height: 3px;
   background-color: var(--color-black);
-  border-radius: 1px;
+  border-radius: 1.5px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -293,8 +293,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom Close Icon (Modern Geometric X Design) */
 .custom-close {
-  width: 18px;
-  height: 18px;
+  width: 27px;
+  height: 27px;
   position: relative;
   display: flex;
   align-items: center;
@@ -304,10 +304,10 @@ h1, h2, h3, h4, h5, h6 {
 .custom-close .close-line {
   position: absolute;
   display: block;
-  height: 2px;
+  height: 3px;
   width: 100%;
   background-color: var(--color-black);
-  border-radius: 1px;
+  border-radius: 1.5px;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
