@@ -200,10 +200,10 @@ export default function InteractiveTerrain() {
     let posXOffset = 1.6; // Shift logo to the right on desktop to separate from left-aligned text
 
     if (canvasWidth < 576) {
-      responsiveScale = 0.52; // Mobile
+      responsiveScale = 0.78; // Mobile (50% increase from 0.52)
       posXOffset = 0;        // Centered
     } else if (canvasWidth < 992) {
-      responsiveScale = 0.72; // Tablet
+      responsiveScale = 0.88; // Tablet
       posXOffset = 0;        // Centered
     }
 
