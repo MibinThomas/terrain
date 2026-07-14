@@ -209,22 +209,24 @@ export default function InteractiveTerrain() {
 
     meshRef.current.scale.setScalar(meshScale.current * responsiveScale);
 
-    // Simple, clean scroll parallax: slide down and fade out
+    // Simple, clean scroll parallax: slide down and fade out (desktop only)
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     smoothScroll.current += (scrollY - smoothScroll.current) * 0.085;
 
-    // Apply translations (X shifts to the right on desktop, Y/Z glide down/back on scroll)
-    meshRef.current.position.set(posXOffset, -smoothScroll.current * 0.0035, -smoothScroll.current * 0.0018);
+    const scrollFactor = canvasWidth >= 992 ? smoothScroll.current : 0;
+
+    // Apply translations (X shifts to the right on desktop, Y/Z glide down/back on scroll on desktop)
+    meshRef.current.position.set(posXOffset, -scrollFactor * 0.0035, -scrollFactor * 0.0018);
 
     // Static Y orientation + scroll-linked vertical tilt
     meshRef.current.rotation.y = 0;
-    meshRef.current.rotation.x = Math.sin(time * 0.02) * 0.06 + 0.45 + smoothScroll.current * 0.0012;
+    meshRef.current.rotation.x = Math.sin(time * 0.02) * 0.06 + 0.45 + scrollFactor * 0.0012;
 
-    // Fade out mesh material on scroll to clear the viewport for content cards below
+    // Fade out mesh material on scroll (desktop only) to clear the viewport for content cards below
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;
       mat.transparent = true;
-      mat.opacity = Math.max(0.0, 1.0 - smoothScroll.current * 0.0018);
+      mat.opacity = Math.max(0.0, 1.0 - scrollFactor * 0.0018);
     }
 
     const count = points.length;
