@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useStore } from '../store/useStore';
 
 export default function HeroOverlay() {
   const scrollToSolutions = () => {
@@ -14,6 +15,62 @@ export default function HeroOverlay() {
   const opacity = useTransform(scrollY, [0, 450], [1, 0]);
   const y = useTransform(scrollY, [0, 450], [0, -60]);
   const scale = useTransform(scrollY, [0, 450], [1, 0.95]);
+
+  const currentPage = useStore((state) => state.currentPage);
+  const setCurrentPage = useStore((state) => state.setCurrentPage);
+  const setHovered = useStore((state) => state.setHovered);
+
+  // Dynamic content configurations based on active page state
+  const pageConfigs = {
+    home: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE",
+      line1: "BUILDING",
+      line2: "SMARTER",
+      line3: "BUSINESS LANDSCAPES",
+      description: "We transform ideas, technology, and strategy into intelligent, tailor-made business solutions designed for sustainable growth, operational optimization, and measurable impact.",
+      btnText: "Explore Solutions",
+      btnAction: scrollToSolutions,
+      subtext: "Deploying efficient, scalable, and future-ready business ecosystems."
+    },
+    ideas: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • IDEAS",
+      line1: "CAPTURING",
+      line2: "RAW IDEAS",
+      line3: "SHAPING THE FUTURE",
+      description: "We capture your unstructured ideas, concepts, and visions, and funnel them through our strategic innovation engine. Move your cursor over the canvas to watch how we attract, organize, and mold floating thoughts into cohesive, high-performance corporate architectures.",
+      btnText: "Explore Tech Phase",
+      btnAction: () => setCurrentPage('technology'),
+      subtext: "Hover the canvas to see how we attract, organize, and structure raw ideas."
+    },
+    technology: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • TECHNOLOGY",
+      line1: "ENGINEERED",
+      line2: "FOR",
+      line3: "SCALABILITY & EFFICIENCY",
+      description: "We build digital foundations that empower modern workflows. By leveraging modern software patterns, reliable cloud architectures, and future-ready technology stacks, we streamline complex operations.",
+      btnText: "Explore Strategy Phase",
+      btnAction: () => setCurrentPage('strategy'),
+      subtext: "Deploying system integrations, scalable clouds, and custom AI solutions."
+    },
+    strategy: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • STRATEGY",
+      line1: "PRACTICAL",
+      line2: "EXECUTION",
+      line3: "FOR MEASURABLE IMPACT",
+      description: "We combine industry insight with rigorous execution to deliver tailored business solutions. We align resources, processes, and tools to ensure seamless transformation and sustainable growth.",
+      btnText: "Request Consultation",
+      btnAction: () => {
+        setCurrentPage('home');
+        setTimeout(() => {
+          const el = document.getElementById('contact');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 400);
+      },
+      subtext: "Optimizing operations, performance analytics, and transformation architecture."
+    }
+  };
+
+  const config = pageConfigs[currentPage] || pageConfigs.home;
 
   const containerVariants = {
     hidden: {},
@@ -68,11 +125,17 @@ export default function HeroOverlay() {
 
   return (
     <section className="hero-section" id="hero">
-      <motion.div style={{ opacity, y, scale }} className="content-hero">
+      <motion.div 
+        key={currentPage} 
+        style={{ opacity, y, scale }} 
+        className="content-hero"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {/* Subtle top indicator */}
         <div className="hero-badge">
           <span style={styles.badgeDot}></span>
-          INTELLIGENT BUSINESS ARCHITECTURE
+          {config.badge}
         </div>
 
         {/* Hero Title with Wave Character Animation */}
@@ -84,33 +147,32 @@ export default function HeroOverlay() {
           className="text-gradient hero-title"
         >
           <span className="hero-title-line-1">
-            {renderWaveText("BUILDING")}
+            {renderWaveText(config.line1)}
           </span>{" "}
           <span className="hero-title-line-2">
-            {renderWaveText("SMARTER")}
+            {renderWaveText(config.line2)}
           </span>
           <span className="hero-title-line-3">
-            {renderWaveText("BUSINESS LANDSCAPES")}
+            {renderWaveText(config.line3)}
           </span>
         </motion.h1>
 
         {/* Hero Description */}
         <p style={styles.description}>
-          We transform ideas, technology, and strategy into intelligent, tailor-made business
-          solutions designed for sustainable growth, operational optimization, and measurable impact.
+          {config.description}
         </p>
 
         {/* Call to Action Button */}
         <div className="hero-cta-wrapper interactive-element">
           <button
-            onClick={scrollToSolutions}
+            onClick={config.btnAction}
             style={styles.ctaButton}
           >
-            Explore Solutions
+            {config.btnText}
           </button>
 
           <div style={styles.ctaSubtext}>
-            Deploying efficient, scalable, and future-ready business ecosystems.
+            {config.subtext}
           </div>
         </div>
       </motion.div>

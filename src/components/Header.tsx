@@ -1,23 +1,25 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useStore } from '../store/useStore';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const setCurrentPage = useStore((state) => state.setCurrentPage);
 
-  const handleLinkClick = (id: string) => {
+  const handleLinkClick = (page: 'home' | 'ideas' | 'technology' | 'strategy') => {
     setIsOpen(false);
     setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
+      setCurrentPage(page);
     }, 300);
   };
 
   return (
     <>
       <header className="site-header interactive-element">
-        <div style={styles.logoContainer}>
+        <div 
+          style={{ ...styles.logoContainer, cursor: 'pointer' }}
+          onClick={() => setCurrentPage('home')}
+        >
           <img 
             src="/brand/logo/logo-header.png" 
             alt="Terrain Business Solutions" 
@@ -104,7 +106,7 @@ export default function Header() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.32, duration: 0.4 }}
-                onClick={() => handleLinkClick('services')} 
+                onClick={() => handleLinkClick('home')} 
                 style={styles.ctaButtonVertical}
               >
                 Explore Solutions

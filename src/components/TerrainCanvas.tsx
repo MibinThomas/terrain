@@ -1,10 +1,20 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
+import { useStore } from '../store/useStore';
 import InteractiveTerrain from './InteractiveTerrain';
+import InteractiveIdeas from './InteractiveIdeas';
+import InteractiveTech from './InteractiveTech';
+import InteractiveStrategy from './InteractiveStrategy';
 
 export default function TerrainCanvas() {
+  const currentPage = useStore((state) => state.currentPage);
+  const setHovered = useStore((state) => state.setHovered);
   return (
-    <div className="canvas-container">
+    <div 
+      className="canvas-container"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <Canvas
         shadows
         camera={{ position: [0, 8, 12], fov: 38 }}
@@ -34,7 +44,10 @@ export default function TerrainCanvas() {
         <pointLight position={[0, 5, 8]} intensity={0.1} color="#a7a9ac" />
         
         <Center>
-          <InteractiveTerrain />
+          {currentPage === 'home' && <InteractiveTerrain />}
+          {currentPage === 'ideas' && <InteractiveIdeas />}
+          {currentPage === 'technology' && <InteractiveTech />}
+          {currentPage === 'strategy' && <InteractiveStrategy />}
         </Center>
         
         {/* Shadow Catcher Ground Plane */}
