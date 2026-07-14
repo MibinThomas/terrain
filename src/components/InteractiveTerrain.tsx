@@ -15,9 +15,9 @@ interface LogoPoint {
 const SPACING = 0.024; // spacing between columns
 const RADIUS_HOVER = 2.2; // radius of pointer interaction
 
-// Spring parameters for anti-gravity float
-const STIFFNESS = 0.08;
-const DAMPING = 0.76;
+// Spring parameters for anti-gravity float (softer for fluid buoyancy)
+const STIFFNESS = 0.05;
+const DAMPING = 0.85;
 
 export default function InteractiveTerrain() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -29,6 +29,7 @@ export default function InteractiveTerrain() {
 
   // Raycast hover refs to avoid re-renders
   const hoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
+  const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const activeHover = useRef<boolean>(false);
 
   // Mesh scale spring values
@@ -181,10 +182,20 @@ export default function InteractiveTerrain() {
   const tempRotation = useMemo(() => new THREE.Matrix4(), []);
   const tempEuler = useMemo(() => new THREE.Euler(), []);
   const tempColor = useMemo(() => new THREE.Color(), []);
-  const targetColorObj = useMemo(() => new THREE.Color('#a7a9ac'), []); // transition target: accent gray
 
   useFrame((state) => {
     if (!meshRef.current || !physicsData || points.length === 0) return;
+
+    // Smoothly interpolate pointer coordinate to create a liquid wave ripple
+    if (activeHover.current) {
+      if (smoothHoverPoint.current.y < -900) {
+        smoothHoverPoint.current.copy(hoverPoint.current);
+      } else {
+        smoothHoverPoint.current.lerp(hoverPoint.current, 0.14);
+      }
+    } else {
+      smoothHoverPoint.current.lerp(new THREE.Vector3(0, -999, 0), 0.12);
+    }
 
     const time = state.clock.getElapsedTime();
 
@@ -243,7 +254,7 @@ export default function InteractiveTerrain() {
       tempPosition.set(p.x + currX[i], finalRestingY + currY[i], p.z + currZ[i]);
       tempPosition.applyMatrix4(meshRef.current.matrixWorld);
 
-      const dist = tempPosition.distanceTo(hoverPoint.current);
+      const dist = tempPosition.distanceTo(smoothHoverPoint.current);
 
       // Calculate spring offset and color interpolation
       if (isHovered && activeHover.current && dist < RADIUS_HOVER) {
@@ -251,7 +262,7 @@ export default function InteractiveTerrain() {
         const factor = Math.pow((RADIUS_HOVER - dist) / RADIUS_HOVER, 2.2);
 
         // Anti-gravity push vector: float up on Y, push outwards on X/Z
-        const pushDir = tempPosition.clone().sub(hoverPoint.current);
+        const pushDir = tempPosition.clone().sub(smoothHoverPoint.current);
         pushDir.y = 0;
         if (pushDir.lengthSq() > 0.001) {
           pushDir.normalize();
@@ -261,21 +272,17 @@ export default function InteractiveTerrain() {
         targetX[i] = pushDir.x * factor * 0.45; // push horizontally
         targetZ[i] = pushDir.z * factor * 0.45;
 
-        // Transition colors to Accent Grey (#a7a9ac)
-        currColor[i * 3] += (targetColorObj.r - currColor[i * 3]) * 0.12;
-        currColor[i * 3 + 1] += (targetColorObj.g - currColor[i * 3 + 1]) * 0.12;
-        currColor[i * 3 + 2] += (targetColorObj.b - currColor[i * 3 + 2]) * 0.12;
       } else {
         // Reset targets to resting layout
         targetX[i] = 0;
         targetY[i] = 0;
         targetZ[i] = 0;
-
-        // Reset colors to original dark metallic gradient
-        currColor[i * 3] += (baseColor[i * 3] - currColor[i * 3]) * 0.08;
-        currColor[i * 3 + 1] += (baseColor[i * 3 + 1] - currColor[i * 3 + 1]) * 0.08;
-        currColor[i * 3 + 2] += (baseColor[i * 3 + 2] - currColor[i * 3 + 2]) * 0.08;
       }
+
+      // Keep base colors (pure solid blackish onyx) constant, no hover color gradient circle
+      currColor[i * 3] += (baseColor[i * 3] - currColor[i * 3]) * 0.08;
+      currColor[i * 3 + 1] += (baseColor[i * 3 + 1] - currColor[i * 3 + 1]) * 0.08;
+      currColor[i * 3 + 2] += (baseColor[i * 3 + 2] - currColor[i * 3 + 2]) * 0.08;
 
       // Update spring physics velocities
       const fx = (targetX[i] - currX[i]) * STIFFNESS - velX[i] * DAMPING;

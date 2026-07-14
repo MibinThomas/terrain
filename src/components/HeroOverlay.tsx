@@ -22,8 +22,8 @@ export default function HeroOverlay() {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.035, // smooth, fast flowing wave stagger
-        delayChildren: 0.15,
+        staggerChildren: 0.08, // slower flowing wave stagger
+        delayChildren: 0.2,
       }
     }
   };
@@ -41,8 +41,11 @@ export default function HeroOverlay() {
       scale: 1,
       rotate: 0,
       transition: {
-        duration: 0.55,
+        duration: 1.1, // slower animation duration
         ease: [0.34, 1.56, 0.64, 1] as any, // Easing curve with subtle bounce
+        repeat: Infinity,
+        repeatType: "reverse" as any,
+        repeatDelay: 2.2, // wait 2.2 seconds before reversing/repeating
       }
     }
   };

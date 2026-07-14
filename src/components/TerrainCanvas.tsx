@@ -17,21 +17,21 @@ export default function TerrainCanvas() {
         <color attach="background" args={['#e6e7e8']} />
         
         {/* Soft atmospheric ambient light */}
-        <ambientLight intensity={0.7} />
+        <ambientLight intensity={0.3} />
         
         {/* Main directional key light casting clean corporate shadows */}
         <directionalLight
           castShadow
           position={[6, 12, 4]}
-          intensity={1.9}
+          intensity={1.0}
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
           shadow-bias={-0.0001}
         />
         
         {/* Subtle secondary fill lights */}
-        <pointLight position={[-6, 4, -4]} intensity={0.6} color="#ffffff" />
-        <pointLight position={[0, 5, 8]} intensity={0.5} color="#a7a9ac" />
+        <pointLight position={[-6, 4, -4]} intensity={0.2} color="#ffffff" />
+        <pointLight position={[0, 5, 8]} intensity={0.2} color="#a7a9ac" />
         
         <Center>
           <InteractiveTerrain />
