@@ -114,16 +114,24 @@ export default function InteractiveIdeas() {
     };
   }, []);
 
-  // 2. Generate corresponding scattered points (drifting client ideas)
+  // 2. Generate corresponding scattered points (drifting client ideas in a spherical cloud)
   const scatteredPoints = useMemo<ScatterPoint[]>(() => {
     if (points.length === 0) return [];
-    return points.map(() => ({
-      x: (Math.random() - 0.5) * 7.5,
-      y: (Math.random() - 0.5) * 5.0,
-      z: (Math.random() - 0.5) * 5.5,
-      driftSpeed: 0.35 + Math.random() * 0.65,
-      driftOffset: Math.random() * Math.PI * 2,
-    }));
+    const sphereRadius = 3.5;
+    return points.map(() => {
+      const theta = Math.random() * Math.PI * 2;
+      const cosPhi = Math.random() * 2 - 1;
+      const sinPhi = Math.sqrt(1 - cosPhi * cosPhi);
+      const radius = sphereRadius * Math.cbrt(Math.random());
+
+      return {
+        x: radius * sinPhi * Math.cos(theta),
+        y: radius * cosPhi,
+        z: radius * sinPhi * Math.sin(theta),
+        driftSpeed: 0.35 + Math.random() * 0.65,
+        driftOffset: Math.random() * Math.PI * 2,
+      };
+    });
   }, [points]);
 
   // 3. Set instance colors on mount
@@ -181,28 +189,37 @@ export default function InteractiveIdeas() {
     const canvasWidth = state.size.width;
     const posXOffset = canvasWidth < 992 ? 0 : 3.4;
 
+    // Slow rotation of the sphere before it morphs
+    const sphereRotation = time * 0.06;
+    const cosRot = Math.cos(sphereRotation);
+    const sinRot = Math.sin(sphereRotation);
+
     for (let i = 0; i < count; i++) {
       const p = points[i];
       const s = scatteredPoints[i];
 
-      // Slow sinus drifting movement for scattered unorganized ideas
-      const driftX = Math.sin(time * s.driftSpeed + s.driftOffset) * 0.25;
-      const driftY = Math.cos(time * s.driftSpeed + s.driftOffset) * 0.22;
-      const driftZ = Math.sin(time * s.driftSpeed * 0.75 + s.driftOffset) * 0.25;
+      // Slow sinus drifting movement for scattered unorganized ideas (drift amount capped to 0.18)
+      const driftX = Math.sin(time * s.driftSpeed + s.driftOffset) * 0.18;
+      const driftY = Math.cos(time * s.driftSpeed + s.driftOffset) * 0.18;
+      const driftZ = Math.sin(time * s.driftSpeed * 0.75 + s.driftOffset) * 0.18;
 
       const sx = s.x + driftX;
       const sy = s.y + driftY;
       const sz = s.z + driftZ;
+
+      // Rotate the scattered coordinates around Y-axis
+      const rotatedX = sx * cosRot - sz * sinRot;
+      const rotatedZ = sx * sinRot + sz * cosRot;
 
       // Structured resting coordinates (the logo shape)
       const lx = p.x;
       const ly = p.h;
       const lz = p.z;
 
-      // Blend between scattered and structured positions
-      let tx = THREE.MathUtils.lerp(sx, lx, morphFactor.current);
+      // Blend between scattered (slowly rotating) and structured positions
+      let tx = THREE.MathUtils.lerp(rotatedX, lx, morphFactor.current);
       let ty = THREE.MathUtils.lerp(sy, ly, morphFactor.current);
-      let tz = THREE.MathUtils.lerp(sz, lz, morphFactor.current);
+      let tz = THREE.MathUtils.lerp(rotatedZ, lz, morphFactor.current);
 
       // 1. Gravitational attraction wave: pull particles toward cursor/center during transition phase
       if (morphFactor.current > 0.02 && morphFactor.current < 0.98) {
