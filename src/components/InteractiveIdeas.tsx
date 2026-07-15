@@ -27,7 +27,7 @@ const DAMPING = 0.90; // increased for fluid weight and less bounce
 export default function InteractiveIdeas() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const isHovered = useStore((state) => state.isHovered);
-  
+
   const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const morphFactor = useRef<number>(0.0); // 0.0 = scattered ideas, 1.0 = structured logo
 
@@ -92,7 +92,7 @@ export default function InteractiveIdeas() {
             const px = (x - size / 2) * SPACING;
             const pz = (y - size / 2) * SPACING;
             const distFromCenter = Math.sqrt(px * px + pz * pz);
-            
+
             // Standard logo heights
             let h = Math.sin(px * 1.8) * Math.cos(pz * 1.8) * 0.25;
             h += (1.0 - Math.min(1.0, distFromCenter / 3.5)) * 0.4;
@@ -161,7 +161,7 @@ export default function InteractiveIdeas() {
     // Detect mouse coordinates on the horizontal plane (Y=0) where the logo sits
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.25);
     const hoverTarget = new THREE.Vector3();
-    
+
     // Morph factor: lerp towards 1.0 (assembled logo) once isAssembled is true
     const targetMorph = isAssembled ? 1.0 : 0.0;
     morphFactor.current += (targetMorph - morphFactor.current) * 0.022; // smooth, slow assembly speed
@@ -179,7 +179,7 @@ export default function InteractiveIdeas() {
 
     // Align to layout section positioning
     const canvasWidth = state.size.width;
-    const posXOffset = canvasWidth < 576 ? 0 : 1.6;
+    const posXOffset = canvasWidth < 992 ? 0 : 3.4;
 
     for (let i = 0; i < count; i++) {
       const p = points[i];
@@ -223,10 +223,10 @@ export default function InteractiveIdeas() {
 
         if (dist < 2.2) {
           const factor = Math.pow((2.2 - dist) / 2.2, 2.0);
-          
+
           // Repulsive force: push away in 3D (X, Y, and Z)
           const pushDir = voxelPos.clone().sub(smoothHoverPoint.current).normalize();
-          
+
           // Make them separate and float before snapping back into place
           tx += pushDir.x * factor * 0.35;
           ty += pushDir.y * factor * 0.45;
@@ -250,7 +250,7 @@ export default function InteractiveIdeas() {
       // 3. Shaded black color scheme for desktop, slate-grey for mobile (blended based on morph)
       const distFromCenter = Math.sqrt(lx * lx + lz * lz);
       const isMobileViewport = state.size.width < 576;
-      
+
       let targetR = p.r;
       let targetG = p.g;
       let targetB = p.b;
@@ -290,7 +290,7 @@ export default function InteractiveIdeas() {
       // Apply matrix transform
       tempPosition.set(currX[i] + posXOffset, currY[i], currZ[i]);
       tempMatrix.makeTranslation(tempPosition.x, tempPosition.y, tempPosition.z);
-      
+
       meshRef.current.setMatrixAt(i, tempMatrix);
     }
 
@@ -309,8 +309,8 @@ export default function InteractiveIdeas() {
       castShadow
       receiveShadow
     >
-      {/* Cityscape column voxel matching home page logo */}
-      <boxGeometry args={[0.017, 0.08, 0.017]} />
+      {/* Spherical voxel matching page logo */}
+      <sphereGeometry args={[0.016, 6, 6]} />
       <meshStandardMaterial
         roughness={0.08}
         metalness={0.96}

@@ -26,6 +26,7 @@ const DAMPING = 0.86;
 export default function InteractiveTech() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const isHovered = useStore((state) => state.isHovered);
+  const setHovered = useStore((state) => state.setHovered);
 
   const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const morphFactor = useRef<number>(0.0); // 0.0 = scattered, 1.0 = 3D desktop shape
@@ -171,7 +172,7 @@ export default function InteractiveTech() {
 
     // Center offset to push model right
     const canvasWidth = state.size.width;
-    const posXOffset = canvasWidth < 576 ? 0 : 1.6;
+    const posXOffset = canvasWidth < 992 ? 0 : 3.4;
 
     for (let i = 0; i < count; i++) {
       const p = points[i];
@@ -208,7 +209,7 @@ export default function InteractiveTech() {
         const voxelPos = new THREE.Vector3(p.x + posXOffset, p.y, p.z);
         const dist = voxelPos.distanceTo(smoothHoverPoint.current);
 
-        if (dist < 2.0) {
+        if (dist < 2.0 && dist > 0.01) {
           const factor = Math.pow((2.0 - dist) / 2.0, 2.0);
           
           // Repulsive force: push away in 3D
@@ -276,9 +277,11 @@ export default function InteractiveTech() {
       args={[null as any, null as any, points.length]}
       castShadow
       receiveShadow
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
     >
-      {/* Voxel column matching page resolution */}
-      <boxGeometry args={[0.018, 0.08, 0.018]} />
+      {/* Spherical voxel matching page resolution */}
+      <sphereGeometry args={[0.016, 6, 6]} />
       <meshStandardMaterial
         roughness={0.12}
         metalness={0.96}

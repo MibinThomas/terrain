@@ -108,6 +108,11 @@ export default function InteractiveStrategy() {
   useFrame((state) => {
     if (!meshRef.current || points.length === 0) return;
 
+    // Align to layout section positioning
+    const canvasWidth = state.size.width;
+    const posXOffset = canvasWidth < 992 ? 0 : 3.4;
+    meshRef.current.position.set(posXOffset, 0, 0);
+
     // Smoothly interpolate pointer coordinate for wave ripples
     if (activeHover.current) {
       if (smoothHoverPoint.current.y < -900) {
@@ -144,11 +149,6 @@ export default function InteractiveStrategy() {
       tempEuler.set(baseRotX, baseRotY, 0);
       tempRotation.makeRotationFromEuler(tempEuler);
       tempPosition.applyMatrix4(tempRotation);
-
-      // Align to layout section positioning
-      const canvasWidth = state.size.width;
-      const posXOffset = canvasWidth < 576 ? 0 : 1.6;
-      tempPosition.x += posXOffset;
 
       const worldPos = tempPosition.clone().applyMatrix4(meshRef.current.matrixWorld);
       const dist = worldPos.distanceTo(smoothHoverPoint.current);

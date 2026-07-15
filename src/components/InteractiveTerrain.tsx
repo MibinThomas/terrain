@@ -208,7 +208,7 @@ export default function InteractiveTerrain() {
     // Responsive scale & position factors based on canvas viewport width
     const canvasWidth = state.size.width;
     let responsiveScale = 1.0;
-    let posXOffset = 1.6; // Shift logo to the right on desktop to separate from left-aligned text
+    let posXOffset = 3.4; // Shift logo to the right on desktop to separate from left-aligned text
 
     if (canvasWidth < 576) {
       responsiveScale = 1.01; // Mobile (30% increase from 0.78)
