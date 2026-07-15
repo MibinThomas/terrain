@@ -40,8 +40,8 @@ export default function InteractiveTerrain() {
   // Load the logo image and parse pixels
   useEffect(() => {
     const img = new Image();
-    img.src = '/brand/logo/Terrain Business Solutions-1.png';
     img.crossOrigin = 'anonymous';
+    img.src = '/brand/logo/Terrain Business Solutions-1.png';
 
     img.onload = () => {
       const canvas = document.createElement('canvas');

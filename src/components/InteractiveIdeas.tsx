@@ -61,8 +61,8 @@ export default function InteractiveIdeas() {
   // 1. Scan the logo image to get structured target coordinates matching home page logo
   useEffect(() => {
     const img = new Image();
-    img.src = '/brand/logo/Terrain Business Solutions-1.png';
     img.crossOrigin = 'anonymous';
+    img.src = '/brand/logo/Terrain Business Solutions-1.png';
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
