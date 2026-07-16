@@ -3,17 +3,20 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useStore } from '../store/useStore';
 
+// Point data structure representing 3D strategic details
 interface Point3D {
-  x: number;
-  z: number;
+  ringIndex: number;
   radius: number;
   baseAngle: number;
+  phase: number;
+  isCore: boolean;
+  isCheckpoint: boolean;
   r: number;
   g: number;
   b: number;
 }
 
-const STIFFNESS = 0.05;
+const STIFFNESS = 0.06;
 const DAMPING = 0.85;
 const RADIUS_HOVER = 2.4;
 
@@ -21,61 +24,91 @@ export default function InteractiveStrategy() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const isHovered = useStore((state) => state.isHovered);
   const setHovered = useStore((state) => state.setHovered);
+  const activeSection = useStore((state) => state.activeSection);
+  const scrollProgress = useStore((state) => state.scrollProgress);
 
   const hoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const activeHover = useRef<boolean>(false);
+  const visibility = useRef<number>(0);
 
-  // Generate concentric target circles
+  // 1. Central strategic objective & 3D radar-ring generation
   const points = useMemo(() => {
     const list: Point3D[] = [];
-    const rings = [
-      { radius: 0.35, count: 12 },
-      { radius: 0.75, count: 20 },
-      { radius: 1.15, count: 28 },
-      { radius: 1.55, count: 36 },
-      { radius: 1.95, count: 44 }
+    const coreCount = 10;
+    
+    // Core objective particles cluster at the center (Layer 1)
+    for (let i = 0; i < coreCount; i++) {
+      const angle = (i / coreCount) * Math.PI * 2;
+      const radius = 0.08 + Math.random() * 0.06;
+      list.push({
+        ringIndex: -1,
+        radius: radius,
+        baseAngle: angle,
+        phase: Math.random() * Math.PI * 2,
+        isCore: true,
+        isCheckpoint: false,
+        r: 0.95,
+        g: 0.15,
+        b: 0.08, // Bright orange/red
+      });
+    }
+
+    // Concentric layers with count definition (Layer 2)
+    const strategicLayers = [
+      { radius: 0.55, count: 16 },
+      { radius: 1.05, count: 26 },
+      { radius: 1.55, count: 38 },
+      { radius: 2.05, count: 52 },
     ];
 
-    rings.forEach((ring, ringIdx) => {
-      for (let i = 0; i < ring.count; i++) {
-        const baseAngle = (i / ring.count) * Math.PI * 2;
-        const px = Math.cos(baseAngle) * ring.radius;
-        const pz = Math.sin(baseAngle) * ring.radius;
+    // Statically distributed strategic nodes / checkpoints
+    const checkpointIndices = new Set<string>();
+    checkpointIndices.add('0-4');
+    checkpointIndices.add('0-12');
+    checkpointIndices.add('1-8');
+    checkpointIndices.add('1-18');
+    checkpointIndices.add('2-15');
+    checkpointIndices.add('3-30');
 
-        // Corporate executive slate-black/blue with target orange accent
-        const isOuterRing = ringIdx === rings.length - 1;
-        const isInnerRing = ringIdx === 0;
+    strategicLayers.forEach((layer, ringIdx) => {
+      for (let i = 0; i < layer.count; i++) {
+        const baseAngle = (i / layer.count) * Math.PI * 2;
+        const key = `${ringIdx}-${i}`;
+        const isCheckpoint = checkpointIndices.has(key);
 
-        let r = 0.08;
-        let g = 0.08;
-        let b = 0.08;
+        let r = 0.15;
+        let g = 0.15;
+        let b = 0.18; // Steel-grey directional markers
 
-        if (isInnerRing) {
-          // Sharp focus red/orange target core
-          r = 0.95;
-          g = 0.15;
-          b = 0.15;
-        } else if (isOuterRing) {
-          // Dark titanium graphite
+        if (isCheckpoint) {
+          r = 0.75;
+          g = 0.12;
+          b = 0.06; // Strategic checkpoints (muted orange)
+        } else if (ringIdx === 3) {
           r = 0.03;
           g = 0.03;
-          b = 0.03;
-        } else {
-          // Deep steel grey
-          r = 0.15;
-          g = 0.15;
-          b = 0.18;
+          b = 0.035; // Graphite outer markers
         }
 
-        list.push({ x: px, z: pz, radius: ring.radius, baseAngle, r, g, b });
+        list.push({
+          ringIndex: ringIdx,
+          radius: layer.radius,
+          baseAngle: baseAngle,
+          phase: Math.random() * Math.PI * 2,
+          isCore: false,
+          isCheckpoint: isCheckpoint,
+          r,
+          g,
+          b,
+        });
       }
     });
 
     return list;
   }, []);
 
-  // Set instance colors on mount
+  // Set initial colors on mount
   useEffect(() => {
     if (!meshRef.current) return;
     const tempColor = new THREE.Color();
@@ -86,34 +119,73 @@ export default function InteractiveStrategy() {
     meshRef.current.instanceColor!.needsUpdate = true;
   }, [points]);
 
-  // Spring physics storage for pointer rotation angles
+  // 2. Ring orientation: Stored orientation/rotation quaternions for each ring to create a 3D tactical radar shape
+  const ringOrientations = useMemo(() => {
+    const eulers = [
+      new THREE.Euler(0, 0, 0),
+      new THREE.Euler(Math.PI / 3.5, 0, 0),
+      new THREE.Euler(0, 0, Math.PI / 3),
+      new THREE.Euler(Math.PI / 4, Math.PI / 5, Math.PI / 6),
+    ];
+    return eulers.map((euler) => new THREE.Quaternion().setFromEuler(euler));
+  }, []);
+
+  const activeOrientations = useMemo(() => [
+    new THREE.Quaternion(),
+    new THREE.Quaternion(),
+    new THREE.Quaternion(),
+    new THREE.Quaternion()
+  ], []);
+
+  // 3. Spring restoration physics arrays
   const physicsData = useMemo(() => {
     const count = points.length;
     return {
-      currAngle: new Float32Array(count),
-      velAngle: new Float32Array(count),
-      targetAngle: new Float32Array(count),
+      currOffset: new Float32Array(count),
+      velOffset: new Float32Array(count),
+      targetOffset: new Float32Array(count),
       currHeight: new Float32Array(count),
       velHeight: new Float32Array(count),
       targetHeight: new Float32Array(count),
     };
   }, [points]);
 
-  // Temporary math helpers
+  // 4. Performance optimisations: Reusable math helpers to prevent garbage collection overhead
   const tempMatrix = useMemo(() => new THREE.Matrix4(), []);
   const tempPosition = useMemo(() => new THREE.Vector3(), []);
-  const tempRotation = useMemo(() => new THREE.Matrix4(), []);
-  const tempEuler = useMemo(() => new THREE.Euler(), []);
+  const tempDir = useMemo(() => new THREE.Vector3(), []);
+  const tempDirToPointer = useMemo(() => new THREE.Vector3(), []);
+  const tempColor = useMemo(() => new THREE.Color(), []);
+  const tempQuaternion = useMemo(() => new THREE.Quaternion(), []);
+  const pointerQuaternion = useMemo(() => new THREE.Quaternion(), []);
+  const localForwardAxis = useMemo(() => new THREE.Vector3(1, 0, 0), []);
 
   useFrame((state) => {
     if (!meshRef.current || points.length === 0) return;
 
-    // Align to layout section positioning
+    // Smooth visibility transition
+    const isActive = activeSection === 'strategy';
+    visibility.current += ((isActive ? 1 : 0) - visibility.current) * 0.08;
+
+    const isVisible = visibility.current > 0.005;
+    meshRef.current.visible = isVisible;
+    if (!isVisible) return;
+
+    // Interpolate orientations based on scroll progress of Strategy section
+    const currentProgress = scrollProgress.strategy;
+    const alignFactor = Math.max(0, Math.min(1, (currentProgress - 0.2) / 0.6));
+    const identityQuat = new THREE.Quaternion();
+
+    for (let r = 0; r < 4; r++) {
+      activeOrientations[r].copy(identityQuat).slerp(ringOrientations[r], alignFactor);
+    }
+
+    // Responsive horizontal positioning offset (only applied to the parent instancedMesh)
     const canvasWidth = state.size.width;
     const posXOffset = canvasWidth < 992 ? 0 : 3.4;
     meshRef.current.position.set(posXOffset, 0, 0);
 
-    // Smoothly interpolate pointer coordinate for wave ripples
+    // Smooth pointer coordinate tracking
     if (activeHover.current) {
       if (smoothHoverPoint.current.y < -900) {
         smoothHoverPoint.current.copy(hoverPoint.current);
@@ -126,79 +198,132 @@ export default function InteractiveStrategy() {
 
     const time = state.clock.getElapsedTime();
     const count = points.length;
-    const { currAngle, velAngle, targetAngle, currHeight, velHeight, targetHeight } = physicsData;
-
-    const baseRotX = Math.PI / 3.4; // perspective tilt
-    const baseRotY = Math.PI / 15;
+    const { currOffset, velOffset, targetOffset, currHeight, velHeight, targetHeight } = physicsData;
 
     for (let i = 0; i < count; i++) {
       const p = points[i];
 
-      // Base concentric rotation: alternate directions for strategic gears effect
-      const dir = i % 2 === 0 ? 1 : -1;
-      const defaultAngle = p.baseAngle + time * 0.08 * dir;
+      let localX = 0;
+      let localY = 0;
+      let localZ = 0;
 
-      // Calculate world coordinates for accurate distance calculations
-      tempPosition.set(
-        Math.cos(defaultAngle) * p.radius,
-        currHeight[i],
-        Math.sin(defaultAngle) * p.radius
-      );
+      if (p.isCore) {
+        // Central strategic objective: subtle pulse and vertical floating cluster
+        const corePulse = 1 + Math.sin(time * 1.8) * 0.12;
+        localX = Math.cos(p.baseAngle) * p.radius * corePulse;
+        localY = Math.sin(time * 1.5 + p.phase) * 0.03;
+        localZ = Math.sin(p.baseAngle) * p.radius * corePulse;
 
-      // Apply static tilt transforms
-      tempEuler.set(baseRotX, baseRotY, 0);
-      tempRotation.makeRotationFromEuler(tempEuler);
-      tempPosition.applyMatrix4(tempRotation);
-
-      const worldPos = tempPosition.clone().applyMatrix4(meshRef.current.matrixWorld);
-      const dist = worldPos.distanceTo(smoothHoverPoint.current);
-
-      if (isHovered && activeHover.current && dist < RADIUS_HOVER) {
-        // 1. Calculate angle to point directly at the cursor in X-Z space
-        const diffX = smoothHoverPoint.current.x - worldPos.x;
-        const diffZ = smoothHoverPoint.current.z - worldPos.z;
-        
-        // Pivot angle facing the pointer
-        targetAngle[i] = Math.atan2(diffZ, diffX);
-        
-        // 2. Lift up along the Y-axis when hovered
-        const factor = Math.pow((RADIUS_HOVER - dist) / RADIUS_HOVER, 2.0);
-        targetHeight[i] = factor * 0.45;
+        // Facing outwards relative to center
+        tempDir.set(Math.cos(p.baseAngle), 0, Math.sin(p.baseAngle)).normalize();
+        tempQuaternion.setFromUnitVectors(localForwardAxis, tempDir);
       } else {
-        // Point outward along the radius of the circle
-        targetAngle[i] = defaultAngle;
+        const ringIdx = p.ringIndex;
+        const direction = ringIdx % 2 === 0 ? 1 : -1;
+
+        // Controlled rotation of each ring
+        const animatedAngle = p.baseAngle + time * (0.045 + ringIdx * 0.012) * direction;
+
+        const baseX = Math.cos(animatedAngle) * p.radius;
+        const baseZ = Math.sin(animatedAngle) * p.radius;
+
+        // 5. Strategic convergence movement: periodically shifting slightly toward the core
+        const convergence = (Math.sin(time * 0.7 + p.phase) * 0.5 + 0.5) * 0.08;
+        const centreDirX = -baseX / p.radius;
+        const centreDirZ = -baseZ / p.radius;
+
+        // Base coordinates before rotation and hover offsets
+        let rawX = baseX + centreDirX * convergence;
+        let rawY = currHeight[i];
+        let rawZ = baseZ + centreDirZ * convergence;
+
+        // Add radial offset push from hover
+        const radialScale = 1 + currOffset[i] / p.radius;
+        rawX *= radialScale;
+        rawZ *= radialScale;
+
+        // Apply pre-calculated 3D ring orientation (scroll-interpolated)
+        tempPosition.set(rawX, rawY, rawZ);
+        tempPosition.applyQuaternion(activeOrientations[ringIdx]);
+
+        localX = tempPosition.x;
+        localY = tempPosition.y;
+        localZ = tempPosition.z;
+
+        // 6. Directional marker alignment: Compute tangent movement direction vector along the ring
+        const tangentX = -Math.sin(animatedAngle) * direction;
+        const tangentZ = Math.cos(animatedAngle) * direction;
+        tempDir.set(tangentX, 0, tangentZ).applyQuaternion(activeOrientations[ringIdx]).normalize();
+
+        // Calculate alignment orientation quaternion
+        tempQuaternion.setFromUnitVectors(localForwardAxis, tempDir);
+      }
+
+      // Check distance in world coordinates for pointer interaction
+      tempPosition.set(localX, localY, localZ);
+      const worldX = localX + posXOffset;
+      const worldPos = tempPosition.clone().setX(worldX);
+      const distance = worldPos.distanceTo(smoothHoverPoint.current);
+      const influence = Math.pow(Math.max(0, RADIUS_HOVER - distance) / RADIUS_HOVER, 2.0);
+
+      // 7. Pointer-responsive decision effect: rotate towards cursor, rise checkpoints, and ripple outward
+      if (isHovered && activeHover.current && distance < RADIUS_HOVER && !p.isCore) {
+        // Set targets for spring physics
+        targetOffset[i] = influence * 0.32;
+        targetHeight[i] = p.isCheckpoint ? influence * 0.35 : 0; // Checkpoints rise perpendicularly
+
+        // Calculate rotation quaternion facing pointer
+        const toPointerX = smoothHoverPoint.current.x - worldX;
+        const toPointerY = smoothHoverPoint.current.y - localY;
+        const toPointerZ = smoothHoverPoint.current.z - localZ;
+        tempDirToPointer.set(toPointerX, toPointerY, toPointerZ).normalize();
+        
+        pointerQuaternion.setFromUnitVectors(localForwardAxis, tempDirToPointer);
+
+        // Interpolate orientation towards pointer
+        tempQuaternion.slerp(pointerQuaternion, influence * 0.25);
+      } else {
+        targetOffset[i] = 0;
         targetHeight[i] = 0;
       }
 
-      // Spring Euler integration for rotation angle
-      // Prevent angle wrapping discontinuity issues (atan2 jumps between -pi and +pi)
-      let diff = targetAngle[i] - currAngle[i];
-      while (diff < -Math.PI) diff += Math.PI * 2;
-      while (diff > Math.PI) diff -= Math.PI * 2;
+      // Spring physics updates
+      const fOffset = (targetOffset[i] - currOffset[i]) * STIFFNESS - velOffset[i] * DAMPING;
+      velOffset[i] += fOffset;
+      currOffset[i] += velOffset[i];
 
-      const fAngle = diff * STIFFNESS - velAngle[i] * DAMPING;
-      velAngle[i] += fAngle;
-      currAngle[i] += velAngle[i];
-
-      // Spring Euler integration for height
       const fHeight = (targetHeight[i] - currHeight[i]) * STIFFNESS - velHeight[i] * DAMPING;
       velHeight[i] += fHeight;
       currHeight[i] += velHeight[i];
 
-      // Assemble final composited matrix
-      tempPosition.set(
-        Math.cos(defaultAngle) * p.radius,
-        currHeight[i],
-        Math.sin(defaultAngle) * p.radius
-      );
+      // Dynamic color palette setup
+      let r = p.r;
+      let g = p.g;
+      let b = p.b;
 
-      // Combine perspective tilt with the dynamic rotation angle
-      tempEuler.set(baseRotX, baseRotY, currAngle[i]);
-      tempRotation.makeRotationFromEuler(tempEuler);
+      if (p.isCheckpoint) {
+        // Checkpoints glow pulsing wave
+        const wave = Math.sin(time * 2.5 + p.baseAngle * 2.0) * 0.5 + 0.5;
+        r += wave * 0.15;
+        g += wave * 0.08;
+      } else if (!p.isCore) {
+        // Pointer proximity highlight ripple
+        if (isHovered && activeHover.current && distance < RADIUS_HOVER) {
+          const glowFactor = influence * 0.12;
+          r += glowFactor;
+          g += glowFactor * 0.6;
+          b += glowFactor * 0.2;
+        }
+      }
 
+      tempColor.setRGB(r, g, b);
+      meshRef.current.setColorAt(i, tempColor);
+
+      // Final matrix composite for rendering
+      tempPosition.set(localX, localY, localZ);
       tempMatrix.compose(
         tempPosition,
-        new THREE.Quaternion().setFromRotationMatrix(tempRotation),
+        tempQuaternion,
         new THREE.Vector3(1, 1, 1)
       );
 
@@ -206,6 +331,18 @@ export default function InteractiveStrategy() {
     }
 
     meshRef.current.instanceMatrix.needsUpdate = true;
+    if (meshRef.current.instanceColor) {
+      meshRef.current.instanceColor.needsUpdate = true;
+    }
+
+    // Scale and opacity transitions
+    const currentScale = 0.85 + 0.15 * visibility.current;
+    meshRef.current.scale.setScalar(currentScale);
+    if (meshRef.current.material) {
+      const mat = meshRef.current.material as THREE.MeshStandardMaterial;
+      mat.transparent = true;
+      mat.opacity = visibility.current;
+    }
   });
 
   const handlePointerOver = () => setHovered(true);
@@ -233,8 +370,8 @@ export default function InteractiveStrategy() {
       castShadow
       receiveShadow
     >
-      {/* Dynamic arrow-like wedges pointing to target */}
-      <boxGeometry args={[0.07, 0.02, 0.016]} />
+      {/* Strategic wedges aligning with movement direction */}
+      <boxGeometry args={[0.09, 0.022, 0.018]} />
       <meshStandardMaterial
         roughness={0.1}
         metalness={0.96}

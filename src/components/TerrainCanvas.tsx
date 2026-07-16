@@ -2,13 +2,11 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Center, Environment } from '@react-three/drei';
 import { Suspense } from 'react';
 import { useStore } from '../store/useStore';
-import InteractiveTerrain from './InteractiveTerrain';
 import InteractiveIdeas from './InteractiveIdeas';
 import InteractiveTech from './InteractiveTech';
 import InteractiveStrategy from './InteractiveStrategy';
 
 export default function TerrainCanvas() {
-  const currentPage = useStore((state) => state.currentPage);
   const setHovered = useStore((state) => state.setHovered);
   return (
     <div 
@@ -47,10 +45,9 @@ export default function TerrainCanvas() {
         
         <Center>
           <Suspense fallback={null}>
-            {currentPage === 'home' && <InteractiveTerrain />}
-            {currentPage === 'ideas' && <InteractiveIdeas />}
-            {currentPage === 'technology' && <InteractiveTech />}
-            {currentPage === 'strategy' && <InteractiveStrategy />}
+            <InteractiveIdeas />
+            <InteractiveTech />
+            <InteractiveStrategy />
           </Suspense>
         </Center>
         

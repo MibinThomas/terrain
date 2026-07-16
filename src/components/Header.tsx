@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useStore } from '../store/useStore';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const setCurrentPage = useStore((state) => state.setCurrentPage);
 
   const handleLinkClick = (page: 'home' | 'ideas' | 'technology' | 'strategy') => {
     setIsOpen(false);
+    const targetId = page === 'home' ? 'hero' : page;
     setTimeout(() => {
-      setCurrentPage(page);
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      }
     }, 300);
   };
 
@@ -18,7 +20,10 @@ export default function Header() {
       <header className="site-header interactive-element">
         <div 
           style={{ ...styles.logoContainer, cursor: 'pointer' }}
-          onClick={() => setCurrentPage('home')}
+          onClick={() => {
+            const el = document.getElementById('hero');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+          }}
         >
           <img 
             src="/brand/logo/logo-header.png" 

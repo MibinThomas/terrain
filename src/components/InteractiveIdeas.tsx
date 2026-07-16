@@ -27,36 +27,14 @@ const DAMPING = 0.90; // increased for fluid weight and less bounce
 export default function InteractiveIdeas() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const isHovered = useStore((state) => state.isHovered);
+  const activeSection = useStore((state) => state.activeSection);
+  const scrollProgress = useStore((state) => state.scrollProgress);
 
   const smoothHoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
   const morphFactor = useRef<number>(0.0); // 0.0 = scattered ideas, 1.0 = structured logo
+  const visibility = useRef<number>(0);
 
   const [points, setPoints] = useState<LogoPoint[]>([]);
-  const [isAssembled, setIsAssembled] = useState(false);
-  const hasFirstActivated = useRef(false);
-
-  // Listen for the first major interaction and subsequent click toggles
-  useEffect(() => {
-    const handleGlobalClick = () => {
-      if (!hasFirstActivated.current) {
-        setIsAssembled(true);
-        hasFirstActivated.current = true;
-      } else {
-        setIsAssembled((prev) => !prev);
-      }
-    };
-    window.addEventListener('click', handleGlobalClick);
-    return () => {
-      window.removeEventListener('click', handleGlobalClick);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isHovered && !hasFirstActivated.current) {
-      setIsAssembled(true);
-      hasFirstActivated.current = true;
-    }
-  }, [isHovered]);
 
   // 1. Scan the logo image to get structured target coordinates matching home page logo
   useEffect(() => {
@@ -166,13 +144,23 @@ export default function InteractiveIdeas() {
   useFrame((state) => {
     if (!meshRef.current || points.length === 0 || scatteredPoints.length === 0) return;
 
+    // Smooth visibility transition
+    const isActive = activeSection === 'ideas';
+    visibility.current += ((isActive ? 1 : 0) - visibility.current) * 0.08;
+
+    const isVisible = visibility.current > 0.005;
+    meshRef.current.visible = isVisible;
+    if (!isVisible) return;
+
     // Detect mouse coordinates on the horizontal plane (Y=0) where the logo sits
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.25);
     const hoverTarget = new THREE.Vector3();
 
-    // Morph factor: lerp towards 1.0 (assembled logo) once isAssembled is true
-    const targetMorph = isAssembled ? 1.0 : 0.0;
-    morphFactor.current += (targetMorph - morphFactor.current) * 0.022; // smooth, slow assembly speed
+    // Morph factor: driven directly by horizontal scroll progress of Ideas section
+    const currentProgress = scrollProgress.ideas;
+    // Morph between 0.2 and 0.8 scroll progress
+    const targetMorph = Math.max(0, Math.min(1, (currentProgress - 0.2) / 0.6));
+    morphFactor.current += (targetMorph - morphFactor.current) * 0.05;
 
     // Detect mouse coordinates on the horizontal plane (Y=0) where the logo sits
     if (isHovered && state.raycaster.ray.intersectPlane(plane, hoverTarget)) {
@@ -314,6 +302,15 @@ export default function InteractiveIdeas() {
     meshRef.current.instanceMatrix.needsUpdate = true;
     if (meshRef.current.instanceColor) {
       meshRef.current.instanceColor.needsUpdate = true;
+    }
+
+    // Scale and opacity transitions
+    const currentScale = 0.85 + 0.15 * visibility.current;
+    meshRef.current.scale.setScalar(currentScale);
+    if (meshRef.current.material) {
+      const mat = meshRef.current.material as THREE.MeshStandardMaterial;
+      mat.transparent = true;
+      mat.opacity = visibility.current;
     }
   });
 

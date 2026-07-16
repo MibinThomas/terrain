@@ -26,6 +26,7 @@ export default function InteractiveTerrain() {
   // Connect to global store
   const isHovered = useStore((state) => state.isHovered);
   const setHovered = useStore((state) => state.setHovered);
+  const activeSection = useStore((state) => state.activeSection);
 
   // Raycast hover refs to avoid re-renders
   const hoverPoint = useRef<THREE.Vector3>(new THREE.Vector3(0, -999, 0));
@@ -35,7 +36,7 @@ export default function InteractiveTerrain() {
   // Mesh scale spring values
   const meshScale = useRef<number>(1.0);
   const meshScaleVelocity = useRef<number>(0);
-  const smoothScroll = useRef<number>(0);
+  const visibility = useRef<number>(activeSection === 'hero' ? 1 : 0);
 
   // Load the logo image and parse pixels
   useEffect(() => {
@@ -186,6 +187,14 @@ export default function InteractiveTerrain() {
   useFrame((state) => {
     if (!meshRef.current || !physicsData || points.length === 0) return;
 
+    // Smooth visibility transition
+    const isActive = activeSection === 'hero';
+    visibility.current += ((isActive ? 1 : 0) - visibility.current) * 0.08;
+
+    const isVisible = visibility.current > 0.005;
+    meshRef.current.visible = isVisible;
+    if (!isVisible) return;
+
     // Smoothly interpolate pointer coordinate to create a liquid wave ripple
     if (activeHover.current) {
       if (smoothHoverPoint.current.y < -900) {
@@ -205,39 +214,31 @@ export default function InteractiveTerrain() {
     meshScaleVelocity.current += scaleForce;
     meshScale.current += meshScaleVelocity.current;
 
-    // Responsive scale & position factors based on canvas viewport width
+    // Responsive scale factor based on canvas viewport width
     const canvasWidth = state.size.width;
     let responsiveScale = 1.0;
-    let posXOffset = 3.4; // Shift logo to the right on desktop to separate from left-aligned text
 
     if (canvasWidth < 576) {
       responsiveScale = 1.01; // Mobile (30% increase from 0.78)
-      posXOffset = 0;        // Centered
     } else if (canvasWidth < 992) {
       responsiveScale = 1.15; // Tablet
-      posXOffset = 0;        // Centered
     }
 
-    meshRef.current.scale.setScalar(meshScale.current * responsiveScale);
+    const currentVisibilityScale = 0.85 + 0.15 * visibility.current;
+    meshRef.current.scale.setScalar(meshScale.current * responsiveScale * currentVisibilityScale);
 
-    // Simple, clean scroll parallax: slide down and fade out (desktop only)
-    const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
-    smoothScroll.current += (scrollY - smoothScroll.current) * 0.085;
+    // Apply translations (centered within its local right-column Canvas)
+    meshRef.current.position.set(0, 0, 0);
 
-    const scrollFactor = canvasWidth >= 992 ? smoothScroll.current : 0;
-
-    // Apply translations (X shifts to the right on desktop, Y/Z glide down/back on scroll on desktop)
-    meshRef.current.position.set(posXOffset, -scrollFactor * 0.0035, -scrollFactor * 0.0018);
-
-    // Static Y orientation + scroll-linked vertical tilt
+    // Static Y orientation + subtle tilt
     meshRef.current.rotation.y = 0;
-    meshRef.current.rotation.x = Math.sin(time * 0.02) * 0.06 + 0.45 + scrollFactor * 0.0012;
+    meshRef.current.rotation.x = Math.sin(time * 0.02) * 0.06 + 0.45;
 
-    // Fade out mesh material on scroll (desktop only) to clear the viewport for content cards below
+    // Fade out mesh material on scroll
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;
       mat.transparent = true;
-      mat.opacity = Math.max(0.0, 1.0 - scrollFactor * 0.0018);
+      mat.opacity = visibility.current;
     }
 
     const count = points.length;

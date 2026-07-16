@@ -125,9 +125,9 @@ export default function HeroOverlay() {
 
   return (
     <section className="hero-section" id="hero">
-      <motion.div 
-        key={currentPage} 
-        style={{ opacity, y, scale }} 
+      <motion.div
+        key={currentPage}
+        style={{ opacity, y, scale }}
         className="content-hero"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -183,7 +183,7 @@ export default function HeroOverlay() {
         className="scroll-indicator-container"
       >
         <div style={styles.scrollIndicator}>
-          <span style={styles.scrollText}>Interact with the 3D Terrain or Scroll</span>
+          <span style={styles.scrollText}>Interact with the 3D Terrain</span>
           <div style={styles.scrollMouse}>
             <div style={styles.scrollWheel}></div>
           </div>

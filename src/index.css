@@ -95,8 +95,9 @@ h6 {
 /* App Container */
 .app-container {
   position: relative;
-  min-height: 100vh;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 /* Canvas Container */
@@ -144,28 +145,40 @@ h6 {
   background-clip: text;
 }
 
-/* Main Layout */
-.main-layout {
-  position: relative;
-  width: 100%;
+/* Horizontal Scroll Container */
+.horizontal-scroll-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
   z-index: 2;
   pointer-events: none;
-  /* Let pointer events pass through to fixed canvas */
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Sections Styling (Stacked single page) */
-.hero-section {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in Chrome/Safari */
+}
+
+/* Horizontal Sections Styling */
+.horizontal-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
   display: flex;
-  align-items: center;
-  padding: 120px 8% 80px 8%;
+  align-items: flex-start; /* Keep text top-aligned for horizontal straight-line flow */
+  padding: 140px 8% 80px 8%; /* safety top padding to clear fixed header logo */
   box-sizing: border-box;
-  z-index: 2;
   pointer-events: none;
-  /* Let pointer events pass through to fixed canvas */
-  /* Left-to-right gradient overlay to ensure text readability on top of R3F canvas */
+  position: relative;
   background: linear-gradient(100deg,
       rgba(230, 231, 232, 0.96) 0%,
       rgba(230, 231, 232, 0.88) 35%,
@@ -173,16 +186,103 @@ h6 {
       transparent 50%);
 }
 
-.services-section {
+/* Hero Section Grid layout */
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
   position: relative;
-  width: 100%;
-  min-height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
   display: flex;
   align-items: center;
-  padding: 120px 8%;
+}
+
+.hero-grid-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 0 8%; /* Align with header logo padding */
   box-sizing: border-box;
-  z-index: 2;
-  background: transparent;
+  align-items: center; /* Vertically center both columns */
+  gap: 60px;
+}
+
+.hero-left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-self: start; /* Align to the outer left side of the grid column */
+  text-align: left;
+  width: 100%;
+  max-width: 680px; /* Highly readable max content width */
+  gap: 24px;
+  min-width: 0;
+  z-index: 5;
+}
+
+.hero-right-column {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+/* Glassmorphic card styling helper - transparent on desktop, card on mobile */
+.content-card-mobile {
+  max-width: 680px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* Services pills for single-page layout */
+.services-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 24px 0;
+}
+
+.service-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-black);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.service-pill:hover {
+  background: var(--color-black);
+  color: var(--color-light);
+  border-color: var(--color-black);
+}
+
+/* Solid background section for footer slide */
+.footer-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 8%;
+  box-sizing: border-box;
+  background-color: var(--color-light);
+  z-index: 3;
+  pointer-events: auto;
 }
 
 /* Header Styling */
@@ -496,77 +596,72 @@ h6 {
 @media (max-width: 991px) {
   .app-container {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    width: 100vw;
     overflow: hidden;
-  }
-
-  .main-layout {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-    overflow: hidden;
-    pointer-events: auto;
-    /* Restore normal interaction when stacked */
   }
 
   .canvas-container {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 1;
     pointer-events: auto;
   }
 
-  .ui-overlay {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    pointer-events: auto;
-  }
-
-  .site-header {
-    position: relative;
+  .horizontal-scroll-container {
+    position: absolute;
     top: 0;
-    width: 100%;
-    padding: 0 24px;
-    height: 60px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    z-index: 2;
+    pointer-events: none;
   }
 
-  .logo-img {
-    height: 38px;
-  }
-
-  .menu-toggle-btn {
-    width: 40px;
-    height: 40px;
-  }
-
-  .hero-section {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    min-height: auto;
-    padding: 16px 20px 24px 20px;
-    background: var(--color-light);
-    /* Solid background, text sits below canvas */
+  .horizontal-section {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    padding: 100px 24px 40px 24px; /* Increased top safety padding to 100px */
+    background: transparent; /* No solid backdrop so 3D elements show through */
+    pointer-events: none;
     box-sizing: border-box;
-    z-index: 2;
+  }
+
+  /* Glassmorphic content card to ensure 100% readability of text overlaying centered R3F models */
+  .content-card-mobile {
+    background: rgba(230, 231, 232, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 92%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
     pointer-events: auto;
-    /* Restore normal interaction when stacked */
+    z-index: 5;
+    position: relative;
+    top: 0; /* Reset relative top offset to prevent overlapping logo */
   }
 
   .content-hero {
-    position: relative;
-    top: -25px; /* Shift all text/buttons up by 25px */
     align-items: center;
     text-align: center;
     max-width: 100%;
@@ -575,18 +670,13 @@ h6 {
   }
 
   .hero-badge {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
     align-self: center;
-    font-size: 7.2px; /* Reduced by 15% from 8.5px */
-    padding: 3px 8px; /* Reduced padding */
+    font-size: 7.5px;
+    padding: 4px 10px;
     letter-spacing: 0.1em;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     white-space: nowrap;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 5;
+    background: rgba(255, 255, 255, 0.8);
   }
 
   .hero-title-line-1,
@@ -596,12 +686,8 @@ h6 {
     margin-top: 0;
   }
 
-  .hero-title-line-2 {
-    margin-bottom: 4px;
-  }
-
   .hero-title {
-    font-size: clamp(20px, 4.5vw, 30px) !important;
+    font-size: clamp(20px, 4.5vw, 28px) !important;
     margin-bottom: 2px;
     line-height: 1.2;
   }
@@ -609,11 +695,12 @@ h6 {
   .content-hero p {
     font-size: 13px !important;
     line-height: 1.5;
-    margin-bottom: 2px;
-    max-width: 95%;
+    margin-bottom: 4px;
+    max-width: 100%;
   }
 
-  .hero-section button {
+  .hero-section button,
+  .horizontal-section button {
     padding: 10px 24px !important;
     font-size: 11px !important;
   }
@@ -621,6 +708,18 @@ h6 {
   .hero-cta-wrapper {
     align-items: center;
     text-align: center;
+    margin-top: 8px;
+  }
+
+  .services-pills {
+    justify-content: center;
+    margin: 8px 0 16px 0;
+    gap: 6px;
+  }
+
+  .service-pill {
+    font-size: 9px;
+    padding: 4px 10px;
   }
 
   .scroll-indicator-container {
@@ -683,7 +782,6 @@ h6 {
     height: 32px;
   }
 
-  .hero-section,
   .services-section {
     padding: 12px 16px 20px 16px;
   }
@@ -703,5 +801,39 @@ h6 {
 
   .service-card h2 {
     font-size: 22px !important;
+  }
+}
+
+/* Tablet and Mobile overrides for the new Hero Layout */
+@media (max-width: 991px) and (min-width: 768px) {
+  .hero-grid-container {
+    grid-template-columns: 45fr 55fr;
+    gap: 30px;
+    padding: 0 5%;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-section {
+    height: 100vh;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+  .hero-grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 24px;
+    padding: 120px 24px 60px 24px;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+  }
+  .hero-left-column {
+    align-items: center;
+    text-align: center;
+  }
+  .hero-right-column {
+    height: 340px;
+    width: 100%;
   }
 }
