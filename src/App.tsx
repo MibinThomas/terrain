@@ -1,10 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Center, Environment } from '@react-three/drei';
 import { useStore } from './store/useStore';
-import TerrainCanvas from './components/TerrainCanvas';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HeroSection from './components/HeroSection';
+import IdeasSection from './components/IdeasSection';
+import InteractiveTech from './components/InteractiveTech';
+import InteractiveStrategy from './components/InteractiveStrategy';
 
 interface SectionProps {
   id: string;
@@ -15,9 +19,13 @@ interface SectionProps {
   description: string;
   btnText: string;
   btnAction: () => void;
+  prevText?: string;
+  prevAction?: () => void;
   subtext?: string;
   pills?: string[];
   isActive: boolean;
+  visual: React.ReactNode;
+  headingStyle?: React.CSSProperties;
 }
 
 function Section({
@@ -29,10 +37,15 @@ function Section({
   description,
   btnText,
   btnAction,
+  prevText,
+  prevAction,
   subtext,
   pills,
   isActive,
+  visual,
+  headingStyle,
 }: SectionProps) {
+  const setHovered = useStore((state) => state.setHovered);
   const containerVariants = {
     hidden: {},
     visible: {
@@ -82,10 +95,11 @@ function Section({
   };
 
   return (
-    <section className="horizontal-section" id={id}>
-      <div className="content-card-mobile">
-        <div className="content-hero">
-          {/* Subtle top indicator */}
+    <section className="interactive-section" id={id}>
+      <div className="section-layout">
+        
+        {/* Left Column — Content */}
+        <div className="section-content">
           <div className="hero-badge">
             <span
               style={{
@@ -101,7 +115,6 @@ function Section({
             {badge}
           </div>
 
-          {/* Hero Title with Wave Character Animation */}
           <motion.h1
             variants={containerVariants}
             initial="hidden"
@@ -113,6 +126,7 @@ function Section({
               fontWeight: 'normal',
               letterSpacing: '0.02em',
               color: 'var(--color-black)',
+              ...headingStyle,
             }}
           >
             <span className="hero-title-line-1">{renderWaveText(line1)}</span>{' '}
@@ -120,20 +134,18 @@ function Section({
             <span className="hero-title-line-3">{renderWaveText(line3)}</span>
           </motion.h1>
 
-          {/* Description */}
           <p
             style={{
               fontSize: 'clamp(15px, 2vw, 18px)',
               color: 'var(--color-text-secondary)',
               lineHeight: '1.7',
-              maxWidth: '650px',
+              maxWidth: '560px',
               fontWeight: '400',
             }}
           >
             {description}
           </p>
 
-          {/* Service Pills (if present) */}
           {pills && pills.length > 0 && (
             <div className="services-pills">
               {pills.map((pill) => (
@@ -144,27 +156,38 @@ function Section({
             </div>
           )}
 
-          {/* Call to Action Button */}
           <div className="hero-cta-wrapper interactive-element">
-            <button
-              onClick={btnAction}
-              style={{
-                backgroundColor: 'var(--color-black)',
-                color: 'var(--color-light)',
-                border: '1px solid var(--color-black)',
-                borderRadius: '30px',
-                padding: '16px 36px',
-                fontSize: '14px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              {btnText}
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <button
+                onClick={btnAction}
+                style={{
+                  backgroundColor: 'var(--color-black)',
+                  color: 'var(--color-light)',
+                  border: '1px solid var(--color-black)',
+                  borderRadius: '30px',
+                  padding: '16px 36px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                {btnText}
+              </button>
+
+              {prevAction && (
+                <button
+                  onClick={prevAction}
+                  className="back-cta-btn"
+                >
+                  <span className="back-arrow">←</span>
+                  {prevText}
+                </button>
+              )}
+            </div>
 
             {subtext && (
               <div
@@ -180,6 +203,53 @@ function Section({
             )}
           </div>
         </div>
+
+        {/* Right Column — 3D Visual */}
+        <div 
+          className="section-visual"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <div style={{ width: '100%', height: '100%' }} className="interactive-element">
+            <Canvas
+              shadows
+              camera={{ position: [0, 8, 12], fov: 38 }}
+              gl={{ antialias: true, alpha: true }}
+            >
+              <Environment preset="city" />
+              <ambientLight intensity={0.18} />
+              <directionalLight
+                castShadow
+                position={[6, 12, 4]}
+                intensity={0.65}
+                shadow-mapSize-width={1024}
+                shadow-mapSize-height={1024}
+                shadow-bias={-0.0008}
+                shadow-radius={10}
+              />
+              <pointLight position={[-6, 4, -4]} intensity={0.1} color="#ffffff" />
+              <pointLight position={[0, 5, 8]} intensity={0.1} color="#a7a9ac" />
+              <Center>
+                <Suspense fallback={null}>
+                  {visual}
+                </Suspense>
+              </Center>
+              <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.65, 0]} receiveShadow>
+                <planeGeometry args={[100, 100]} />
+                <shadowMaterial opacity={0.06} />
+              </mesh>
+              <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                minPolarAngle={Math.PI / 6}
+                maxPolarAngle={Math.PI / 2.2}
+                dampingFactor={0.05}
+                enableDamping
+              />
+            </Canvas>
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -293,9 +363,6 @@ function App() {
       {/* Header floats on top */}
       <Header />
 
-      {/* 3D R3F Canvas - fixed behind content */}
-      <TerrainCanvas />
-
       {/* Horizontal snapping scroll wrapper */}
       <div
         className="horizontal-scroll-container"
@@ -307,19 +374,7 @@ function App() {
         <HeroSection scrollToSection={scrollToSection} />
 
         {/* IDEAS SECTION */}
-        <Section
-          id="ideas"
-          isActive={activeSection === 'ideas'}
-          badge="INTELLIGENT BUSINESS ARCHITECTURE • IDEAS"
-          line1="CAPTURING"
-          line2="RAW IDEAS"
-          line3="SHAPING THE FUTURE"
-          description="We capture your unstructured ideas, concepts, and visions, and funnel them through our strategic innovation engine. Move your cursor over the canvas to watch how we attract, organize, and mold floating thoughts into cohesive, high-performance corporate architectures."
-          pills={['Strategic Blueprinting', 'Innovation Workshops', 'Opportunity Mapping']}
-          btnText="Explore Tech Phase"
-          btnAction={() => scrollToSection('technology')}
-          subtext="Hover the canvas to see how we attract, organize, and structure raw ideas."
-        />
+        <IdeasSection scrollToSection={scrollToSection} />
 
         {/* TECHNOLOGY SECTION */}
         <Section
@@ -333,7 +388,11 @@ function App() {
           pills={['System Integration', 'Scalable Cloud Infrastructures', 'Custom AI & Data Solutions']}
           btnText="Explore Strategy Phase"
           btnAction={() => scrollToSection('strategy')}
+          prevText="BACK TO IDEAS"
+          prevAction={() => scrollToSection('ideas')}
           subtext="Deploying system integrations, scalable clouds, and custom AI solutions."
+          visual={<InteractiveTech />}
+          headingStyle={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
         />
 
         {/* STRATEGY SECTION */}
@@ -348,12 +407,15 @@ function App() {
           pills={['Operational Optimization', 'Change Architecture', 'Performance Analytics']}
           btnText="Connect With Us"
           btnAction={() => scrollToSection('footer')}
+          prevText="BACK TO TECH"
+          prevAction={() => scrollToSection('technology')}
           subtext="Optimizing operations, performance analytics, and transformation architecture."
+          visual={<InteractiveStrategy />}
         />
 
         {/* FOOTER SECTION SLIDE */}
         <div className="footer-section" id="footer">
-          <Footer />
+          <Footer scrollToSection={scrollToSection} />
         </div>
       </div>
     </div>

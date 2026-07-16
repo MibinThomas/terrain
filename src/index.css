@@ -167,23 +167,61 @@ h6 {
   display: none; /* Hide scrollbar in Chrome/Safari */
 }
 
-/* Horizontal Sections Styling */
-.horizontal-section {
+/* Interactive Sections Grid layout */
+.interactive-section {
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
   scroll-snap-align: start;
-  display: flex;
-  align-items: flex-start; /* Keep text top-aligned for horizontal straight-line flow */
-  padding: 140px 8% 80px 8%; /* safety top padding to clear fixed header logo */
-  box-sizing: border-box;
-  pointer-events: none;
   position: relative;
-  background: linear-gradient(100deg,
-      rgba(230, 231, 232, 0.96) 0%,
-      rgba(230, 231, 232, 0.88) 35%,
-      rgba(230, 231, 232, 0.2) 45%,
-      transparent 50%);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.section-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 0 8%; /* Align with header logo padding */
+  box-sizing: border-box;
+  align-items: center; /* Vertically center both columns */
+  gap: 60px;
+}
+
+.section-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-self: start; /* Align to the outer left side of the grid column */
+  text-align: left;
+  width: 100%;
+  max-width: 650px;
+  gap: 24px;
+  min-width: 0;
+  z-index: 5;
+}
+
+.section-visual {
+  justify-self: end;
+  width: 100%;
+  height: min(78vh, 760px);
+  min-width: 0;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.section-visual canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
 
 /* Hero Section Grid layout */
@@ -625,19 +663,53 @@ h6 {
     pointer-events: none;
   }
 
-  .horizontal-section {
+  .interactive-section {
     width: 100vw;
     height: 100vh;
     flex-shrink: 0;
     scroll-snap-align: start;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 100px 24px 40px 24px; /* Increased top safety padding to 100px */
-    background: transparent; /* No solid backdrop so 3D elements show through */
+    align-items: flex-start;
+    overflow-y: auto;
+    background: transparent;
     pointer-events: none;
     box-sizing: border-box;
+  }
+
+  .section-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 24px;
+    padding: 120px 24px 60px 24px;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .section-visual {
+    height: 380px; /* Controlled height between 360px and 480px */
+    width: 100%;
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-visual canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
   }
 
   /* Glassmorphic content card to ensure 100% readability of text overlaying centered R3F models */
@@ -804,6 +876,15 @@ h6 {
   }
 }
 
+/* Tablet and Mobile overrides for the new Section Layouts */
+@media (max-width: 991px) and (min-width: 768px) {
+  .section-layout {
+    grid-template-columns: 45fr 55fr;
+    gap: 30px;
+    padding: 0 5%;
+  }
+}
+
 /* Tablet and Mobile overrides for the new Hero Layout */
 @media (max-width: 991px) and (min-width: 768px) {
   .hero-grid-container {
@@ -836,4 +917,149 @@ h6 {
     height: 340px;
     width: 100%;
   }
+}
+
+/* ==========================================================================
+   Ideas Section Custom Grid Redesign
+   ========================================================================== */
+.ideas-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 46%) minmax(0, 54%);
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding-inline: clamp(24px, 8vw, 150px);
+  gap: clamp(32px, 5vw, 96px);
+  box-sizing: border-box;
+}
+
+.ideas-content {
+  width: 100%;
+  max-width: 650px;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  z-index: 5;
+}
+
+.ideas-heading {
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 650px;
+  margin: 0;
+  font-family: var(--font-title);
+  color: var(--color-black);
+  text-transform: uppercase;
+}
+
+.ideas-description {
+  max-width: 590px;
+  font-size: clamp(15px, 1.05vw, 18px);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin-top: clamp(24px, 3vh, 36px);
+}
+
+.ideas-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.ideas-tag {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.ideas-visual {
+  position: relative;
+  width: 100%;
+  height: min(74vh, 760px);
+  min-height: 520px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.ideas-visual canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Tablet responsiveness for Ideas Section */
+@media (max-width: 1024px) {
+  .ideas-layout {
+    grid-template-columns: minmax(0, 48%) minmax(0, 52%);
+    padding-inline: 40px;
+    gap: 24px;
+  }
+
+  .ideas-visual {
+    min-height: 440px;
+  }
+}
+
+/* Mobile responsiveness for Ideas Section */
+@media (max-width: 767px) {
+  .ideas-layout {
+    grid-template-columns: 1fr;
+    padding: 110px 20px 40px;
+    gap: 32px;
+  }
+
+  .ideas-content {
+    max-width: 100%;
+  }
+
+  .ideas-visual {
+    width: 100%;
+    height: 420px;
+    min-height: 0;
+  }
+}
+
+/* Sleek premium Back Button navigation */
+.back-cta-btn {
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 30px;
+  padding: 16px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.back-cta-btn:hover {
+  border-color: var(--color-black);
+  color: var(--color-black);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.back-cta-btn:hover .back-arrow {
+  transform: translateX(-4px);
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 
-export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+interface FooterProps {
+  scrollToSection: (secId: string) => void;
+}
 
+export default function Footer({ scrollToSection }: FooterProps) {
   return (
     <footer style={styles.footer} className="glass-panel">
       <div style={styles.container}>
@@ -52,9 +52,24 @@ export default function Footer() {
             © {new Date().getFullYear()} Terrain Business Solutions. All rights reserved.
           </p>
           
-          <button onClick={scrollToTop} style={styles.scrollBtn} className="interactive-element">
-            Back to top <ArrowUp size={16} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+            <button 
+              onClick={() => scrollToSection('strategy')} 
+              style={styles.scrollBtn} 
+              className="interactive-element"
+            >
+              <span className="back-arrow" style={{ marginRight: '6px', display: 'inline-block', transition: 'transform 0.2s ease' }}>←</span>
+              Back to Strategy
+            </button>
+            
+            <button 
+              onClick={() => scrollToSection('hero')} 
+              style={styles.scrollBtn} 
+              className="interactive-element"
+            >
+              Back to Start <ArrowUp size={16} style={{ marginLeft: '4px' }} />
+            </button>
+          </div>
         </div>
       </div>
     </footer>

@@ -26,7 +26,6 @@ const DAMPING = 0.90; // increased for fluid weight and less bounce
 
 export default function InteractiveIdeas() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const isHovered = useStore((state) => state.isHovered);
   const activeSection = useStore((state) => state.activeSection);
   const scrollProgress = useStore((state) => state.scrollProgress);
 
@@ -35,6 +34,7 @@ export default function InteractiveIdeas() {
   const visibility = useRef<number>(0);
 
   const [points, setPoints] = useState<LogoPoint[]>([]);
+  const [hovered, setHovered] = useState(false);
 
   // 1. Scan the logo image to get structured target coordinates matching home page logo
   useEffect(() => {
@@ -136,10 +136,32 @@ export default function InteractiveIdeas() {
     };
   }, [points]);
 
-  // Math helpers
+  // Initialize particles at their scattered positions to avoid origin explosion
+  useEffect(() => {
+    const { currX, currY, currZ } = physicsData;
+    const count = points.length;
+    for (let i = 0; i < count; i++) {
+      const s = scatteredPoints[i];
+      if (s) {
+        currX[i] = s.x;
+        currY[i] = s.y;
+        currZ[i] = s.z;
+      }
+    }
+  }, [points, scatteredPoints, physicsData]);
+
+  // Math helpers & pre-allocated objects to prevent GC overhead inside useFrame
   const tempMatrix = useMemo(() => new THREE.Matrix4(), []);
   const tempPosition = useMemo(() => new THREE.Vector3(), []);
   const tempColor = useMemo(() => new THREE.Color(), []);
+
+  const interactionPlane = useMemo(() => new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.25), []);
+  const hoverTarget = useMemo(() => new THREE.Vector3(), []);
+  const localHover = useMemo(() => new THREE.Vector3(), []);
+  const voxelPosition = useMemo(() => new THREE.Vector3(), []);
+  const pushDirection = useMemo(() => new THREE.Vector3(), []);
+
+  const shadowMatRef = useRef<THREE.ShadowMaterial>(null);
 
   useFrame((state) => {
     if (!meshRef.current || points.length === 0 || scatteredPoints.length === 0) return;
@@ -152,30 +174,42 @@ export default function InteractiveIdeas() {
     meshRef.current.visible = isVisible;
     if (!isVisible) return;
 
-    // Detect mouse coordinates on the horizontal plane (Y=0) where the logo sits
-    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.25);
-    const hoverTarget = new THREE.Vector3();
-
     // Morph factor: driven directly by horizontal scroll progress of Ideas section
     const currentProgress = scrollProgress.ideas;
-    // Morph between 0.2 and 0.8 scroll progress
-    const targetMorph = Math.max(0, Math.min(1, (currentProgress - 0.2) / 0.6));
+
+    // Progression:
+    // 0.00–0.20: scattered rotating sphere
+    // 0.20–0.75: gradual particle organization
+    // 0.75–1.00: fully assembled structured form
+    let targetMorph = 0;
+    if (currentProgress < 0.20) {
+      targetMorph = 0;
+    } else if (currentProgress > 0.75) {
+      targetMorph = 1;
+    } else {
+      targetMorph = (currentProgress - 0.20) / (0.75 - 0.20);
+    }
     morphFactor.current += (targetMorph - morphFactor.current) * 0.05;
 
     // Detect mouse coordinates on the horizontal plane (Y=0) where the logo sits
-    if (isHovered && state.raycaster.ray.intersectPlane(plane, hoverTarget)) {
+    if (hovered && state.raycaster.ray.intersectPlane(interactionPlane, hoverTarget)) {
       smoothHoverPoint.current.lerp(hoverTarget, 0.12);
     } else {
-      smoothHoverPoint.current.lerp(new THREE.Vector3(0, -999, 0), 0.1);
+      smoothHoverPoint.current.lerp(tempPosition.set(0, -999, 0), 0.1);
     }
 
     const time = state.clock.getElapsedTime();
     const count = points.length;
     const { currX, currY, currZ, velX, velY, velZ } = physicsData;
 
-    // Align to layout section positioning
+    // Align to layout section positioning (centered locally)
     const canvasWidth = state.size.width;
-    const posXOffset = canvasWidth < 992 ? 0 : 3.4;
+    const posXOffset = canvasWidth >= 1600 ? 0.15 : 0;
+
+    // Update grounding shadow material opacity dynamically
+    if (shadowMatRef.current) {
+      shadowMatRef.current.opacity = 0.08 * morphFactor.current * visibility.current;
+    }
 
     // Slow rotation of the sphere before it morphs
     const sphereRotation = time * 0.06;
@@ -212,9 +246,12 @@ export default function InteractiveIdeas() {
       // 1. Gravitational attraction wave: pull particles toward cursor/center during transition phase
       if (morphFactor.current > 0.02 && morphFactor.current < 0.98) {
         const pullStrength = Math.sin(morphFactor.current * Math.PI) * 0.45;
-        const localHover = smoothHoverPoint.current.y > -900
-          ? smoothHoverPoint.current.clone().sub(new THREE.Vector3(posXOffset, 0, 0))
-          : new THREE.Vector3(0, 0, 0);
+        if (smoothHoverPoint.current.y > -900) {
+          localHover.copy(smoothHoverPoint.current);
+          localHover.x -= posXOffset;
+        } else {
+          localHover.set(0, 0, 0);
+        }
 
         tx += (localHover.x - tx) * pullStrength;
         ty += (localHover.y - ty) * pullStrength;
@@ -223,19 +260,19 @@ export default function InteractiveIdeas() {
 
       // 2. Post-Assembly Hover State: apply a subtle repulsive force pushing particles in 3D
       if (morphFactor.current >= 0.95 && smoothHoverPoint.current.y > -900) {
-        const voxelPos = new THREE.Vector3(lx + posXOffset, ly, lz);
-        const dist = voxelPos.distanceTo(smoothHoverPoint.current);
+        voxelPosition.set(lx + posXOffset, ly, lz);
+        const dist = voxelPosition.distanceTo(smoothHoverPoint.current);
 
         if (dist < 2.2) {
           const factor = Math.pow((2.2 - dist) / 2.2, 2.0);
 
           // Repulsive force: push away in 3D (X, Y, and Z)
-          const pushDir = voxelPos.clone().sub(smoothHoverPoint.current).normalize();
+          pushDirection.copy(voxelPosition).sub(smoothHoverPoint.current).normalize();
 
           // Make them separate and float before snapping back into place
-          tx += pushDir.x * factor * 0.35;
-          ty += pushDir.y * factor * 0.45;
-          tz += pushDir.z * factor * 0.35;
+          tx += pushDirection.x * factor * 0.35;
+          ty += pushDirection.y * factor * 0.45;
+          tz += pushDirection.z * factor * 0.35;
         }
       }
 
@@ -254,7 +291,7 @@ export default function InteractiveIdeas() {
 
       // 3. Shaded black color scheme for desktop, slate-grey for mobile (blended based on morph)
       const distFromCenter = Math.sqrt(lx * lx + lz * lz);
-      const isMobileViewport = state.size.width < 576;
+      const isMobileViewport = canvasWidth < 576;
 
       let targetR = p.r;
       let targetG = p.g;
@@ -278,7 +315,7 @@ export default function InteractiveIdeas() {
       let glowG = 0;
       let glowB = 0;
 
-      if (isHovered && smoothHoverPoint.current.y > -900) {
+      if (hovered && smoothHoverPoint.current.y > -900) {
         tempPosition.set(currX[i] + posXOffset, currY[i], currZ[i]);
         const distToMouse = tempPosition.distanceTo(smoothHoverPoint.current);
         if (distToMouse < 1.0) {
@@ -304,8 +341,8 @@ export default function InteractiveIdeas() {
       meshRef.current.instanceColor.needsUpdate = true;
     }
 
-    // Scale and opacity transitions
-    const currentScale = 0.85 + 0.15 * visibility.current;
+    // Scale and opacity transitions (increased by 25% scale, base scale = 1.25)
+    const currentScale = 1.25 * (0.85 + 0.15 * visibility.current);
     meshRef.current.scale.setScalar(currentScale);
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;
@@ -317,19 +354,40 @@ export default function InteractiveIdeas() {
   if (points.length === 0) return null;
 
   return (
-    <instancedMesh
-      ref={meshRef}
-      args={[null as any, null as any, points.length]}
-      castShadow
-      receiveShadow
-    >
-      {/* Spherical voxel matching page logo */}
-      <sphereGeometry args={[0.016, 6, 6]} />
-      <meshStandardMaterial
-        roughness={0.08}
-        metalness={0.96}
-        envMapIntensity={0.25}
-      />
-    </instancedMesh>
+    <group>
+      <instancedMesh
+        ref={meshRef}
+        args={[null as any, null as any, points.length]}
+        castShadow
+        receiveShadow
+      >
+        {/* Spherical voxel matching page logo */}
+        <sphereGeometry args={[0.016, 6, 6]} />
+        <meshStandardMaterial
+          roughness={0.08}
+          metalness={0.96}
+          envMapIntensity={0.25}
+        />
+      </instancedMesh>
+
+      {/* Grounding shadow that fades in as morph completed */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.85, 0]} receiveShadow>
+        <planeGeometry args={[12, 12]} />
+        <shadowMaterial ref={shadowMatRef} opacity={0} transparent />
+      </mesh>
+
+      {/* Invisible larger interaction mesh to capture mouse hover */}
+      <mesh
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+      >
+        <sphereGeometry args={[4.2, 16, 16]} />
+        <meshBasicMaterial
+          transparent
+          opacity={0}
+          depthWrite={false}
+        />
+      </mesh>
+    </group>
   );
 }

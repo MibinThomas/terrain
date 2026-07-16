@@ -180,10 +180,8 @@ export default function InteractiveStrategy() {
       activeOrientations[r].copy(identityQuat).slerp(ringOrientations[r], alignFactor);
     }
 
-    // Responsive horizontal positioning offset (only applied to the parent instancedMesh)
-    const canvasWidth = state.size.width;
-    const posXOffset = canvasWidth < 992 ? 0 : 3.4;
-    meshRef.current.position.set(posXOffset, 0, 0);
+    // Apply translations (centered in local Canvas)
+    meshRef.current.position.set(0, 0, 0);
 
     // Smooth pointer coordinate tracking
     if (activeHover.current) {
@@ -261,9 +259,7 @@ export default function InteractiveStrategy() {
 
       // Check distance in world coordinates for pointer interaction
       tempPosition.set(localX, localY, localZ);
-      const worldX = localX + posXOffset;
-      const worldPos = tempPosition.clone().setX(worldX);
-      const distance = worldPos.distanceTo(smoothHoverPoint.current);
+      const distance = tempPosition.distanceTo(smoothHoverPoint.current);
       const influence = Math.pow(Math.max(0, RADIUS_HOVER - distance) / RADIUS_HOVER, 2.0);
 
       // 7. Pointer-responsive decision effect: rotate towards cursor, rise checkpoints, and ripple outward
@@ -273,7 +269,7 @@ export default function InteractiveStrategy() {
         targetHeight[i] = p.isCheckpoint ? influence * 0.35 : 0; // Checkpoints rise perpendicularly
 
         // Calculate rotation quaternion facing pointer
-        const toPointerX = smoothHoverPoint.current.x - worldX;
+        const toPointerX = smoothHoverPoint.current.x - localX;
         const toPointerY = smoothHoverPoint.current.y - localY;
         const toPointerZ = smoothHoverPoint.current.z - localZ;
         tempDirToPointer.set(toPointerX, toPointerY, toPointerZ).normalize();
