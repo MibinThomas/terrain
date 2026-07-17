@@ -307,7 +307,7 @@ export default function InteractiveIdeas() {
 
       // 3. Shaded black color scheme for desktop, slate-grey for mobile (blended based on morph)
       const distFromCenter = Math.sqrt(lx * lx + lz * lz);
-      const isMobileViewport = canvasWidth < 576;
+      const isMobileViewport = width < 576;
 
       let targetR = p.r;
       let targetG = p.g;
