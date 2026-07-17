@@ -149,13 +149,6 @@ function Section({
 
           <div className="hero-cta-wrapper interactive-element">
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <button
-                onClick={btnAction}
-                className="panel-cta"
-              >
-                {btnText}
-              </button>
-
               {prevAction && (
                 <button
                   onClick={prevAction}
@@ -168,6 +161,13 @@ function Section({
                   </svg>
                 </button>
               )}
+
+              <button
+                onClick={btnAction}
+                className="panel-cta"
+              >
+                {btnText}
+              </button>
             </div>
 
             {subtext && (

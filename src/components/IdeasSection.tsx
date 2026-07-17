@@ -111,13 +111,6 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
           <div className="hero-cta-wrapper interactive-element" style={{ marginTop: 'clamp(20px, 3vh, 32px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <button
-                onClick={() => scrollToSection('technology')}
-                className="panel-cta"
-              >
-                EXPLORE TECHNOLOGY
-              </button>
-
-              <button
                 onClick={() => scrollToSection('hero')}
                 className="back-cta-btn"
                 aria-label="Back to Hero"
@@ -126,6 +119,13 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
                   <line x1="19" y1="12" x2="5" y2="12"></line>
                   <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
+              </button>
+
+              <button
+                onClick={() => scrollToSection('technology')}
+                className="panel-cta"
+              >
+                EXPLORE TECHNOLOGY
               </button>
             </div>
 
