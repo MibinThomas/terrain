@@ -175,6 +175,12 @@ body,
   z-index: 4;
 }
 
+@media (min-width: 1025px) {
+  .panel-visual {
+    transform: translateY(80px);
+  }
+}
+
 .panel-visual canvas {
   width: 100% !important;
   height: 100% !important;
