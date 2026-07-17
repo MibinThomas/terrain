@@ -202,10 +202,10 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: '0 0 3px var(--color-black)',
   },
   title: {
-    fontSize: 'clamp(36px, 6vw, 64px)',
-    lineHeight: '1.1',
+    fontSize: 'clamp(18px, 3vw, 32px)',
+    lineHeight: '1.3',
     fontWeight: 'normal',
-    letterSpacing: '0.02em',
+    letterSpacing: 'calc(0.02em + 1px)',
     color: 'var(--color-black)',
   },
   description: {

@@ -349,7 +349,7 @@ export default function InteractiveStrategy() {
 
 
     // Scale and opacity transitions
-    const currentScale = responsiveScale * (0.85 + 0.15 * visibility.current);
+    const currentScale = responsiveScale * (0.85 + 0.15 * visibility.current) * 1.3;
     meshRef.current.scale.setScalar(currentScale);
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;

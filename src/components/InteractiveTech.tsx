@@ -111,7 +111,7 @@ export default function InteractiveTech() {
     }
 
 
-    const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current);
+    const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current) * 1.3;
     targetScale.setScalar(finalScale);
     groupRef.current.scale.lerp(targetScale, 0.08);
 

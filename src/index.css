@@ -228,9 +228,9 @@ body,
   font-family: var(--font-title);
   color: var(--color-black);
   text-transform: uppercase;
-  font-size: clamp(52px, 5.4vw, 90px);
-  line-height: 0.91;
-  letter-spacing: -0.035em;
+  font-size: clamp(26px, 2.7vw, 45px);
+  line-height: 1.2;
+  letter-spacing: calc(-0.035em + 1px);
   overflow-wrap: break-word;
 }
 
@@ -240,22 +240,22 @@ body,
   display: block;
   max-width: 100%;
   width: 100%;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 @media (max-width: 1024px) {
   .panel-heading {
     max-width: 100%;
-    font-size: clamp(38px, min(10vw, 6.5vh), 66px);
-    line-height: 0.93;
-    letter-spacing: -0.025em;
+    font-size: clamp(19px, min(5vw, 3.25vh), 33px);
+    line-height: 1.2;
+    letter-spacing: calc(-0.025em + 1px);
   }
 }
 
 @media (max-width: 480px) {
   .panel-heading {
-    font-size: clamp(34px, min(10.5vw, 6.2vh), 48px);
-    line-height: 0.95;
+    font-size: clamp(17px, min(5.25vw, 3.1vh), 24px);
+    line-height: 1.2;
   }
 }
 
@@ -426,6 +426,77 @@ body,
 .menu-toggle-btn:hover {
   transform: scale(1.1);
 }
+
+/* Custom Hamburger Icon (Modern Two-Line Design) */
+.custom-hamburger {
+  width: 20px;
+  height: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.custom-hamburger .hamburger-line {
+  display: block;
+  height: 2px;
+  background-color: var(--color-black);
+  border-radius: 1px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-hamburger .line-1 {
+  width: 100%;
+}
+
+.custom-hamburger .line-2 {
+  width: 55%;
+}
+
+.menu-toggle-btn:hover .line-1 {
+  width: 60%;
+}
+
+.menu-toggle-btn:hover .line-2 {
+  width: 100%;
+}
+
+/* Custom Close Icon (Modern Geometric X Design) */
+.custom-close {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-close .close-line {
+  position: absolute;
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--color-black);
+  border-radius: 1px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-close .line-1 {
+  transform: rotate(45deg);
+}
+
+.custom-close .line-2 {
+  transform: rotate(-45deg);
+}
+
+.drawer-close-btn:hover .line-1 {
+  transform: rotate(135deg);
+}
+
+.drawer-close-btn:hover .line-2 {
+  transform: rotate(45deg);
+}
+
 
 /* Bottom Navigation */
 .horizontal-navigation {
@@ -625,8 +696,8 @@ body,
   }
 
   .panel-heading {
-    font-size: clamp(24px, 7.5vh, 36px) !important;
-    line-height: 0.95 !important;
+    font-size: clamp(12px, 3.75vh, 18px) !important;
+    line-height: 1.2 !important;
   }
 
   .panel-description {

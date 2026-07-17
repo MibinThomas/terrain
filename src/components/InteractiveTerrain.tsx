@@ -233,7 +233,7 @@ export default function InteractiveTerrain() {
 
 
     const currentVisibilityScale = 0.85 + 0.15 * visibility.current;
-    meshRef.current.scale.setScalar(meshScale.current * responsiveScale * currentVisibilityScale);
+    meshRef.current.scale.setScalar(meshScale.current * responsiveScale * currentVisibilityScale * 1.3);
 
     // Apply translations (centered within its local right-column Canvas)
     meshRef.current.position.set(0, 0, 0);
