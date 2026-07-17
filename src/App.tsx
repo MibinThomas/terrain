@@ -25,7 +25,6 @@ interface SectionProps {
   pills?: string[];
   isActive: boolean;
   visual: React.ReactNode;
-  headingStyle?: React.CSSProperties;
 }
 
 function Section({
@@ -43,7 +42,6 @@ function Section({
   pills,
   isActive,
   visual,
-  headingStyle,
 }: SectionProps) {
   const setHovered = useStore((state) => state.setHovered);
   const containerVariants = {
