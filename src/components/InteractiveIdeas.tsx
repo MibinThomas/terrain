@@ -10,7 +10,6 @@ export default function InteractiveIdeas() {
   const setHovered = useStore((state) => state.setHovered);
 
   const groupRef = useRef<THREE.Group>(null);
-  const shadowMatRef = useRef<THREE.ShadowMaterial>(null);
   const [hovered, setHoveredState] = useState(false);
   const visibility = useRef<number>(0);
 
@@ -22,8 +21,8 @@ export default function InteractiveIdeas() {
     const s = scene.clone();
     s.traverse((node) => {
       if (node instanceof THREE.Mesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
+        node.castShadow = false;
+        node.receiveShadow = false;
 
         if (node.material) {
           const mat = node.material as THREE.MeshStandardMaterial;
@@ -120,11 +119,6 @@ export default function InteractiveIdeas() {
         mat.opacity = visibility.current;
       }
     });
-
-    // Update grounding shadow material opacity dynamically
-    if (shadowMatRef.current) {
-      shadowMatRef.current.opacity = 0.08 * visibility.current;
-    }
   });
 
   const handlePointerOver = () => {
@@ -141,20 +135,20 @@ export default function InteractiveIdeas() {
     <group>
       {/* Lights locally placed to show off metallic highlights of the model */}
       <ambientLight intensity={0.2} />
-      <directionalLight position={[5, 8, 5]} intensity={0.7} castShadow />
+      <directionalLight position={[5, 8, 5]} intensity={0.7} />
       <pointLight position={[-4, 3, 4]} intensity={0.3} />
 
       {/* Main Astronauts Model Group */}
       <group ref={groupRef}>
         {/* Render GLTF model cloned scene - base scaled to fit camera viewport */}
-        <primitive object={clonedScene} scale={1.1} position={[0, -0.4, 0]} />
+        <primitive object={clonedScene} scale={0.55} position={[0, -0.2, 0]} />
 
         {/* Invisible interaction bounding box to capture pointer hover */}
         <mesh
           onPointerOver={handlePointerOver}
           onPointerOut={handlePointerOut}
         >
-          <boxGeometry args={[2.2, 2.2, 2.2]} />
+          <boxGeometry args={[1.1, 1.1, 1.1]} />
           <meshBasicMaterial
             transparent
             opacity={0}
@@ -162,12 +156,6 @@ export default function InteractiveIdeas() {
           />
         </mesh>
       </group>
-
-      {/* Grounding shadow that fades in as model becomes visible */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.85, 0]} receiveShadow>
-        <planeGeometry args={[12, 12]} />
-        <shadowMaterial ref={shadowMatRef} opacity={0} transparent />
-      </mesh>
     </group>
   );
 }
