@@ -138,7 +138,7 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
                 marginTop: '12px',
               }}
             >
-              Move your cursor across the visual to attract and organize the particles.
+              Move your cursor across the visual to interact with the 3D model.
             </div>
           </div>
         </div>
