@@ -339,26 +339,20 @@ body,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  min-height: 50px;
-  border-radius: 50%;
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: none;
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
-  padding: 0;
+  padding: 12px;
   margin-top: 30px;
   box-sizing: border-box;
 }
 
 .back-cta-btn:hover {
-  background: var(--color-black);
-  border-color: var(--color-black);
-  color: var(--color-light);
-  transform: scale(1.05);
+  color: var(--color-black);
+  transform: scale(1.1);
 }
 
 .back-cta-btn svg {
@@ -366,23 +360,13 @@ body,
 }
 
 .back-cta-btn:hover svg {
-  transform: translateX(-3px);
+  transform: translateX(-4px);
 }
 
 @media (max-width: 1024px) {
   .back-cta-btn {
     margin-top: clamp(18px, 2.5vh, 30px);
-    width: 48px;
-    height: 48px;
-    min-height: 48px;
-  }
-}
-
-@media (max-width: 480px) {
-  .back-cta-btn {
-    min-height: 44px;
-    height: 44px;
-    width: 44px;
+    padding: 10px;
   }
 }
 
