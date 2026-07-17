@@ -27,11 +27,22 @@ export default function InteractiveIdeas() {
 
         if (node.material) {
           const mat = node.material as THREE.MeshStandardMaterial;
+          const matName = mat.name.toLowerCase();
           
-          // Make the materials feel extra premium and responsive to lighting
-          mat.metalness = 0.75;
-          mat.roughness = 0.2;
-          mat.envMapIntensity = 1.2;
+          if (matName.includes('steklo') || matName.includes('glass')) {
+            // Shiny dark gold visor representing vision and ideas
+            mat.color = new THREE.Color('#d4af37');
+            mat.metalness = 1.0;
+            mat.roughness = 0.05;
+            mat.envMapIntensity = 3.0; // Highly reflective
+            mat.emissive = new THREE.Color('#2b2005');
+            mat.emissiveIntensity = 0.35;
+          } else if (matName.includes('skafandr') || matName.includes('suit')) {
+            // High-end matte white tech suit fabric
+            mat.metalness = 0.2;
+            mat.roughness = 0.45;
+            mat.envMapIntensity = 0.9;
+          }
         }
       }
     });
@@ -96,8 +107,8 @@ export default function InteractiveIdeas() {
       responsiveScale *= 0.8;
     }
 
-    // Combine scale multipliers: base hover swell * responsive * active transition * 1.3 (30% scale requested earlier)
-    const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current) * 1.3;
+    // Combine scale multipliers: base hover swell * responsive * active transition
+    const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current);
     targetScale.setScalar(finalScale);
     groupRef.current.scale.lerp(targetScale, 0.08);
 
@@ -136,14 +147,14 @@ export default function InteractiveIdeas() {
       {/* Main Astronauts Model Group */}
       <group ref={groupRef}>
         {/* Render GLTF model cloned scene - base scaled to fit camera viewport */}
-        <primitive object={clonedScene} scale={1.8} position={[0, -0.6, 0]} />
+        <primitive object={clonedScene} scale={1.1} position={[0, -0.4, 0]} />
 
         {/* Invisible interaction bounding box to capture pointer hover */}
         <mesh
           onPointerOver={handlePointerOver}
           onPointerOut={handlePointerOut}
         >
-          <boxGeometry args={[3.2, 3.2, 3.2]} />
+          <boxGeometry args={[2.2, 2.2, 2.2]} />
           <meshBasicMaterial
             transparent
             opacity={0}
