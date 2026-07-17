@@ -411,7 +411,6 @@ function App() {
           prevAction={() => scrollToSection('ideas')}
           subtext="Deploying system integrations, scalable clouds, and custom AI solutions."
           visual={<InteractiveTech />}
-          headingStyle={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
         />
 
         {/* STRATEGY SECTION */}
