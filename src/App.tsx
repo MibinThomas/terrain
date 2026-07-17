@@ -120,29 +120,13 @@ function Section({
             initial="hidden"
             animate={isActive ? 'visible' : 'hidden'}
             className="text-gradient hero-title"
-            style={{
-              fontSize: 'clamp(36px, 6vw, 64px)',
-              lineHeight: '1.1',
-              fontWeight: 'normal',
-              letterSpacing: '0.02em',
-              color: 'var(--color-black)',
-              ...headingStyle,
-            }}
           >
-            <span className="hero-title-line-1">{renderWaveText(line1)}</span>{' '}
+            <span className="hero-title-line-1">{renderWaveText(line1)}</span>
             <span className="hero-title-line-2">{renderWaveText(line2)}</span>
             <span className="hero-title-line-3">{renderWaveText(line3)}</span>
           </motion.h1>
 
-          <p
-            style={{
-              fontSize: 'clamp(15px, 2vw, 18px)',
-              color: 'var(--color-text-secondary)',
-              lineHeight: '1.7',
-              maxWidth: '560px',
-              fontWeight: '400',
-            }}
-          >
+          <p className="hero-description">
             {description}
           </p>
 
@@ -215,6 +199,7 @@ function Section({
               shadows
               camera={{ position: [0, 8, 12], fov: 38 }}
               gl={{ antialias: true, alpha: true }}
+              dpr={[1, 1.5]}
             >
               <Environment preset="city" />
               <ambientLight intensity={0.18} />
@@ -280,74 +265,110 @@ function App() {
     };
   }, []);
 
-  // Monitor horizontal scroll position and update active states + progress
+  // Monitor scroll position and update active states + progress.
+  // On desktop (≥ 1024px) the container scrolls horizontally;
+  // on tablet/mobile (< 1024px) the app-container scrolls vertically.
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const handleScroll = () => {
-      const width = window.innerWidth;
-
-      // 1. Detect Active Section using distance to viewport center
-      const sections = ['hero', 'ideas', 'technology', 'strategy', 'footer'];
-      let active = 'hero';
-      let minDistance = Infinity;
-
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const elementCenter = rect.left + rect.width / 2;
-          const viewportCenter = width / 2;
-          const dist = Math.abs(elementCenter - viewportCenter);
-          if (dist < minDistance) {
-            minDistance = dist;
-            active = id;
-          }
-        }
-      });
-
-      // Update store
-      setActiveSection(active);
-      const pageMapping: Record<string, 'home' | 'ideas' | 'technology' | 'strategy'> = {
-        hero: 'home',
-        ideas: 'ideas',
-        technology: 'technology',
-        strategy: 'strategy',
-        footer: 'strategy',
-      };
-      setCurrentPage(pageMapping[active]);
-
-      // 2. Calculate progress (0 to 1) for each section and update store
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          // Calculates entrance progress: 0 when right edge enters viewport, 1 when left edge aligns to 0
-          const enterProgress = 1 - rect.left / width;
-          const progress = Math.max(0, Math.min(1, enterProgress));
-
-          // Set progress for components to read
-          if (id === 'hero') {
-            setScrollProgress('hero', progress);
-          } else if (id === 'ideas') {
-            setScrollProgress('ideas', progress);
-          } else if (id === 'technology') {
-            setScrollProgress('technology', progress);
-          } else if (id === 'strategy' || id === 'footer') {
-            // Keep strategy and footer progressing strategy 3D items
-            setScrollProgress('strategy', progress);
-          }
-        }
-      });
+    const sections = ['hero', 'ideas', 'technology', 'strategy', 'footer'];
+    const pageMapping: Record<string, 'home' | 'ideas' | 'technology' | 'strategy'> = {
+      hero: 'home',
+      ideas: 'ideas',
+      technology: 'technology',
+      strategy: 'strategy',
+      footer: 'strategy',
     };
 
+    const handleScroll = () => {
+      const isMobile = window.innerWidth <= 1024;
+
+      if (isMobile) {
+        // ── Vertical scroll detection (tablet / mobile) ──────────────────
+        const viewH = window.innerHeight;
+        let active = 'hero';
+        let minDistance = Infinity;
+
+        sections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            // Distance from the element's centre to the viewport centre
+            const elCentreY = rect.top + rect.height / 2;
+            const dist = Math.abs(elCentreY - viewH / 2);
+            if (dist < minDistance) {
+              minDistance = dist;
+              active = id;
+            }
+          }
+        });
+
+        setActiveSection(active);
+        setCurrentPage(pageMapping[active]);
+
+        sections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            // Vertical entrance progress: 0 when bottom enters viewport, 1 when top aligns to 0
+            const enterProgress = 1 - rect.top / viewH;
+            const progress = Math.max(0, Math.min(1, enterProgress));
+
+            if (id === 'hero') setScrollProgress('hero', progress);
+            else if (id === 'ideas') setScrollProgress('ideas', progress);
+            else if (id === 'technology') setScrollProgress('technology', progress);
+            else if (id === 'strategy' || id === 'footer') setScrollProgress('strategy', progress);
+          }
+        });
+      } else {
+        // ── Horizontal scroll detection (desktop) ────────────────────────
+        const width = window.innerWidth;
+        let active = 'hero';
+        let minDistance = Infinity;
+
+        sections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const elementCenter = rect.left + rect.width / 2;
+            const viewportCenter = width / 2;
+            const dist = Math.abs(elementCenter - viewportCenter);
+            if (dist < minDistance) {
+              minDistance = dist;
+              active = id;
+            }
+          }
+        });
+
+        setActiveSection(active);
+        setCurrentPage(pageMapping[active]);
+
+        sections.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            // Horizontal entrance progress: 0 when right edge enters, 1 when left aligns to 0
+            const enterProgress = 1 - rect.left / width;
+            const progress = Math.max(0, Math.min(1, enterProgress));
+
+            if (id === 'hero') setScrollProgress('hero', progress);
+            else if (id === 'ideas') setScrollProgress('ideas', progress);
+            else if (id === 'technology') setScrollProgress('technology', progress);
+            else if (id === 'strategy' || id === 'footer') setScrollProgress('strategy', progress);
+          }
+        });
+      }
+    };
+
+    // Listen on both the scroll container (horizontal) and window (vertical)
     container.addEventListener('scroll', handleScroll);
-    // Initial run to configure progress on load
-    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial run
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [setActiveSection, setCurrentPage, setScrollProgress]);
 

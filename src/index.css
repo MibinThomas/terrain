@@ -16,27 +16,36 @@
   font-display: swap;
 }
 
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
 :root {
   --color-black: #000000;
   --color-light: #e6e7e8;
   --color-accent: #a7a9ac;
   --color-dark-gray: #1a1a1c;
 
-  /* Light Theme Specifics */
   --color-glass: rgba(255, 255, 255, 0.45);
   --color-glass-border: rgba(0, 0, 0, 0.08);
   --color-card-bg: rgba(255, 255, 255, 0.85);
-  /* High opacity for excellent readability */
   --color-text-primary: #000000;
   --color-text-secondary: #333335;
 
   --font-title: 'ROSTEX', sans-serif;
   --font-body: 'Artific', 'Outfit', sans-serif;
 
+  /* Header height — used for canvas margin-top on mobile */
+  --header-height: 88px;
+
   color-scheme: light;
 }
 
-* {
+/* ============================================================
+   RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -49,81 +58,83 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  /* No overflow-x: hidden here — we fix layout properly instead */
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-light); }
+::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-black); }
 
-::-webkit-scrollbar-track {
-  background: var(--color-light);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-accent);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-black);
-}
-
-/* Heading Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
   color: var(--color-black);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-/* Selection colors */
+/* ── Section heading (desktop baseline — replaces inline style) ── */
+.hero-title {
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 1.05;
+  font-weight: normal;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+/* Ideas heading — desktop baseline */
+.ideas-heading {
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 650px;
+  margin: 0;
+  font-family: var(--font-title);
+  color: var(--color-black);
+  text-transform: uppercase;
+  width: 100%;
+}
+
+/* Section description paragraph — desktop baseline */
+.hero-description {
+  font-size: clamp(15px, 1.1vw, 18px);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  font-weight: 400;
+  max-width: 560px;
+  width: 100%;
+  margin-top: 8px;
+  overflow-wrap: break-word;
+}
+
 ::selection {
   background-color: var(--color-black);
   color: var(--color-light);
 }
 
-/* App Container */
-.app-container {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
-/* Canvas Container */
-.canvas-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-/* HTML Content Overlay (Stacks sections vertically) */
-.ui-overlay {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  pointer-events: none;
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-black) 0%, var(--color-dark-gray) 50%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .interactive-element {
   pointer-events: auto;
 }
 
-/* Utility styles */
 .glass-panel {
   background: var(--color-glass);
   backdrop-filter: blur(24px);
@@ -138,192 +149,39 @@ h6 {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, var(--color-black) 0%, var(--color-dark-gray) 50%, var(--color-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.ui-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  pointer-events: none;
 }
 
-/* Horizontal Scroll Container */
-.horizontal-scroll-container {
-  position: absolute;
+.canvas-container {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
-  z-index: 2;
-  pointer-events: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.horizontal-scroll-container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in Chrome/Safari */
-}
-
-/* Interactive Sections Grid layout */
-.interactive-section {
-  width: 100vw;
-  height: 100vh;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  background: transparent;
-  display: flex;
-  align-items: center;
-}
-
-.section-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  width: 100%;
-  height: 100%;
-  padding: 0 8%; /* Align with header logo padding */
-  box-sizing: border-box;
-  align-items: center; /* Vertically center both columns */
-  gap: 60px;
-}
-
-.section-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-self: start; /* Align to the outer left side of the grid column */
-  text-align: left;
-  width: 100%;
-  max-width: 650px;
-  gap: 24px;
-  min-width: 0;
-  z-index: 5;
-}
-
-.section-visual {
-  justify-self: end;
-  width: 100%;
-  height: min(78vh, 760px);
-  min-width: 0;
-  position: relative;
-  overflow: visible;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 4;
-}
-
-.section-visual canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-/* Hero Section Grid layout */
-.hero-section {
-  width: 100vw;
-  height: 100vh;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  background: transparent;
-  display: flex;
-  align-items: center;
-}
-
-.hero-grid-container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  width: 100%;
-  height: 100%;
-  padding: 0 8%; /* Align with header logo padding */
-  box-sizing: border-box;
-  align-items: center; /* Vertically center both columns */
-  gap: 60px;
-}
-
-.hero-left-column {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-self: start; /* Align to the outer left side of the grid column */
-  text-align: left;
-  width: 100%;
-  max-width: 680px; /* Highly readable max content width */
-  gap: 24px;
-  min-width: 0;
-  z-index: 5;
-}
-
-.hero-right-column {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 4;
-}
-
-/* Glassmorphic card styling helper - transparent on desktop, card on mobile */
-.content-card-mobile {
-  max-width: 680px;
-  width: 100%;
+  z-index: 1;
   pointer-events: auto;
 }
 
-/* Services pills for single-page layout */
-.services-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 12px 0 24px 0;
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.service-pill {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-black);
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 6px 14px;
-  border-radius: 20px;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
+.animate-fade-in-up { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
 
-.service-pill:hover {
-  background: var(--color-black);
-  color: var(--color-light);
-  border-color: var(--color-black);
-}
-
-/* Solid background section for footer slide */
-.footer-section {
-  width: 100vw;
-  height: 100vh;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 8%;
-  box-sizing: border-box;
-  background-color: var(--color-light);
-  z-index: 3;
-  pointer-events: auto;
-}
-
-/* Header Styling */
+/* ============================================================
+   HEADER  (desktop baseline)
+   ============================================================ */
 .site-header {
   position: fixed;
   top: 32px;
@@ -366,7 +224,58 @@ h6 {
   transform: scale(1.1);
 }
 
-/* Fullscreen Nav Drawer Layout */
+/* ============================================================
+   HAMBURGER / CLOSE ICONS
+   ============================================================ */
+.custom-hamburger {
+  width: 20px;
+  height: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.custom-hamburger .hamburger-line {
+  display: block;
+  height: 3px;
+  background-color: var(--color-black);
+  border-radius: 1.5px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-hamburger .line-1 { width: 100%; }
+.custom-hamburger .line-2 { width: 55%; }
+.menu-toggle-btn:hover .line-1 { width: 60%; }
+.menu-toggle-btn:hover .line-2 { width: 100%; }
+
+.custom-close {
+  width: 27px;
+  height: 27px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-close .close-line {
+  position: absolute;
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--color-black);
+  border-radius: 1.5px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-close .line-1 { transform: rotate(45deg); }
+.custom-close .line-2 { transform: rotate(-45deg); }
+.drawer-close-btn:hover .line-1 { transform: rotate(135deg); }
+.drawer-close-btn:hover .line-2 { transform: rotate(45deg); }
+
+/* ============================================================
+   FULLSCREEN DRAWER
+   ============================================================ */
 .fullscreen-drawer {
   position: fixed;
   top: 0;
@@ -374,7 +283,6 @@ h6 {
   width: 100vw;
   height: 100vh;
   background: rgba(230, 231, 232, 0.98);
-  /* Near fully opaque background for text isolation */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   display: flex;
@@ -382,7 +290,6 @@ h6 {
   align-items: center;
   justify-content: center;
   z-index: 110;
-  /* Above header z-index */
 }
 
 .drawer-close-btn {
@@ -407,76 +314,6 @@ h6 {
   transform: scale(1.1);
 }
 
-/* Custom Hamburger Icon (Modern Two-Line Design) */
-.custom-hamburger {
-  width: 20px;
-  height: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.custom-hamburger .hamburger-line {
-  display: block;
-  height: 3px;
-  background-color: var(--color-black);
-  border-radius: 1.5px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.custom-hamburger .line-1 {
-  width: 100%;
-}
-
-.custom-hamburger .line-2 {
-  width: 55%;
-}
-
-.menu-toggle-btn:hover .line-1 {
-  width: 60%;
-}
-
-.menu-toggle-btn:hover .line-2 {
-  width: 100%;
-}
-
-/* Custom Close Icon (Modern Geometric X Design) */
-.custom-close {
-  width: 27px;
-  height: 27px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-close .close-line {
-  position: absolute;
-  display: block;
-  height: 3px;
-  width: 100%;
-  background-color: var(--color-black);
-  border-radius: 1.5px;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.custom-close .line-1 {
-  transform: rotate(45deg);
-}
-
-.custom-close .line-2 {
-  transform: rotate(-45deg);
-}
-
-.drawer-close-btn:hover .line-1 {
-  transform: rotate(135deg);
-}
-
-.drawer-close-btn:hover .line-2 {
-  transform: rotate(45deg);
-}
-
 .drawer-logo {
   position: absolute;
   bottom: 48px;
@@ -489,7 +326,6 @@ h6 {
   transition: all 0.3s ease;
 }
 
-/* Fullscreen Nav Links */
 .fullscreen-nav-link {
   font-family: var(--font-title);
   font-size: clamp(28px, 5vw, 56px);
@@ -527,401 +363,151 @@ h6 {
   transform: translateX(0);
 }
 
-.hero-cta-wrapper {
-  margin-top: 16px;
+/* ============================================================
+   APP / SCROLL CONTAINER  (desktop baseline)
+   ============================================================ */
+.app-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.horizontal-scroll-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================================
+   SECTIONS  (desktop baseline — two-column grid)
+   ============================================================ */
+.interactive-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+}
+
+/* Two-column grid — preserved exactly as before for desktop */
+.section-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 0 8%;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 60px;
+}
+
+.section-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-}
-
-/* Cards & Content Elements */
-.content-hero {
-  max-width: 680px;
-  display: flex;
-  flex-direction: column;
+  justify-self: start;
+  text-align: left;
+  width: 100%;
+  max-width: 650px;
   gap: 24px;
+  min-width: 0;
+  z-index: 5;
 }
 
-.services-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.section-visual {
+  justify-self: end;
   width: 100%;
+  height: min(78vh, 760px);
+  min-width: 0;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
 }
 
-.services-grid {
+.section-visual canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ============================================================
+   HERO SECTION  (desktop baseline)
+   ============================================================ */
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   width: 100%;
+  height: 100%;
+  padding: 0 8%;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 60px;
 }
 
-.service-card {
-  padding: 40px;
-  width: 100%;
-  max-width: 450px;
+.hero-left-column {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-self: start;
+  text-align: left;
+  width: 100%;
+  max-width: 680px;
+  gap: 24px;
+  min-width: 0;
+  z-index: 5;
+}
+
+.hero-right-column {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
   position: relative;
-  background: var(--color-card-bg);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.04);
-}
-
-/* Micro-animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-/* Hero Badge Style */
-.hero-badge {
-  align-self: flex-start; /* Left-aligned on larger screens */
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 9.3px; /* Reduced by 15% from 11px */
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--color-text-secondary);
-  padding: 5px 10px; /* Reduced padding */
-  border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
+  justify-content: center;
+  z-index: 4;
 }
 
-/* Responsive Headline Lines */
-.hero-title-line-1,
-.hero-title-line-2 {
-  display: inline-block;
-}
-.hero-title-line-3 {
-  display: block;
-  margin-top: 4px;
-}
-
-/* ==========================================================================
-   MEDIA QUERIES (Mobile & Tablet Responsiveness)
-   ========================================================================== */
-
-@media (max-width: 991px) {
-  .app-container {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
-
-  .canvas-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-    pointer-events: auto;
-  }
-
-  .horizontal-scroll-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .interactive-section {
-    width: 100vw;
-    height: 100vh;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: flex-start;
-    overflow-y: auto;
-    background: transparent;
-    pointer-events: none;
-    box-sizing: border-box;
-  }
-
-  .section-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 24px;
-    padding: 120px 24px 60px 24px;
-    align-items: center;
-    justify-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .section-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .section-visual {
-    height: 380px; /* Controlled height between 360px and 480px */
-    width: 100%;
-    position: relative;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .section-visual canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-  }
-
-  /* Glassmorphic content card to ensure 100% readability of text overlaying centered R3F models */
-  .content-card-mobile {
-    background: rgba(230, 231, 232, 0.78);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 20px;
-    padding: 28px 24px;
-    width: 92%;
-    max-width: 440px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
-    pointer-events: auto;
-    z-index: 5;
-    position: relative;
-    top: 0; /* Reset relative top offset to prevent overlapping logo */
-  }
-
-  .content-hero {
-    align-items: center;
-    text-align: center;
-    max-width: 100%;
-    margin-top: 0;
-    gap: 12px;
-  }
-
-  .hero-badge {
-    align-self: center;
-    font-size: 7.5px;
-    padding: 4px 10px;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-    white-space: nowrap;
-    background: rgba(255, 255, 255, 0.8);
-  }
-
-  .hero-title-line-1,
-  .hero-title-line-2,
-  .hero-title-line-3 {
-    display: block;
-    margin-top: 0;
-  }
-
-  .hero-title {
-    font-size: clamp(20px, 4.5vw, 28px) !important;
-    margin-bottom: 2px;
-    line-height: 1.2;
-  }
-
-  .content-hero p {
-    font-size: 13px !important;
-    line-height: 1.5;
-    margin-bottom: 4px;
-    max-width: 100%;
-  }
-
-  .hero-section button,
-  .horizontal-section button {
-    padding: 10px 24px !important;
-    font-size: 11px !important;
-  }
-
-  .hero-cta-wrapper {
-    align-items: center;
-    text-align: center;
-    margin-top: 8px;
-  }
-
-  .services-pills {
-    justify-content: center;
-    margin: 8px 0 16px 0;
-    gap: 6px;
-  }
-
-  .service-pill {
-    font-size: 9px;
-    padding: 4px 10px;
-  }
-
-  .scroll-indicator-container {
-    display: none !important;
-  }
-}
-
-@media (max-width: 768px) {
-
-  /* Drawer Responsive Overrides */
-  .drawer-close-btn {
-    top: 16px;
-    left: 16px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .drawer-logo {
-    bottom: 32px;
-    height: 38px;
-  }
-
-  .services-section {
-    padding: 80px 24px;
-  }
-
-  .service-card {
-    max-width: 100%;
-    width: 100%;
-    padding: 30px 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    align-items: center;
-    text-align: center;
-  }
-
-  .service-card .cardHeader {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .service-card ul {
-    align-items: center;
-  }
-
-  .fullscreen-nav-link {
-    font-size: 28px;
-  }
-
-  .fullscreen-nav-link::before {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-header {
-    padding: 0 16px;
-  }
-
-  .logo-img {
-    height: 32px;
-  }
-
-  .services-section {
-    padding: 12px 16px 20px 16px;
-  }
-
-  .content-hero h1 {
-    font-size: 18px !important;
-  }
-
-  .content-hero p {
-    font-size: 12px !important;
-    max-width: 100%;
-  }
-
-  .service-card {
-    padding: 24px 16px;
-  }
-
-  .service-card h2 {
-    font-size: 22px !important;
-  }
-}
-
-/* Tablet and Mobile overrides for the new Section Layouts */
-@media (max-width: 991px) and (min-width: 768px) {
-  .section-layout {
-    grid-template-columns: 45fr 55fr;
-    gap: 30px;
-    padding: 0 5%;
-  }
-}
-
-/* Tablet and Mobile overrides for the new Hero Layout */
-@media (max-width: 991px) and (min-width: 768px) {
-  .hero-grid-container {
-    grid-template-columns: 45fr 55fr;
-    gap: 30px;
-    padding: 0 5%;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-section {
-    height: 100vh;
-    align-items: flex-start;
-    overflow-y: auto;
-  }
-  .hero-grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 24px;
-    padding: 120px 24px 60px 24px;
-    align-items: center;
-    justify-items: center;
-    text-align: center;
-  }
-  .hero-left-column {
-    align-items: center;
-    text-align: center;
-  }
-  .hero-right-column {
-    height: 340px;
-    width: 100%;
-  }
-}
-
-/* ==========================================================================
-   Ideas Section Custom Grid Redesign
-   ========================================================================== */
+/* ============================================================
+   IDEAS SECTION  (desktop baseline)
+   ============================================================ */
 .ideas-layout {
   display: grid;
   grid-template-columns: minmax(0, 46%) minmax(0, 54%);
@@ -1003,39 +589,54 @@ h6 {
   display: block;
 }
 
-/* Tablet responsiveness for Ideas Section */
-@media (max-width: 1024px) {
-  .ideas-layout {
-    grid-template-columns: minmax(0, 48%) minmax(0, 52%);
-    padding-inline: 40px;
-    gap: 24px;
-  }
-
-  .ideas-visual {
-    min-height: 440px;
-  }
+/* ============================================================
+   SHARED DESKTOP UI COMPONENTS
+   ============================================================ */
+/* Eyebrow badge */
+.hero-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9.3px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-text-secondary);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  /* Never let this element cause horizontal overflow */
+  max-width: 100%;
+  white-space: normal;
+  box-sizing: border-box;
 }
 
-/* Mobile responsiveness for Ideas Section */
-@media (max-width: 767px) {
-  .ideas-layout {
-    grid-template-columns: 1fr;
-    padding: 110px 20px 40px;
-    gap: 32px;
-  }
-
-  .ideas-content {
-    max-width: 100%;
-  }
-
-  .ideas-visual {
-    width: 100%;
-    height: 420px;
-    min-height: 0;
-  }
+/* Headline span blocks */
+.hero-title-line-1,
+.hero-title-line-2 {
+  display: inline-block;
 }
 
-/* Sleek premium Back Button navigation */
+.hero-title-line-3 {
+  display: block;
+  margin-top: 4px;
+}
+
+/* CTA wrapper */
+.hero-cta-wrapper {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Back button */
 .back-cta-btn {
   background: none;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1062,4 +663,675 @@ h6 {
 
 .back-cta-btn:hover .back-arrow {
   transform: translateX(-4px);
+}
+
+/* Services pills */
+.services-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 24px 0;
+}
+
+.service-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-black);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.service-pill:hover {
+  background: var(--color-black);
+  color: var(--color-light);
+  border-color: var(--color-black);
+}
+
+/* Glassmorphic card (desktop: transparent wrapper) */
+.content-card-mobile {
+  max-width: 680px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* Footer slide */
+.footer-section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 8%;
+  box-sizing: border-box;
+  background-color: var(--color-light);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* Services page layout */
+.services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  width: 100%;
+}
+
+.service-card {
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--color-card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.04);
+}
+
+.content-hero {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN  — TABLET & MOBILE  (≤ 1024px)
+   
+   Strategy:
+   1. Convert horizontal snap-scroll to vertical flow
+   2. Make sections stack naturally to their content height
+   3. Place 3D visual BEFORE text content using CSS order (no DOM change needed)
+   4. Reset ALL desktop grid/position properties that cause left-overflow
+   5. Use width:100% + padding for safe horizontal bounds
+   6. Override inline-style font sizes with higher-specificity class rules
+   ============================================================================= */
+
+/* ── 1. Unconditional property reset — prevents desktop leak into mobile ──── */
+@media (max-width: 1024px) {
+  /*
+    Hard-reset every property that could push content outside the viewport.
+    Important: these apply BEFORE the layout rules below so nothing leaks.
+  */
+  .section-layout,
+  .section-content,
+  .section-visual,
+  .hero-grid-container,
+  .hero-left-column,
+  .hero-right-column,
+  .ideas-layout,
+  .ideas-content,
+  .ideas-visual {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-self: unset;
+    align-self: unset;
+  }
+
+  /* ── 2. App container & scroll wrapper become vertical ──────────────────── */
+  :root {
+    --header-height: 84px;
+  }
+
+  .app-container {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    width: 100%;
+    overflow-x: clip; /* clip (not hidden) so position:fixed children still work */
+    overflow-y: auto;
+  }
+
+  .horizontal-scroll-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-x: clip;
+    overflow-y: visible;
+    scroll-snap-type: none;
+    pointer-events: auto;
+    scrollbar-width: none;
+  }
+
+  .horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── 3. Section containers become auto-height ───────────────────────────── */
+  .interactive-section {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: auto;
+    flex-shrink: unset;
+    scroll-snap-align: none;
+    display: block; /* plain block avoids flex alignment interference */
+    overflow: visible;
+    background: transparent;
+    pointer-events: auto;
+    box-sizing: border-box;
+  }
+
+  .hero-section {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: auto;
+    flex-shrink: unset;
+    scroll-snap-align: none;
+    display: block;
+    overflow: visible;
+    pointer-events: auto;
+    box-sizing: border-box;
+  }
+
+  .footer-section {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: auto;
+    flex-shrink: unset;
+    scroll-snap-align: none;
+    padding: 80px 6%;
+  }
+
+  /* ── 4. Section layout → single-column flex ─────────────────────────────── */
+  .section-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    /* Inline padding creates a safe zone. Zero horizontal margin. */
+    padding: 0 clamp(20px, 5vw, 40px) 72px;
+    gap: 0;
+  }
+
+  /* 3D visual — order: -1 brings it before the content div visually */
+  .section-visual {
+    order: -1;
+    width: 100%;
+    height: clamp(360px, 45vh, 500px);
+    min-height: 360px;
+    margin-top: var(--header-height);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    z-index: 4;
+  }
+
+  .section-visual canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    touch-action: pan-y;
+  }
+
+  /* Text content block */
+  .section-content {
+    order: 0;
+    width: 100%;
+    max-width: 100%; /* never constrain width on mobile */
+    margin: 0;       /* no auto margins that could centre-shift a wide child */
+    padding-top: clamp(20px, 3vh, 36px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0;
+    z-index: 5;
+    pointer-events: auto;
+    overflow: visible;
+  }
+
+  /* ── 5. Hero layout → single-column flex ────────────────────────────────── */
+  .hero-grid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    padding: 0 clamp(20px, 5vw, 40px) 72px;
+    gap: 0;
+  }
+
+  .hero-right-column {
+    order: -1;
+    width: 100%;
+    height: clamp(360px, 45vh, 500px);
+    min-height: 360px;
+    margin-top: var(--header-height);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+    z-index: 4;
+  }
+
+  .hero-right-column canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    touch-action: pan-y;
+  }
+
+  .hero-left-column {
+    order: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding-top: clamp(20px, 3vh, 36px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0;
+    z-index: 5;
+    pointer-events: auto;
+    overflow: visible;
+  }
+
+  /* ── 6. Ideas layout → single-column flex ───────────────────────────────── */
+  .ideas-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    padding: 0 clamp(20px, 5vw, 40px) 72px;
+    gap: 0;
+  }
+
+  .ideas-visual {
+    order: -1;
+    width: 100%;
+    height: clamp(360px, 45vh, 500px);
+    min-height: 360px;
+    margin-top: var(--header-height);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    z-index: 4;
+  }
+
+  .ideas-visual canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    touch-action: pan-y;
+  }
+
+  .ideas-content {
+    order: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding-top: clamp(20px, 3vh, 36px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    z-index: 5;
+    pointer-events: auto;
+    overflow: visible;
+  }
+
+  /* ── 7. Typography — override inline styles with high specificity ────────── */
+  /*
+    The motion.h1 elements have inline style= attributes that normally win.
+    We target the class names used on those elements so our CSS wins through
+    specificity. The !important on font-size is needed to beat inline style.
+  */
+  h1.hero-title,
+  .hero-title {
+    font-size: clamp(40px, 9vw, 64px) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.02em !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow: visible;
+  }
+
+  .ideas-heading {
+    font-size: clamp(40px, 9vw, 64px) !important;
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    max-width: 100%;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Each span inside the heading fills the row */
+  h1.hero-title span,
+  .hero-title span {
+    display: block;
+    max-width: 100%;
+  }
+
+  .hero-title-line-1,
+  .hero-title-line-2,
+  .hero-title-line-3 {
+    display: block;
+    margin-top: 0;
+    white-space: normal;
+  }
+
+  /* Paragraphs — override inline maxWidth: '560px' */
+  .section-content p,
+  .hero-left-column p,
+  .ideas-content p,
+  .ideas-description {
+    font-size: clamp(14px, 2vw, 16px) !important;
+    line-height: 1.65 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-top: clamp(16px, 2.5vh, 28px) !important;
+    overflow-wrap: break-word;
+  }
+
+  /* ── 8. Eyebrow badge ────────────────────────────────────────────────────── */
+  .hero-badge {
+    align-self: flex-start;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 6px 10px;
+    margin-bottom: 14px;
+    white-space: normal;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    line-height: 1.3;
+  }
+
+  /* ── 9. Tags & pills ─────────────────────────────────────────────────────── */
+  .ideas-tags,
+  .services-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+    justify-content: flex-start;
+  }
+
+  .ideas-tag,
+  .service-pill {
+    min-height: 34px;
+    padding: 7px 12px;
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* ── 10. CTA wrapper and buttons ─────────────────────────────────────────── */
+  .hero-cta-wrapper {
+    align-items: flex-start;
+    text-align: left;
+    margin-top: clamp(24px, 3.5vh, 36px);
+    width: 100%;
+  }
+
+  /* Ensure the inner flex row doesn't create overflow */
+  .hero-cta-wrapper > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* Override inline style buttons */
+  .hero-cta-wrapper button,
+  .section-content button {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ── 11. Header ──────────────────────────────────────────────────────────── */
+  .site-header {
+    height: 84px;
+    top: 0;
+    padding: 0 clamp(20px, 5vw, 40px);
+    position: fixed;
+    background: rgba(230, 231, 232, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 100;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .logo-img {
+    height: 42px;
+  }
+
+  .menu-toggle-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* ── 12. Drawer ──────────────────────────────────────────────────────────── */
+  .drawer-close-btn {
+    top: 16px;
+    left: 20px;
+  }
+
+  .fullscreen-nav-link {
+    font-size: 32px;
+  }
+
+  .fullscreen-nav-link::before {
+    display: none;
+  }
+
+  /* ── 13. Misc resets ─────────────────────────────────────────────────────── */
+  .scroll-indicator-container {
+    display: none !important;
+  }
+
+  .content-card-mobile {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* ── Tablet-specific adjustments (768px – 1024px) ─────────────────────────── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  :root { --header-height: 84px; }
+
+  .section-visual,
+  .ideas-visual,
+  .hero-right-column {
+    height: clamp(360px, 45vh, 500px);
+    min-height: 360px;
+  }
+
+  h1.hero-title,
+  .hero-title {
+    font-size: clamp(48px, 7vw, 68px) !important;
+    line-height: 0.94 !important;
+  }
+
+  .ideas-heading {
+    font-size: clamp(48px, 7vw, 68px) !important;
+    line-height: 0.94;
+  }
+
+  .site-header {
+    height: 84px;
+    padding: 0 40px;
+  }
+}
+
+/* ── Mobile (< 768px) ─────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  :root { --header-height: 72px; }
+
+  /* Header */
+  .site-header {
+    height: 72px;
+    top: 0;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .logo-img {
+    height: 34px;
+  }
+
+  /* Tighter inline padding for narrow screens */
+  .section-layout,
+  .hero-grid-container,
+  .ideas-layout {
+    padding-inline: 20px;
+    padding-bottom: 56px;
+  }
+
+  /* Shorter canvas on phones */
+  .section-visual,
+  .ideas-visual,
+  .hero-right-column {
+    height: clamp(270px, 35vh, 340px);
+    min-height: 270px;
+    margin-top: var(--header-height);
+  }
+
+  /* Mobile heading */
+  h1.hero-title,
+  .hero-title {
+    font-size: clamp(36px, 11vw, 52px) !important;
+    line-height: 0.97 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .ideas-heading {
+    font-size: clamp(36px, 11vw, 52px) !important;
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+  }
+
+  /* Mobile paragraph */
+  .section-content p,
+  .hero-left-column p,
+  .ideas-content p,
+  .ideas-description {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    margin-top: 16px !important;
+  }
+
+  /* Service cards */
+  .service-card {
+    max-width: 100%;
+    width: 100%;
+    padding: 28px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .drawer-logo { bottom: 32px; height: 38px; }
+  .fullscreen-nav-link { font-size: 28px; }
+}
+
+/* ── Very small devices (≤ 390px) ─────────────────────────────────────────── */
+@media (max-width: 390px) {
+  :root { --header-height: 64px; }
+
+  .site-header {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .section-layout,
+  .hero-grid-container,
+  .ideas-layout {
+    padding-inline: 16px;
+  }
+
+  .section-visual,
+  .ideas-visual,
+  .hero-right-column {
+    height: 270px;
+    min-height: 270px;
+    margin-top: var(--header-height);
+  }
+
+  h1.hero-title,
+  .hero-title {
+    font-size: clamp(32px, 10.5vw, 40px) !important;
+    line-height: 0.98 !important;
+    letter-spacing: -0.018em !important;
+  }
+
+  .ideas-heading {
+    font-size: clamp(32px, 10.5vw, 40px) !important;
+    line-height: 0.98;
+    letter-spacing: -0.018em;
+  }
+
+  .hero-badge {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* ── Narrow phones — logo + service cards ─────────────────────────────────── */
+@media (max-width: 480px) {
+  .logo-img { height: 30px; }
+
+  .service-card {
+    padding: 22px 16px;
+  }
+
+  /* Full-width CTA on very narrow screens */
+  .hero-cta-wrapper > div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta-wrapper button {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
 }

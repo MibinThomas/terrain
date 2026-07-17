@@ -94,7 +94,18 @@ export default function InteractiveTech() {
 
     groupRef.current.position.y += (floatY - groupRef.current.position.y) * 0.08;
 
-    const finalScale = scaleMultiplier * (0.85 + 0.15 * visibility.current);
+    // Responsive scale: shrink model to fit smaller canvas on tablet/mobile
+    const width = state.size.width;
+    let responsiveScale = 1.0;
+    if (width < 480) {
+      responsiveScale = 0.68;
+    } else if (width < 768) {
+      responsiveScale = 0.78;
+    } else if (width < 1024) {
+      responsiveScale = 0.90;
+    }
+
+    const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current);
     targetScale.setScalar(finalScale);
     groupRef.current.scale.lerp(targetScale, 0.08);
 

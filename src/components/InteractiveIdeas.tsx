@@ -202,9 +202,19 @@ export default function InteractiveIdeas() {
     const count = points.length;
     const { currX, currY, currZ, velX, velY, velZ } = physicsData;
 
-    // Align to layout section positioning (centered locally)
+    // Always centered — the CSS container controls horizontal position
+    const posXOffset = 0;
+
+    // Responsive scale: keep object prominent at all viewport sizes
     const canvasWidth = state.size.width;
-    const posXOffset = canvasWidth >= 1600 ? 0.15 : 0;
+    let responsiveScale = 1.25;
+    if (canvasWidth < 480) {
+      responsiveScale = 0.85;
+    } else if (canvasWidth < 768) {
+      responsiveScale = 0.95;
+    } else if (canvasWidth < 1024) {
+      responsiveScale = 1.1;
+    }
 
     // Update grounding shadow material opacity dynamically
     if (shadowMatRef.current) {
@@ -341,8 +351,8 @@ export default function InteractiveIdeas() {
       meshRef.current.instanceColor.needsUpdate = true;
     }
 
-    // Scale and opacity transitions (increased by 25% scale, base scale = 1.25)
-    const currentScale = 1.25 * (0.85 + 0.15 * visibility.current);
+    // Scale and opacity transitions
+    const currentScale = responsiveScale * (0.85 + 0.15 * visibility.current);
     meshRef.current.scale.setScalar(currentScale);
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;

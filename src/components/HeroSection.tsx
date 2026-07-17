@@ -90,29 +90,14 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
             initial="hidden"
             animate={isActive ? 'visible' : 'hidden'}
             className="text-gradient hero-title"
-            style={{
-              fontSize: 'clamp(36px, 6vw, 64px)',
-              lineHeight: '1.1',
-              fontWeight: 'normal',
-              letterSpacing: '0.02em',
-              color: 'var(--color-black)',
-            }}
           >
-            <span className="hero-title-line-1">{renderWaveText("BUILDING")}</span>{' '}
+            <span className="hero-title-line-1">{renderWaveText("BUILDING")}</span>
             <span className="hero-title-line-2">{renderWaveText("SMARTER")}</span>
             <span className="hero-title-line-3">{renderWaveText("BUSINESS LANDSCAPES")}</span>
           </motion.h1>
 
           {/* Supporting paragraph */}
-          <p
-            style={{
-              fontSize: 'clamp(15px, 2vw, 18px)',
-              color: 'var(--color-text-secondary)',
-              lineHeight: '1.7',
-              maxWidth: '560px',
-              fontWeight: '400',
-            }}
-          >
+          <p className="hero-description">
             We transform ideas, technology, and strategy into intelligent, tailor-made business solutions designed for sustainable growth, operational optimization, and measurable impact.
           </p>
 
@@ -161,6 +146,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
               shadows
               camera={{ position: [0, 8, 12], fov: 38 }}
               gl={{ antialias: true, alpha: true }}
+              dpr={[1, 1.5]}
             >
               <Environment preset="city" />
               

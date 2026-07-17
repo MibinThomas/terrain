@@ -155,6 +155,7 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
               shadows
               camera={{ position: [0, 8, 12], fov: 38 }}
               gl={{ antialias: true, alpha: true }}
+              dpr={[1, 1.5]}
             >
               <Environment preset="city" />
               <ambientLight intensity={0.18} />

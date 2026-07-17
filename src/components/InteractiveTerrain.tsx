@@ -218,10 +218,12 @@ export default function InteractiveTerrain() {
     const canvasWidth = state.size.width;
     let responsiveScale = 1.0;
 
-    if (canvasWidth < 576) {
-      responsiveScale = 1.01; // Mobile (30% increase from 0.78)
-    } else if (canvasWidth < 992) {
-      responsiveScale = 1.15; // Tablet
+    if (canvasWidth < 480) {
+      responsiveScale = 0.82; // Small phones
+    } else if (canvasWidth < 768) {
+      responsiveScale = 0.92; // Large phones / narrow
+    } else if (canvasWidth < 1024) {
+      responsiveScale = 1.05; // Tablets
     }
 
     const currentVisibilityScale = 0.85 + 0.15 * visibility.current;

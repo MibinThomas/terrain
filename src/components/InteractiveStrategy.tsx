@@ -331,8 +331,19 @@ export default function InteractiveStrategy() {
       meshRef.current.instanceColor.needsUpdate = true;
     }
 
+    // Responsive scale: keep the radar ring system visible in smaller viewports
+    const width = state.size.width;
+    let responsiveScale = 1.0;
+    if (width < 480) {
+      responsiveScale = 0.72;
+    } else if (width < 768) {
+      responsiveScale = 0.82;
+    } else if (width < 1024) {
+      responsiveScale = 0.92;
+    }
+
     // Scale and opacity transitions
-    const currentScale = 0.85 + 0.15 * visibility.current;
+    const currentScale = responsiveScale * (0.85 + 0.15 * visibility.current);
     meshRef.current.scale.setScalar(currentScale);
     if (meshRef.current.material) {
       const mat = meshRef.current.material as THREE.MeshStandardMaterial;
