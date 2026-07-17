@@ -214,17 +214,23 @@ export default function InteractiveTerrain() {
     meshScaleVelocity.current += scaleForce;
     meshScale.current += meshScaleVelocity.current;
 
-    // Responsive scale factor based on canvas viewport width
-    const canvasWidth = state.size.width;
+    // Responsive scale factor based on canvas viewport dimensions
+    const width = state.size.width;
+    const height = state.size.height;
     let responsiveScale = 1.0;
 
-    if (canvasWidth < 480) {
-      responsiveScale = 0.82; // Small phones
-    } else if (canvasWidth < 768) {
-      responsiveScale = 0.92; // Large phones / narrow
-    } else if (canvasWidth < 1024) {
-      responsiveScale = 1.05; // Tablets
+    if (width < 390) {
+      responsiveScale = 0.64;
+    } else if (width < 600) {
+      responsiveScale = 0.74;
+    } else if (width < 1024) {
+      responsiveScale = 0.88;
     }
+
+    if (height < 600) {
+      responsiveScale *= 0.82;
+    }
+
 
     const currentVisibilityScale = 0.85 + 0.15 * visibility.current;
     meshRef.current.scale.setScalar(meshScale.current * responsiveScale * currentVisibilityScale);

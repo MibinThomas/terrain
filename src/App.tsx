@@ -93,12 +93,12 @@ function Section({
   };
 
   return (
-    <section className="interactive-section" id={id}>
-      <div className="section-layout">
+    <section className="experience-panel interactive-section" id={id}>
+      <div className="panel-inner section-layout">
         
         {/* Left Column — Content */}
-        <div className="section-content">
-          <div className="hero-badge">
+        <div className="panel-content section-content">
+          <div className="panel-label hero-badge">
             <span
               style={{
                 width: '5px',
@@ -117,45 +117,41 @@ function Section({
             variants={containerVariants}
             initial="hidden"
             animate={isActive ? 'visible' : 'hidden'}
-            className="text-gradient hero-title"
+            className="text-gradient panel-heading hero-title"
           >
             <span className="hero-title-line-1">{renderWaveText(line1)}</span>
             <span className="hero-title-line-2">{renderWaveText(line2)}</span>
             <span className="hero-title-line-3">{renderWaveText(line3)}</span>
           </motion.h1>
 
-          <p className="hero-description">
+          <p className="panel-description hero-description">
             {description}
           </p>
 
           {pills && pills.length > 0 && (
-            <div className="services-pills">
-              {pills.map((pill) => (
-                <span key={pill} className="service-pill">
-                  {pill}
-                </span>
-              ))}
-            </div>
+            <>
+              <div className="services-pills desktop-only-pills">
+                {pills.map((pill) => (
+                  <span key={pill} className="service-pill">
+                    {pill}
+                  </span>
+                ))}
+              </div>
+              <div className="mobile-tags mobile-only-tags">
+                {pills.slice(0, 2).map((pill) => (
+                  <span key={pill} className="mobile-tag">
+                    {pill}
+                  </span>
+                ))}
+              </div>
+            </>
           )}
 
           <div className="hero-cta-wrapper interactive-element">
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <button
                 onClick={btnAction}
-                style={{
-                  backgroundColor: 'var(--color-black)',
-                  color: 'var(--color-light)',
-                  border: '1px solid var(--color-black)',
-                  borderRadius: '30px',
-                  padding: '16px 36px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.1)',
-                }}
+                className="panel-cta"
               >
                 {btnText}
               </button>
@@ -188,7 +184,7 @@ function Section({
 
         {/* Right Column — 3D Visual */}
         <div 
-          className="section-visual"
+          className="panel-visual section-visual"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
@@ -252,9 +248,11 @@ function App() {
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Intercept vertical scroll and shift horizontally
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
+      // Only intercept vertical mouse wheel scrolls (where deltaX is 0)
+      if (Math.abs(e.deltaY) > 0 && Math.abs(e.deltaX) === 0) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
     };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
@@ -263,9 +261,20 @@ function App() {
     };
   }, []);
 
-  // Monitor scroll position and update active states + progress.
-  // On desktop (≥ 1024px) the container scrolls horizontally;
-  // on tablet/mobile (< 1024px) the app-container scrolls vertically.
+  // Lock window/body scrolling so vertical scroll is absolutely prevented
+  useEffect(() => {
+    const preventWindowScroll = () => {
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener('scroll', preventWindowScroll);
+    return () => {
+      window.removeEventListener('scroll', preventWindowScroll);
+    };
+  }, []);
+
+  // Monitor horizontal-only scroll position and update active states + progress.
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -280,95 +289,67 @@ function App() {
     };
 
     const handleScroll = () => {
-      const isMobile = window.innerWidth <= 1024;
+      const width = container.clientWidth;
+      if (width <= 0) return;
 
-      if (isMobile) {
-        // ── Vertical scroll detection (tablet / mobile) ──────────────────
-        const viewH = window.innerHeight;
-        let active = 'hero';
-        let minDistance = Infinity;
+      const rawIndex = container.scrollLeft / width;
+      const index = Math.round(rawIndex);
+      const activeId = sections[index] || 'hero';
 
-        sections.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            // Distance from the element's centre to the viewport centre
-            const elCentreY = rect.top + rect.height / 2;
-            const dist = Math.abs(elCentreY - viewH / 2);
-            if (dist < minDistance) {
-              minDistance = dist;
-              active = id;
-            }
-          }
-        });
+      setActiveSection(activeId);
+      setCurrentPage(pageMapping[activeId]);
 
-        setActiveSection(active);
-        setCurrentPage(pageMapping[active]);
-
-        sections.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            // Vertical entrance progress: 0 when bottom enters viewport, 1 when top aligns to 0
-            const enterProgress = 1 - rect.top / viewH;
-            const progress = Math.max(0, Math.min(1, enterProgress));
-
-            if (id === 'hero') setScrollProgress('hero', progress);
-            else if (id === 'ideas') setScrollProgress('ideas', progress);
-            else if (id === 'technology') setScrollProgress('technology', progress);
-            else if (id === 'strategy' || id === 'footer') setScrollProgress('strategy', progress);
-          }
-        });
-      } else {
-        // ── Horizontal scroll detection (desktop) ────────────────────────
-        const width = window.innerWidth;
-        let active = 'hero';
-        let minDistance = Infinity;
-
-        sections.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            const elementCenter = rect.left + rect.width / 2;
-            const viewportCenter = width / 2;
-            const dist = Math.abs(elementCenter - viewportCenter);
-            if (dist < minDistance) {
-              minDistance = dist;
-              active = id;
-            }
-          }
-        });
-
-        setActiveSection(active);
-        setCurrentPage(pageMapping[active]);
-
-        sections.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            // Horizontal entrance progress: 0 when right edge enters, 1 when left aligns to 0
-            const enterProgress = 1 - rect.left / width;
-            const progress = Math.max(0, Math.min(1, enterProgress));
-
-            if (id === 'hero') setScrollProgress('hero', progress);
-            else if (id === 'ideas') setScrollProgress('ideas', progress);
-            else if (id === 'technology') setScrollProgress('technology', progress);
-            else if (id === 'strategy' || id === 'footer') setScrollProgress('strategy', progress);
-          }
-        });
-      }
+      // Calculate progress (0 to 1) for each section based on horizontal center
+      sections.forEach((id, idx) => {
+        const progress = Math.max(0, Math.min(1, 1 - Math.abs(rawIndex - idx)));
+        setScrollProgress(id, progress);
+      });
     };
 
-    // Listen on both the scroll container (horizontal) and window (vertical)
     container.addEventListener('scroll', handleScroll);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
     handleScroll(); // Initial run
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, [setActiveSection, setCurrentPage, setScrollProgress]);
+
+  // Keyboard navigation support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+
+      const width = container.clientWidth;
+      const index = Math.round(container.scrollLeft / width);
+      const total = 5; // hero, ideas, technology, strategy, footer
+
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        e.preventDefault();
+        if (index < total - 1) {
+          container.scrollTo({ left: (index + 1) * width, behavior: 'smooth' });
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        if (index > 0) {
+          container.scrollTo({ left: (index - 1) * width, behavior: 'smooth' });
+        }
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        container.scrollTo({ left: (total - 1) * width, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const scrollToSection = (secId: string) => {
     const el = document.getElementById(secId);
@@ -377,6 +358,12 @@ function App() {
     }
   };
 
+  const totalSections = 4;
+  const sectionIds = ['hero', 'ideas', 'technology', 'strategy'];
+  const currentIndex = activeSection === 'footer' ? 3 : sectionIds.indexOf(activeSection);
+  const displayIndex = currentIndex !== -1 ? currentIndex : 0;
+
+
   return (
     <div className="app-container">
       {/* Header floats on top */}
@@ -384,7 +371,7 @@ function App() {
 
       {/* Horizontal snapping scroll wrapper */}
       <div
-        className="horizontal-scroll-container"
+        className="horizontal-experience"
         ref={scrollContainerRef}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -403,9 +390,9 @@ function App() {
           line1="ENGINEERED"
           line2="FOR"
           line3="SCALABILITY & EFFICIENCY"
-          description="We build digital foundations that empower modern workflows. By leveraging reliable cloud architectures and future-ready technology stacks, we streamline complex operations. Hover the canvas to see scattered data particles consolidate into a structured workstation."
+          description="We build digital foundations that empower modern workflows. By leveraging reliable cloud architectures and future-ready technology stacks, we streamline complex operations."
           pills={['System Integration', 'Scalable Cloud Infrastructures', 'Custom AI & Data Solutions']}
-          btnText="Explore Strategy Phase"
+          btnText="Explore Strategy"
           btnAction={() => scrollToSection('strategy')}
           prevText="BACK TO IDEAS"
           prevAction={() => scrollToSection('ideas')}
@@ -423,7 +410,7 @@ function App() {
           line3="FOR MEASURABLE IMPACT"
           description="We combine industry insight with rigorous execution to deliver tailored business solutions. We align resources, processes, and tools to ensure seamless transformation and sustainable growth."
           pills={['Operational Optimization', 'Change Architecture', 'Performance Analytics']}
-          btnText="Connect With Us"
+          btnText="Start a Conversation"
           btnAction={() => scrollToSection('footer')}
           prevText="BACK TO TECH"
           prevAction={() => scrollToSection('technology')}
@@ -432,8 +419,55 @@ function App() {
         />
 
         {/* FOOTER SECTION SLIDE */}
-        <div className="footer-section" id="footer">
+        <div className="footer-section experience-panel" id="footer">
           <Footer scrollToSection={scrollToSection} />
+        </div>
+      </div>
+
+      {/* Bottom Horizontal Navigation Overlay (Hidden or simplified on short screens) */}
+      <div className="horizontal-navigation">
+        <div className="nav-indicators">
+          <span>0{displayIndex + 1} / 0{totalSections}</span>
+          <div className="nav-dots">
+            {sectionIds.map((id, idx) => (
+              <button
+                key={id}
+                className={`nav-dot ${displayIndex === idx ? 'active' : ''}`}
+                onClick={() => scrollToSection(id)}
+                aria-label={`Go to section ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="nav-arrows">
+          {displayIndex === 0 && (
+            <span className="swipe-instruction">Swipe or Scroll</span>
+          )}
+          <button
+            className="nav-arrow"
+            onClick={() => {
+              if (displayIndex > 0) {
+                scrollToSection(sectionIds[displayIndex - 1]);
+              }
+            }}
+            disabled={displayIndex === 0}
+            aria-label="Previous Section"
+          >
+            ←
+          </button>
+          <button
+            className="nav-arrow"
+            onClick={() => {
+              if (displayIndex < totalSections - 1) {
+                scrollToSection(sectionIds[displayIndex + 1]);
+              }
+            }}
+            disabled={displayIndex === totalSections - 1}
+            aria-label="Next Section"
+          >
+            →
+          </button>
         </div>
       </div>
     </div>

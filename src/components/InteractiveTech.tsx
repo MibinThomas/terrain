@@ -96,14 +96,20 @@ export default function InteractiveTech() {
 
     // Responsive scale: shrink model to fit smaller canvas on tablet/mobile
     const width = state.size.width;
+    const height = state.size.height;
     let responsiveScale = 1.0;
-    if (width < 480) {
-      responsiveScale = 0.68;
-    } else if (width < 768) {
-      responsiveScale = 0.78;
+    if (width < 390) {
+      responsiveScale = 0.64;
+    } else if (width < 600) {
+      responsiveScale = 0.74;
     } else if (width < 1024) {
-      responsiveScale = 0.90;
+      responsiveScale = 0.88;
     }
+
+    if (height < 600) {
+      responsiveScale *= 0.82;
+    }
+
 
     const finalScale = scaleMultiplier * responsiveScale * (0.85 + 0.15 * visibility.current);
     targetScale.setScalar(finalScale);

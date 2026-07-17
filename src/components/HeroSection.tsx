@@ -63,13 +63,13 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
   };
 
   return (
-    <section className="hero-section" id="hero">
-      <div className="hero-grid-container">
+    <section className="experience-panel hero-section" id="hero">
+      <div className="panel-inner hero-grid-container">
         
         {/* Left Column - Hero Content */}
-        <div className="hero-left-column">
+        <div className="panel-content hero-left-column">
           {/* Eyebrow badge */}
-          <div className="hero-badge">
+          <div className="panel-label hero-badge">
             <span
               style={{
                 width: '5px',
@@ -89,7 +89,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
             variants={containerVariants}
             initial="hidden"
             animate={isActive ? 'visible' : 'hidden'}
-            className="text-gradient hero-title"
+            className="text-gradient panel-heading hero-title"
           >
             <span className="hero-title-line-1">{renderWaveText("BUILDING")}</span>
             <span className="hero-title-line-2">{renderWaveText("SMARTER")}</span>
@@ -97,7 +97,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
           </motion.h1>
 
           {/* Supporting paragraph */}
-          <p className="hero-description">
+          <p className="panel-description hero-description">
             We transform ideas, technology, and strategy into intelligent, tailor-made business solutions designed for sustainable growth, operational optimization, and measurable impact.
           </p>
 
@@ -105,22 +105,9 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
           <div className="hero-cta-wrapper interactive-element">
             <button
               onClick={() => scrollToSection('ideas')}
-              style={{
-                backgroundColor: 'var(--color-black)',
-                color: 'var(--color-light)',
-                border: '1px solid var(--color-black)',
-                borderRadius: '30px',
-                padding: '16px 36px',
-                fontSize: '14px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.1)',
-              }}
+              className="panel-cta"
             >
-              Explore Solutions
+              Explore Ideas
             </button>
             <div
               style={{
@@ -137,7 +124,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
 
         {/* Right Column - Interactive 3D Object */}
         <div 
-          className="hero-right-column"
+          className="panel-visual hero-right-column"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >

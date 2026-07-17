@@ -62,12 +62,12 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
   };
 
   return (
-    <section className="interactive-section" id="ideas">
-      <div className="ideas-layout">
+    <section className="experience-panel interactive-section" id="ideas">
+      <div className="panel-inner ideas-layout">
         
         {/* Left Column — Ideas Content */}
-        <div className="ideas-content">
-          <div className="hero-badge" style={{ marginBottom: '16px' }}>
+        <div className="panel-content ideas-content">
+          <div className="panel-label hero-badge" style={{ marginBottom: '16px' }}>
             <span
               style={{
                 width: '5px',
@@ -86,41 +86,33 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
             variants={containerVariants}
             initial="hidden"
             animate={isActive ? 'visible' : 'hidden'}
-            className="text-gradient ideas-heading"
+            className="text-gradient panel-heading ideas-heading"
           >
             <span className="hero-title-line-1" style={{ display: 'block' }}>{renderWaveText("CAPTURING")}</span>
             <span className="hero-title-line-2" style={{ display: 'block', marginTop: '4px' }}>{renderWaveText("RAW IDEAS,")}</span>
             <span className="hero-title-line-3" style={{ display: 'block', marginTop: '4px' }}>{renderWaveText("SHAPING THE FUTURE")}</span>
           </motion.h1>
 
-          <p className="ideas-description">
+          <p className="panel-description ideas-description">
             We transform unstructured ideas, concepts, and ambitions into clear, scalable business opportunities through strategic thinking, innovation, and structured execution.
           </p>
 
-          <div className="ideas-tags">
+          <div className="ideas-tags desktop-only-pills">
             <span className="ideas-tag">Strategic Blueprinting</span>
             <span className="ideas-tag">Innovation Workshops</span>
             <span className="ideas-tag">Opportunity Mapping</span>
           </div>
 
-          <div className="hero-cta-wrapper interactive-element" style={{ marginTop: 'clamp(32px, 4vh, 40px)' }}>
+          <div className="mobile-tags mobile-only-tags">
+            <span className="mobile-tag">Strategic Blueprinting</span>
+            <span className="mobile-tag">Innovation Workshops</span>
+          </div>
+
+          <div className="hero-cta-wrapper interactive-element" style={{ marginTop: 'clamp(20px, 3vh, 32px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <button
                 onClick={() => scrollToSection('technology')}
-                style={{
-                  backgroundColor: 'var(--color-black)',
-                  color: 'var(--color-light)',
-                  border: '1px solid var(--color-black)',
-                  borderRadius: '30px',
-                  padding: '16px 36px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.1)',
-                }}
+                className="panel-cta"
               >
                 EXPLORE TECHNOLOGY
               </button>
@@ -149,7 +141,7 @@ export default function IdeasSection({ scrollToSection }: IdeasSectionProps) {
         </div>
 
         {/* Right Column — Interactive 3D Visual */}
-        <div className="ideas-visual">
+        <div className="panel-visual ideas-visual">
           <div style={{ width: '100%', height: '100%' }} className="interactive-element">
             <Canvas
               shadows

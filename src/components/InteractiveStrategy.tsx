@@ -333,14 +333,20 @@ export default function InteractiveStrategy() {
 
     // Responsive scale: keep the radar ring system visible in smaller viewports
     const width = state.size.width;
+    const height = state.size.height;
     let responsiveScale = 1.0;
-    if (width < 480) {
-      responsiveScale = 0.72;
-    } else if (width < 768) {
-      responsiveScale = 0.82;
+    if (width < 390) {
+      responsiveScale = 0.64;
+    } else if (width < 600) {
+      responsiveScale = 0.74;
     } else if (width < 1024) {
-      responsiveScale = 0.92;
+      responsiveScale = 0.88;
     }
+
+    if (height < 600) {
+      responsiveScale *= 0.82;
+    }
+
 
     // Scale and opacity transitions
     const currentScale = responsiveScale * (0.85 + 0.15 * visibility.current);

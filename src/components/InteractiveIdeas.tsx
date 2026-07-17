@@ -206,15 +206,21 @@ export default function InteractiveIdeas() {
     const posXOffset = 0;
 
     // Responsive scale: keep object prominent at all viewport sizes
-    const canvasWidth = state.size.width;
+    const width = state.size.width;
+    const height = state.size.height;
     let responsiveScale = 1.25;
-    if (canvasWidth < 480) {
-      responsiveScale = 0.85;
-    } else if (canvasWidth < 768) {
+    if (width < 390) {
+      responsiveScale = 0.8;
+    } else if (width < 600) {
       responsiveScale = 0.95;
-    } else if (canvasWidth < 1024) {
+    } else if (width < 1024) {
       responsiveScale = 1.1;
     }
+
+    if (height < 600) {
+      responsiveScale *= 0.82;
+    }
+
 
     // Update grounding shadow material opacity dynamically
     if (shadowMatRef.current) {
