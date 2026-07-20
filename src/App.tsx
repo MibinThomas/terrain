@@ -9,6 +9,9 @@ import HeroSection from './components/HeroSection';
 import IdeasSection from './components/IdeasSection';
 import InteractiveTech from './components/InteractiveTech';
 import InteractiveStrategy from './components/InteractiveStrategy';
+import Services from './components/Services';
+import BlogSection from './components/BlogSection';
+import ContactSection from './components/ContactSection';
 
 interface SectionProps {
   id: string;
@@ -361,9 +364,9 @@ function App() {
     }
   };
 
-  const totalSections = 4;
-  const sectionIds = ['hero', 'ideas', 'technology', 'strategy'];
-  const currentIndex = activeSection === 'footer' ? 3 : sectionIds.indexOf(activeSection);
+  const totalSections = 7;
+  const sectionIds = ['hero', 'ideas', 'technology', 'strategy', 'services', 'blog', 'contact'];
+  const currentIndex = activeSection === 'footer' ? 6 : sectionIds.indexOf(activeSection);
   const displayIndex = currentIndex !== -1 ? currentIndex : 0;
 
 
@@ -413,13 +416,22 @@ function App() {
           line3="FOR MEASURABLE IMPACT"
           description="We combine industry insight with rigorous execution to deliver tailored business solutions. We align resources, processes, and tools to ensure seamless transformation and sustainable growth."
           pills={['Operational Optimization', 'Change Architecture', 'Performance Analytics']}
-          btnText="Start a Conversation"
-          btnAction={() => scrollToSection('footer')}
+          btnText="Explore Services"
+          btnAction={() => scrollToSection('services')}
           prevText="BACK TO TECH"
           prevAction={() => scrollToSection('technology')}
           subtext="Optimizing operations, performance analytics, and transformation architecture."
           visual={<InteractiveStrategy />}
         />
+
+        {/* SERVICES SECTION */}
+        <Services scrollToSection={scrollToSection} />
+
+        {/* BLOG / INSIGHTS SECTION */}
+        <BlogSection scrollToSection={scrollToSection} />
+
+        {/* CONTACT SECTION */}
+        <ContactSection scrollToSection={scrollToSection} />
 
         {/* FOOTER SECTION SLIDE */}
         <div className="footer-section experience-panel" id="footer">

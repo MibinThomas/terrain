@@ -67,10 +67,40 @@ export default function HeroOverlay() {
         }, 400);
       },
       subtext: "Optimizing operations, performance analytics, and transformation architecture."
+    },
+    services: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • SERVICES",
+      line1: "TAILORED",
+      line2: "SOLUTIONS FOR",
+      line3: "SUSTAINABLE GROWTH",
+      description: "We bridge the gap between ambitious vision and tactical execution across three core organizational capabilities.",
+      btnText: "Explore Blog & Insights",
+      btnAction: () => setCurrentPage('blog'),
+      subtext: "Ideas, Technology, and Strategy engineered for enterprise impact."
+    },
+    blog: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • INSIGHTS",
+      line1: "THOUGHT",
+      line2: "LEADERSHIP &",
+      line3: "STRATEGIC PERSPECTIVES",
+      description: "Explore technical analysis, strategic frameworks, and industry insights written by our business architects.",
+      btnText: "Get in Touch",
+      btnAction: () => setCurrentPage('contact'),
+      subtext: "In-depth perspectives on architecture, AI, and business transformation."
+    },
+    contact: {
+      badge: "INTELLIGENT BUSINESS ARCHITECTURE • CONTACT",
+      line1: "START A",
+      line2: "CONVERSATION WITH",
+      line3: "OUR ARCHITECTS",
+      description: "Ready to engineer a scalable digital foundation or optimize enterprise operations? Send us a message to schedule a consultation.",
+      btnText: "Return to Home",
+      btnAction: () => setCurrentPage('home'),
+      subtext: "Direct response from senior architects within 24 business hours."
     }
   };
 
-  const config = pageConfigs[currentPage] || pageConfigs.home;
+  const config = pageConfigs[currentPage as keyof typeof pageConfigs] || pageConfigs.home;
 
   const containerVariants = {
     hidden: {},

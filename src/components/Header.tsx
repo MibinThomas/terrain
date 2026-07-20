@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLinkClick = (page: 'home' | 'ideas' | 'technology' | 'strategy') => {
+  const handleLinkClick = (page: 'home' | 'ideas' | 'technology' | 'strategy' | 'services' | 'blog' | 'contact') => {
     setIsOpen(false);
     const targetId = page === 'home' ? 'hero' : page;
     setTimeout(() => {
@@ -84,7 +84,7 @@ export default function Header() {
               <motion.button 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12, duration: 0.4 }}
+                transition={{ delay: 0.09, duration: 0.4 }}
                 onClick={() => handleLinkClick('technology')} 
                 className="fullscreen-nav-link"
               >
@@ -93,11 +93,38 @@ export default function Header() {
               <motion.button 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.19, duration: 0.4 }}
+                transition={{ delay: 0.13, duration: 0.4 }}
                 onClick={() => handleLinkClick('strategy')} 
                 className="fullscreen-nav-link"
               >
                 Strategy
+              </motion.button>
+              <motion.button 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.17, duration: 0.4 }}
+                onClick={() => handleLinkClick('services')} 
+                className="fullscreen-nav-link"
+              >
+                Services
+              </motion.button>
+              <motion.button 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.21, duration: 0.4 }}
+                onClick={() => handleLinkClick('blog')} 
+                className="fullscreen-nav-link"
+              >
+                Blog & Insights
+              </motion.button>
+              <motion.button 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.4 }}
+                onClick={() => handleLinkClick('contact')} 
+                className="fullscreen-nav-link"
+              >
+                Contact Us
               </motion.button>
               
               <motion.div 
