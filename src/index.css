@@ -177,7 +177,7 @@ body,
 
 @media (min-width: 1025px) {
   .panel-visual {
-    transform: translateY(80px);
+    transform: translateY(0px);
   }
 }
 
@@ -770,10 +770,12 @@ body,
   .panel-visual {
     display: none !important;
   }
+
   .panel-inner {
     grid-template-rows: 1fr !important;
     padding-bottom: 24px !important;
   }
+
   .panel-content {
     height: 100% !important;
     justify-content: center !important;
