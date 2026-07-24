@@ -5,7 +5,7 @@ import { useRef } from "react";
 
 interface AnimatedTextProps {
   text: string;
-  el?: keyof JSX.IntrinsicElements;
+  el?: React.ElementType;
   className?: string;
   once?: boolean;
   mode?: "word" | "character";
