@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"components\\\\sections\\\\Hero.tsx -> @/components/three/TerrainVisual\":{\"id\":\"components\\\\sections\\\\Hero.tsx -> @/components/three/TerrainVisual\",\"files\":[\"static/chunks/_app-pages-browser_components_three_TerrainVisual_tsx.js\"]}}"
