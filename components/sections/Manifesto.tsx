@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import AnimatedText from "@/components/ui/AnimatedText";
 
 export default function Manifesto() {
   const containerRef = useRef<HTMLElement>(null);
@@ -31,10 +32,10 @@ export default function Manifesto() {
             <span className="font-heading uppercase tracking-widest text-sm font-medium">Manifesto</span>
           </motion.div>
           
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tighter text-terrain-pureWhite">
-            WE BUILD SYSTEMS,<br />
-            <span className="text-terrain-midGrey">NOT JUST SCREENS.</span>
-          </h2>
+          <div className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tighter mb-4">
+            <AnimatedText text="WE BUILD SYSTEMS," el="h2" className="text-terrain-pureWhite block" mode="word" />
+            <AnimatedText text="NOT JUST SCREENS." el="h2" className="text-terrain-midGrey block" mode="word" delay={0.2} />
+          </div>
         </div>
 
         <div className="flex flex-col gap-32 md:gap-48 relative">

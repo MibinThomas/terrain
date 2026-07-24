@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import AnimatedText from "@/components/ui/AnimatedText";
 
 export default function DesignPhilosophy() {
   const text = "INTELLIGENT DIGITAL EXPERIENCES.";
@@ -15,22 +16,10 @@ export default function DesignPhilosophy() {
             <span className="font-heading uppercase tracking-widest text-sm font-bold">Philosophy</span>
           </div>
 
-          <h2 className="font-heading text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tighter mb-16 uppercase">
-            DESIGNING <br/>
-            {words.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden mr-4">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: "100%" }}
-                  whileInView={{ y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </h2>
+          <div className="font-heading text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tighter mb-16 uppercase">
+            <AnimatedText text="DESIGNING" el="h2" mode="word" className="block" />
+            <AnimatedText text="INTELLIGENT DIGITAL EXPERIENCES." el="h2" mode="word" delay={0.2} />
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-terrain-deepBlack/10 pt-16">
             <p className="text-2xl md:text-3xl leading-snug font-light">

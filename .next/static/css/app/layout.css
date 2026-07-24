@@ -625,6 +625,9 @@ video {
 .z-\[9999\] {
   z-index: 9999;
 }
+.z-40 {
+  z-index: 40;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -811,6 +814,9 @@ video {
 }
 .origin-center {
   transform-origin: center;
+}
+.origin-top {
+  transform-origin: top;
 }
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
@@ -1393,8 +1399,26 @@ video {
 .opacity-\[0\.03\] {
   opacity: 0.03;
 }
+.mix-blend-screen {
+  mix-blend-mode: screen;
+}
 .mix-blend-difference {
   mix-blend-mode: difference;
+}
+.shadow-\[0_0_10px_rgba\(255\2c 255\2c 255\2c 0\.5\)\] {
+  --tw-shadow: 0 0 10px rgba(255,255,255,0.5);
+  --tw-shadow-colored: 0 0 10px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-\[0_0_15px_rgba\(255\2c 255\2c 255\2c 0\.8\)\] {
+  --tw-shadow: 0 0 15px rgba(255,255,255,0.8);
+  --tw-shadow-colored: 0 0 15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-\[0_0_15px_rgba\(255\2c 255\2c 255\2c 1\)\] {
+  --tw-shadow: 0 0 15px rgba(255,255,255,1);
+  --tw-shadow-colored: 0 0 15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 .outline {
   outline-style: solid;
@@ -1404,6 +1428,13 @@ video {
 }
 .outline-terrain-deepBlack {
   outline-color: #090909;
+}
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .backdrop-blur-md {
   --tw-backdrop-blur: blur(12px);
@@ -1645,6 +1676,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 @media (min-width: 640px) {
 
+  .sm\:block {
+    display: block;
+  }
+
   .sm\:w-auto {
     width: auto;
   }
@@ -1676,11 +1711,20 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
+
+  .sm\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
 }
 @media (min-width: 768px) {
 
   .md\:left-1\/2 {
     left: 50%;
+  }
+
+  .md\:left-12 {
+    left: 3rem;
   }
 
   .md\:col-span-2 {

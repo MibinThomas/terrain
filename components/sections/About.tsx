@@ -1,3 +1,5 @@
+import AnimatedText from "@/components/ui/AnimatedText";
+
 export default function About() {
   return (
     <section id="about" className="py-32 bg-terrain-nearBlack border-t border-white/5">
@@ -5,11 +7,12 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           
           <div className="lg:col-span-6">
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-terrain-pureWhite mb-8 tracking-tight">
-              BUILDING<br />
-              EXPERIENCES<br />
-              <span className="text-terrain-midGrey">BEYOND<br />EXPECTATIONS.</span>
-            </h2>
+            <div className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-8 tracking-tight">
+              <AnimatedText text="BUILDING" el="h2" className="text-terrain-pureWhite block" mode="character" />
+              <AnimatedText text="EXPERIENCES" el="h2" className="text-terrain-pureWhite block" mode="character" delay={0.1} />
+              <AnimatedText text="BEYOND" el="h2" className="text-terrain-midGrey block" mode="character" delay={0.2} />
+              <AnimatedText text="EXPECTATIONS." el="h2" className="text-terrain-midGrey block" mode="character" delay={0.3} />
+            </div>
           </div>
 
           <div className="lg:col-span-6 space-y-12">

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import AnimatedText from "@/components/ui/AnimatedText";
 
 const TerrainVisual = dynamic(() => import("@/components/three/TerrainVisual"), {
   ssr: false,
@@ -30,18 +31,16 @@ export default function Hero() {
             <div className="h-[1px] w-8 bg-terrain-midGrey" />
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8 px-4"
-          >
-            BUILDING SMARTER
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-terrain-pureWhite to-terrain-midGrey">
-              BUSINESS LANDSCAPES.
-            </span>
-          </motion.h1>
+          <h1 className="font-heading text-2xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8 px-4">
+            <AnimatedText text="BUILDING SMARTER" el="span" mode="word" className="block" />
+            <AnimatedText 
+              text="BUSINESS LANDSCAPES." 
+              el="span" 
+              mode="word" 
+              delay={0.2}
+              className="block text-transparent bg-clip-text bg-gradient-to-b from-terrain-pureWhite to-terrain-midGrey" 
+            />
+          </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}

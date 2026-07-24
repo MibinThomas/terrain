@@ -31,11 +31,24 @@ export default function Services() {
           </div>
 
           {/* Interactive List */}
-          <div className="md:w-2/3">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+              hidden: {}
+            }}
+            className="md:w-2/3"
+          >
             <div className="border-t border-white/10">
               {servicesList.map((service, index) => (
-                <div 
+                <motion.div 
                   key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+                  }}
                   className="group relative border-b border-white/10"
                   onMouseEnter={() => setActiveService(index)}
                   onMouseLeave={() => setActiveService(null)}
@@ -60,10 +73,10 @@ export default function Services() {
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute inset-0 bg-white/[0.02] origin-bottom z-0"
                   />
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       
