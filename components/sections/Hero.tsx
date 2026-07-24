@@ -34,7 +34,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8"
+            className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8 px-4"
           >
             BUILDING SMARTER
             <br />
@@ -47,7 +47,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-terrain-softWhite/80 max-w-2xl mb-6 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-terrain-softWhite/80 max-w-2xl mx-auto px-4 mb-6 leading-relaxed"
           >
             We transform ideas, technology, and strategy into intelligent business solutions designed for sustainable growth and measurable impact.
           </motion.p>
@@ -56,7 +56,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm md:text-base text-terrain-midGrey max-w-xl mb-12 leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-terrain-midGrey max-w-xl mx-auto px-4 mb-12 leading-relaxed"
           >
             We combine industry insight with practical execution to build efficient, scalable, and future-ready business ecosystems.
           </motion.p>

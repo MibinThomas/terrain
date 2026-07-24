@@ -60,13 +60,13 @@ export default function Process() {
                   <div className="text-terrain-pureWhite text-8xl lg:text-[10rem] font-heading font-bold opacity-10 tracking-tighter mb-4">
                     {step.id}
                   </div>
-                  <h3 className="text-5xl lg:text-7xl font-heading text-terrain-pureWhite mb-8 tracking-tight">
+                  <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading text-terrain-pureWhite mb-8 tracking-tight">
                     {step.title}
                   </h3>
                 </div>
                 
                 <div className="pl-12 border-l border-terrain-midGrey">
-                  <p className="text-xl lg:text-2xl text-terrain-softWhite/80 leading-relaxed max-w-md">
+                  <p className="text-lg lg:text-xl text-terrain-softWhite/80 leading-relaxed max-w-md">
                     {step.desc}
                   </p>
                 </div>
@@ -88,9 +88,9 @@ export default function Process() {
           {processSteps.map((step) => (
             <div key={step.id} className="relative pl-8 border-l border-white/20">
               <div className="absolute top-0 left-0 w-2 h-2 bg-terrain-pureWhite -translate-x-[5px] rotate-45" />
-              <div className="text-terrain-midGrey text-2xl font-heading mb-2">{step.id}</div>
-              <h3 className="text-3xl font-heading text-terrain-pureWhite mb-4">{step.title}</h3>
-              <p className="text-lg text-terrain-softWhite/80 leading-relaxed">{step.desc}</p>
+              <div className="text-terrain-midGrey text-xl font-heading mb-2">{step.id}</div>
+              <h3 className="text-2xl sm:text-3xl font-heading text-terrain-pureWhite mb-4">{step.title}</h3>
+              <p className="text-base sm:text-lg text-terrain-softWhite/80 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>

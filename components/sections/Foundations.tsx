@@ -36,8 +36,8 @@ export default function Foundations() {
              ))}
           </div>
           <div className="relative z-10 text-center">
-            <h2 className="font-heading text-6xl text-terrain-pureWhite mb-4 tracking-tight">IDEAS</h2>
-            <p className="text-terrain-midGrey text-xl max-w-md mx-auto">Discovery and early-stage thinking. Unstructured forms seeking direction.</p>
+            <h2 className="font-heading text-4xl md:text-6xl text-terrain-pureWhite mb-4 tracking-tight">IDEAS</h2>
+            <p className="text-terrain-midGrey text-lg md:text-xl max-w-md mx-auto px-6">Discovery and early-stage thinking. Unstructured forms seeking direction.</p>
           </div>
         </motion.div>
 
@@ -58,8 +58,8 @@ export default function Foundations() {
              </div>
           </div>
           <div className="relative z-10 text-center bg-terrain-deepBlack/80 p-8">
-            <h2 className="font-heading text-6xl text-terrain-pureWhite mb-4 tracking-tight">TECHNOLOGY</h2>
-            <p className="text-terrain-midGrey text-xl max-w-md mx-auto">Structured digital grids. Connected nodes forming scalable systems.</p>
+            <h2 className="font-heading text-4xl md:text-6xl text-terrain-pureWhite mb-4 tracking-tight">TECHNOLOGY</h2>
+            <p className="text-terrain-midGrey text-lg md:text-xl max-w-md mx-auto px-6">Structured digital grids. Connected nodes forming scalable systems.</p>
           </div>
         </motion.div>
 
@@ -84,8 +84,8 @@ export default function Foundations() {
              </div>
           </div>
           <div className="relative z-10 text-center mt-64">
-            <h2 className="font-heading text-6xl text-terrain-pureWhite mb-4 tracking-tight">STRATEGY</h2>
-            <p className="text-terrain-midGrey text-xl max-w-md mx-auto">Paths converge. One clear direction highlighted for sustainable growth.</p>
+            <h2 className="font-heading text-4xl md:text-6xl text-terrain-pureWhite mb-4 tracking-tight">STRATEGY</h2>
+            <p className="text-terrain-midGrey text-lg md:text-xl max-w-md mx-auto px-6">Paths converge. One clear direction highlighted for sustainable growth.</p>
           </div>
         </motion.div>
       </div>

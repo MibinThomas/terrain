@@ -24,8 +24,8 @@ export default function Services() {
         <div className="flex flex-col md:flex-row gap-16 md:gap-24">
           {/* Index Sidebar */}
           <div className="md:w-1/3">
-            <h2 className="font-heading text-3xl md:text-5xl text-terrain-pureWhite mb-8 tracking-tight">CAPABILITIES</h2>
-            <p className="text-terrain-midGrey text-lg leading-relaxed mb-12 max-w-sm">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-terrain-pureWhite mb-8 tracking-tight">CAPABILITIES</h2>
+            <p className="text-terrain-midGrey text-base md:text-lg leading-relaxed mb-12 max-w-sm">
               We design and build complete digital ecosystems. Every capability works together to turn complex challenges into clear solutions.
             </p>
           </div>
@@ -40,9 +40,9 @@ export default function Services() {
                   onMouseEnter={() => setActiveService(index)}
                   onMouseLeave={() => setActiveService(null)}
                 >
-                  <a href="#" data-interactive="true" className="block py-8 md:py-12 relative z-10">
+                  <a href="#" data-interactive="true" className="block py-6 md:py-10 relative z-10">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-heading text-3xl md:text-5xl text-terrain-softWhite group-hover:translate-x-4 transition-transform duration-500 ease-out">
+                      <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl text-terrain-softWhite group-hover:translate-x-4 transition-transform duration-500 ease-out">
                         {service}
                       </h3>
                       <div className="w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">

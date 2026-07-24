@@ -32,9 +32,9 @@ export default function Work() {
   return (
     <section id="work" className="py-32 bg-terrain-deepBlack border-t border-white/5">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="flex items-center justify-between mb-24">
-          <h2 className="font-heading text-4xl md:text-6xl text-terrain-pureWhite tracking-tight">SELECTED WORK</h2>
-          <a href="#" className="hidden md:flex items-center gap-2 text-terrain-pureWhite font-semibold text-sm hover:opacity-70 transition-opacity">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-16 md:mb-24 gap-6">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-terrain-pureWhite tracking-tight">SELECTED WORK</h2>
+          <a href="#" className="flex items-center gap-2 text-terrain-pureWhite font-semibold text-sm hover:opacity-70 transition-opacity">
             View All Projects
             <div className="w-4 h-4 border border-current flex items-center justify-center rotate-45">
               <div className="w-1 h-1 bg-current" />
@@ -42,7 +42,7 @@ export default function Work() {
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {projects.map((project, index) => (
             <motion.div 
               key={project.id}
@@ -64,8 +64,8 @@ export default function Work() {
               </div>
 
               <div className="flex items-start justify-between mb-3">
-                <h3 className="font-heading text-2xl text-terrain-pureWhite group-hover:text-terrain-midGrey transition-colors">{project.title}</h3>
-                <span className="text-terrain-midGrey text-sm font-heading">{project.year}</span>
+                <h3 className="font-heading text-xl md:text-2xl text-terrain-pureWhite group-hover:text-terrain-midGrey transition-colors">{project.title}</h3>
+                <span className="text-terrain-midGrey text-xs md:text-sm font-heading">{project.year}</span>
               </div>
               
               <div className="flex gap-3 mb-4">

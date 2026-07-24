@@ -20,9 +20,9 @@ export default function BusinessImpact() {
     <section className="py-32 bg-terrain-deepBlack border-t border-white/5 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10" ref={containerRef}>
         
-        <div className="text-center mb-24 max-w-4xl mx-auto">
-          <h2 className="font-heading text-4xl md:text-5xl text-terrain-pureWhite mb-6 tracking-tight">MEASURABLE IMPACT</h2>
-          <p className="text-terrain-midGrey text-lg">We deliver qualitative outcomes that build an evolving, structured business landscape.</p>
+        <div className="text-center mb-16 md:mb-24 max-w-4xl mx-auto px-4">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-terrain-pureWhite mb-6 tracking-tight">MEASURABLE IMPACT</h2>
+          <p className="text-terrain-midGrey text-base md:text-lg">We deliver qualitative outcomes that build an evolving, structured business landscape.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
@@ -33,13 +33,13 @@ export default function BusinessImpact() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               onAnimationComplete={() => setActiveNodes(prev => Math.max(prev, index + 1))}
-              className="border border-white/10 bg-terrain-nearBlack p-8 hover:bg-white/5 transition-colors group"
+              className="border border-white/10 bg-terrain-nearBlack p-6 md:p-8 hover:bg-white/5 transition-colors group"
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className={`w-3 h-3 transition-colors duration-500 ${activeNodes > index ? 'bg-terrain-pureWhite' : 'bg-terrain-midGrey/30'}`} />
                 <div className="text-terrain-midGrey font-heading text-xs tracking-widest">OUTCOME {index + 1}</div>
               </div>
-              <p className="text-terrain-softWhite text-xl font-light group-hover:text-terrain-pureWhite transition-colors">
+              <p className="text-terrain-softWhite text-lg md:text-xl font-light group-hover:text-terrain-pureWhite transition-colors">
                 {outcome}
               </p>
             </motion.div>
