@@ -31,14 +31,14 @@ export default function Hero() {
             <div className="h-[1px] w-8 bg-terrain-midGrey" />
           </motion.div>
 
-          <h1 className="font-heading text-2xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8 px-4">
-            <AnimatedText text="BUILDING SMARTER" el="span" mode="word" className="block" />
+          <h1 className="font-heading text-2xl sm:text-4xl md:text-5xl lg:text-7xl leading-[0.95] tracking-tight text-terrain-pureWhite mb-8 px-4">
+            <AnimatedText text="BUILDING SMARTER" el="span" mode="word" className="block sm:whitespace-nowrap" />
             <AnimatedText 
               text="BUSINESS LANDSCAPES." 
               el="span" 
               mode="word" 
               delay={0.2}
-              className="block text-transparent bg-clip-text bg-gradient-to-b from-terrain-pureWhite to-terrain-midGrey" 
+              className="block sm:whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-terrain-pureWhite to-terrain-midGrey" 
             />
           </h1>
 

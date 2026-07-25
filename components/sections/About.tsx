@@ -8,10 +8,8 @@ export default function About() {
           
           <div className="lg:col-span-6">
             <div className="font-heading text-3xl md:text-4xl lg:text-5xl leading-[1.1] mb-8 tracking-tight">
-              <AnimatedText text="BUILDING" el="h2" className="text-terrain-pureWhite block" mode="character" />
-              <AnimatedText text="EXPERIENCES" el="h2" className="text-terrain-pureWhite block" mode="character" delay={0.1} />
-              <AnimatedText text="BEYOND" el="h2" className="text-terrain-midGrey block" mode="character" delay={0.2} />
-              <AnimatedText text="EXPECTATIONS." el="h2" className="text-terrain-midGrey block" mode="character" delay={0.3} />
+              <AnimatedText text="BUILDING EXPERIENCES" el="h2" className="text-terrain-pureWhite block" mode="word" />
+              <AnimatedText text="BEYOND EXPECTATIONS." el="h2" className="text-terrain-midGrey block" mode="word" delay={0.15} />
             </div>
           </div>
 

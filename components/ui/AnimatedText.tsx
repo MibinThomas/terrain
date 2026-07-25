@@ -28,6 +28,32 @@ export default function AnimatedText({
   // Split by words or characters
   const itemArray = isWordMode ? text.split(" ") : text.split("");
 
+  // Separate wrapper layout classes from text gradient/clip classes
+  const classList = className.split(" ").filter(Boolean);
+  const textGradientClasses = classList
+    .filter(
+      (c) =>
+        c.includes("bg-clip-text") ||
+        c.includes("text-transparent") ||
+        c.startsWith("bg-gradient") ||
+        c.startsWith("from-") ||
+        c.startsWith("to-") ||
+        c.startsWith("via-")
+    )
+    .join(" ");
+
+  const wrapperClasses = classList
+    .filter(
+      (c) =>
+        !c.includes("bg-clip-text") &&
+        !c.includes("text-transparent") &&
+        !c.startsWith("bg-gradient") &&
+        !c.startsWith("from-") &&
+        !c.startsWith("to-") &&
+        !c.startsWith("via-")
+    )
+    .join(" ");
+
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -58,18 +84,18 @@ export default function AnimatedText({
   };
 
   return (
-    <Wrapper ref={ref} className={className}>
+    <Wrapper ref={ref} className={wrapperClasses}>
       <motion.span
         variants={container}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="inline-block"
+        className={`inline-block ${textGradientClasses}`}
       >
         {itemArray.map((item, index) => (
           <motion.span
             key={index}
             variants={child}
-            className="inline-block"
+            className={`inline-block ${textGradientClasses}`}
             style={{ marginRight: isWordMode && index !== itemArray.length - 1 ? "0.25em" : "0" }}
           >
             {item === " " && !isWordMode ? "\u00A0" : item}
