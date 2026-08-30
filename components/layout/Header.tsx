@@ -20,10 +20,10 @@ export default function Header() {
   });
 
   const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Capabilities", href: "#capabilities" },
-    { name: "Process", href: "#process" },
-    { name: "Work", href: "#work" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Work", href: "/work" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -61,7 +61,7 @@ export default function Header() {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/contact"
             data-interactive="true"
             className="text-sm font-semibold text-terrain-deepBlack bg-terrain-pureWhite px-5 py-2.5 rounded-sm hover:bg-terrain-softWhite hover:scale-[1.02] transition-all"
           >
@@ -101,7 +101,7 @@ export default function Header() {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/contact"
             onClick={() => setMobileMenuOpen(false)}
             className="text-center text-lg font-heading text-terrain-deepBlack bg-terrain-pureWhite px-6 py-4 mt-4"
           >

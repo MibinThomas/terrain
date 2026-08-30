@@ -11,24 +11,26 @@ import BusinessImpact from "@/components/sections/BusinessImpact";
 import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import CustomCursor from "@/components/ui/CustomCursor";
-import ContinuityLine from "@/components/ui/ContinuityLine";
+import TrustBadges from "@/components/sections/TrustBadges";
+import FaqSection from "@/components/sections/FaqSection";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen selection:bg-terrain-pureWhite selection:text-terrain-deepBlack">
       <CustomCursor />
-      <ContinuityLine />
       <Header />
       
       <Hero />
       <Manifesto />
       <Foundations />
+      <TrustBadges />
       <Process />
       <Services />
       <Work />
       <DesignPhilosophy />
       <BusinessImpact />
       <About />
+      <FaqSection />
       <Contact />
       
       <Footer />
