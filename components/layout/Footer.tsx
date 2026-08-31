@@ -17,7 +17,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-terrain-nearBlack pt-20 pb-10 border-t border-white/5 relative overflow-hidden">
+    <footer className="bg-terrain-nearBlack pt-16 sm:pt-20 pb-10 border-t border-white/5 relative overflow-hidden">
       {/* Subtle white radial background glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] opacity-10 pointer-events-none"
@@ -27,25 +27,25 @@ export default function Footer() {
         }}
       />
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
           {/* Brand & Newsletter Column */}
           <div className="lg:col-span-5 space-y-6">
             <Link href="/" className="inline-block">
               <img 
                 src="/images/logo/Terrain Vertical White.png" 
                 alt="Terrain Logo" 
-                className="h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="h-12 sm:h-16 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
-            <p className="text-terrain-midGrey text-sm leading-relaxed max-w-md">
+            <p className="text-terrain-midGrey text-xs sm:text-sm leading-relaxed max-w-md">
               Beyond Design. Into Experience. We engineer high-performance web products,
               UI/UX design systems, and custom software that drive measurable business impact.
             </p>
 
             {/* Newsletter Subscription */}
             <div className="pt-2 max-w-md">
-              <label className="block text-xs uppercase tracking-wider text-terrain-midGrey font-semibold mb-2">
+              <label className="block text-[11px] uppercase tracking-wider text-terrain-midGrey font-semibold mb-2">
                 Subscribe to Digital Insights
               </label>
               {subscribed ? (
@@ -53,7 +53,7 @@ export default function Footer() {
                   <CheckCircle2 size={16} /> Thank you! You're subscribed to Terrain Insights.
                 </div>
               ) : (
-                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
                   <input
                     type="email"
                     required
@@ -64,7 +64,7 @@ export default function Footer() {
                   />
                   <button
                     type="submit"
-                    className="bg-white hover:bg-neutral-200 text-black px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                    className="bg-white hover:bg-neutral-200 text-black px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                   >
                     Subscribe <Send size={12} />
                   </button>
@@ -84,7 +84,7 @@ export default function Footer() {
             <h4 className="font-heading text-terrain-softWhite uppercase text-xs tracking-widest mb-5 font-semibold">
               Company
             </h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-xs sm:text-sm">
               {[
                 { label: "Home", href: "/" },
                 { label: "About Us", href: "/about" },
@@ -110,7 +110,7 @@ export default function Footer() {
             <h4 className="font-heading text-terrain-softWhite uppercase text-xs tracking-widest mb-5 font-semibold">
               Capabilities
             </h4>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-xs sm:text-sm">
               {[
                 { label: "Web Engineering & Next.js", href: "/services" },
                 { label: "UI/UX Product Architecture", href: "/services" },
@@ -135,7 +135,7 @@ export default function Footer() {
             <h4 className="font-heading text-terrain-softWhite uppercase text-xs tracking-widest mb-5 font-semibold">
               Connect
             </h4>
-            <div className="flex flex-col space-y-3 text-sm">
+            <div className="flex flex-col space-y-3 text-xs sm:text-sm">
               <a
                 href="https://linkedin.com"
                 target="_blank"
@@ -165,7 +165,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs text-terrain-midGrey gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[11px] sm:text-xs text-terrain-midGrey gap-4 text-center md:text-left">
           <p>© {new Date().getFullYear()} Terrain Business Solutions. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-terrain-softWhite transition-colors">

@@ -37,7 +37,7 @@ export default function Foundations() {
   const blurStrat = useTransform(smoothProgress, [0.65, 0.78, 1], ["blur(10px)", "blur(0px)", "blur(0px)"]);
 
   return (
-    <section ref={containerRef} className="relative h-[320vh] bg-terrain-deepBlack" id="foundations">
+    <section ref={containerRef} className="relative h-[320vh] bg-terrain-deepBlack overflow-hidden" id="foundations">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
         {/* Ambient white radial background glow */}
@@ -49,8 +49,8 @@ export default function Foundations() {
         />
 
         {/* Floating Stage Indicator Bar */}
-        <div className="absolute top-24 sm:top-28 z-30 flex items-center justify-center">
-          <div className="bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-full p-1.5 flex items-center gap-1 sm:gap-2">
+        <div className="absolute top-20 sm:top-28 z-30 flex items-center justify-center px-4 w-full">
+          <div className="bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-full p-1.5 flex items-center gap-1 sm:gap-2 max-w-full overflow-x-auto no-scrollbar">
             {[
               { label: "01 Ideas", icon: Sparkles },
               { label: "02 Tech", icon: Cpu },
@@ -60,9 +60,9 @@ export default function Foundations() {
               return (
                 <div
                   key={stg.label}
-                  className="px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-heading font-semibold uppercase tracking-wider text-terrain-midGrey flex items-center gap-1.5 transition-colors"
+                  className="px-2.5 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-xs font-heading font-semibold uppercase tracking-wider text-terrain-midGrey flex items-center gap-1.5 shrink-0 transition-colors"
                 >
-                  <Icon size={13} className="text-white" />
+                  <Icon size={13} className="text-white shrink-0" />
                   <span>{stg.label}</span>
                 </div>
               );
@@ -75,7 +75,7 @@ export default function Foundations() {
         {/* =================================================== */}
         <motion.div
           style={{ opacity: opacityIdeas, scale: scaleIdeas, y: yIdeas, filter: blurIdeas }}
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-6"
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4 sm:px-6"
         >
           {/* Animated floating particles */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
@@ -115,19 +115,19 @@ export default function Foundations() {
             <motion.div
               animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-80 h-80 rounded-full bg-white/20 blur-[90px] absolute"
+              className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white/20 blur-[90px] absolute"
             />
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.02] backdrop-blur-xl border border-white/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-auto bg-white/[0.02] backdrop-blur-xl border border-white/20 p-6 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-5 font-semibold">
               <Sparkles size={13} /> Discovery Phase
             </span>
-            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-3 sm:mb-4 tracking-tight">
               IDEAS
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="text-terrain-midGrey text-sm sm:text-base lg:text-lg max-w-xl mx-auto leading-relaxed">
               Discovery and early-stage thinking. Unstructured vision seeking direction, pattern recognition, and form.
             </p>
           </div>
@@ -138,11 +138,11 @@ export default function Foundations() {
         {/* =================================================== */}
         <motion.div
           style={{ opacity: opacityTech, scale: scaleTech, y: yTech, filter: blurTech }}
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-6"
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4 sm:px-6"
         >
           {/* Cybernetic grid network */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[320px] h-[320px] sm:w-[540px] sm:h-[540px] border border-white/15 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-white/[0.01]">
+            <div className="w-[280px] h-[280px] sm:w-[540px] sm:h-[540px] border border-white/15 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-white/[0.01]">
               {Array.from({ length: 16 }).map((_, i) => (
                 <div key={i} className="border border-white/10 relative flex items-center justify-center">
                   <motion.div
@@ -156,14 +156,14 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-terrain-deepBlack/90 backdrop-blur-xl border border-white/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-auto bg-terrain-deepBlack/90 backdrop-blur-xl border border-white/20 p-6 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-5 font-semibold">
               <Cpu size={13} /> Engineering Matrix
             </span>
-            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight whitespace-nowrap">
+            <h2 className="font-heading font-extrabold text-2xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-3 sm:mb-4 tracking-tight sm:whitespace-nowrap">
               TECHNOLOGY
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="text-terrain-midGrey text-sm sm:text-base lg:text-lg max-w-xl mx-auto leading-relaxed">
               Structured digital grids. Connected nodes forming scalable systems, robust architecture, and high-speed execution.
             </p>
           </div>
@@ -174,11 +174,11 @@ export default function Foundations() {
         {/* =================================================== */}
         <motion.div
           style={{ opacity: opacityStrat, scale: scaleStrat, y: yStrat, filter: blurStrat }}
-          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-6"
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4 sm:px-6"
         >
           {/* Laser trajectory SVG */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[600px] opacity-30">
+            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[500px] sm:max-w-[600px] opacity-30">
               <motion.path
                 d="M 100 500 L 300 200 L 500 500"
                 fill="none"
@@ -194,14 +194,14 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.03] backdrop-blur-xl border border-white/25 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_60px_rgba(255,255,255,0.12)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-auto bg-white/[0.03] backdrop-blur-xl border border-white/25 p-6 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_60px_rgba(255,255,255,0.12)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-5 font-semibold">
               <Compass size={13} /> Clear Direction
             </span>
-            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-3 sm:mb-4 tracking-tight">
               STRATEGY
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="text-terrain-midGrey text-sm sm:text-base lg:text-lg max-w-xl mx-auto leading-relaxed">
               Paths converge. One clear direction highlighted for sustainable business growth, market distinction, and lasting impact.
             </p>
           </div>
