@@ -12,14 +12,57 @@ import {
   FileText,
   ArrowRight,
   CheckCircle2,
-  Layers,
   Wrench,
+  Box,
+  Layers,
+  PlayCircle,
+  Shapes,
 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Creatives & Brand Media",
   description:
     "Explore Terrain's design showcase — Modern UI/UX Mockups, Motion Graphics, Executive Business Cards, Flyers, and Brand Posters.",
+};
+
+// Vector Tool Badges / Logos
+const TOOL_LOGOS: Record<string, React.ReactNode> = {
+  Figma: (
+    <svg viewBox="0 0 38 57" className="w-6 h-6 fill-current text-white shrink-0">
+      <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38H19V28.5Z" />
+      <path d="M0 47.5C0 42.2533 4.2533 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.2533 57 0 52.7467 0 47.5Z" />
+      <path d="M19 0V19H28.5C33.7467 19 38 14.7467 38 9.5C38 4.2533 33.7467 0 28.5 0H19Z" />
+      <path d="M0 9.5C0 14.7467 4.2533 19 9.5 19H19V0H9.5C4.2533 0 0 4.2533 0 9.5Z" />
+      <path d="M0 28.5C0 33.7467 4.2533 38 9.5 38H19V19H9.5C4.2533 19 0 23.2533 0 28.5Z" />
+    </svg>
+  ),
+  "After Effects": (
+    <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xs tracking-tighter shrink-0 font-mono">
+      Ae
+    </div>
+  ),
+  Photoshop: (
+    <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xs tracking-tighter shrink-0 font-mono">
+      Ps
+    </div>
+  ),
+  Illustrator: (
+    <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-xs tracking-tighter shrink-0 font-mono">
+      Ai
+    </div>
+  ),
+  "Blender 3D": (
+    <Box size={24} className="text-white shrink-0" />
+  ),
+  "Cinema 4D": (
+    <Shapes size={24} className="text-white shrink-0" />
+  ),
+  Lottie: (
+    <PlayCircle size={24} className="text-white shrink-0" />
+  ),
+  "Spline 3D": (
+    <Layers size={24} className="text-white shrink-0" />
+  ),
 };
 
 const CREATIVE_TOOLS = [
@@ -174,24 +217,30 @@ export default function CreativesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {CREATIVE_TOOLS.map((tool) => (
               <div
                 key={tool.name}
-                className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-2xl p-5 transition-all duration-300 group hover:bg-white/[0.04]"
+                className="bg-white/[0.02] border border-white/10 hover:border-white/40 rounded-2xl p-6 transition-all duration-300 group hover:bg-white/[0.05] flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey font-semibold bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
-                    {tool.category}
-                  </span>
-                  <div className="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity" />
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0 group-hover:border-white/40 group-hover:scale-105 transition-all">
+                      {TOOL_LOGOS[tool.name] || <Wrench size={20} className="text-white" />}
+                    </div>
+                    <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey font-bold bg-white/5 border border-white/10 px-2.5 py-1 rounded-full text-right shrink-0">
+                      {tool.category}
+                    </span>
+                  </div>
+
+                  <h3 className="font-body font-bold text-lg sm:text-xl text-terrain-softWhite mb-2 group-hover:text-white tracking-normal leading-snug">
+                    {tool.name}
+                  </h3>
+
+                  <p className="text-terrain-midGrey text-xs sm:text-sm leading-relaxed">
+                    {tool.desc}
+                  </p>
                 </div>
-                <h3 className="font-heading font-extrabold text-xl text-terrain-softWhite mb-1 group-hover:text-white">
-                  {tool.name}
-                </h3>
-                <p className="text-terrain-midGrey text-xs leading-relaxed">
-                  {tool.desc}
-                </p>
               </div>
             ))}
           </div>
@@ -247,7 +296,7 @@ export default function CreativesPage() {
                       <span className="text-[11px] uppercase tracking-wider text-terrain-midGrey font-semibold block mb-3">
                         Design & Print Specifications
                       </span>
-                      <div className="grid grid-cols-2 gap-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {item.specs.map((spec) => (
                           <div key={spec} className="flex items-center gap-2 text-xs text-terrain-softWhite">
                             <CheckCircle2 size={14} className="text-white shrink-0" />
