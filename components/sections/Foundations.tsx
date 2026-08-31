@@ -13,31 +13,31 @@ export default function Foundations() {
 
   // Smooth scroll spring physics for buttery smooth motion
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 20,
+    stiffness: 90,
+    damping: 22,
     restDelta: 0.001,
   });
 
-  // --- STAGE 1: IDEAS (0.0 to 0.35) ---
-  const opacityIdeas = useTransform(smoothProgress, [0, 0.25, 0.35], [1, 1, 0]);
-  const scaleIdeas = useTransform(smoothProgress, [0, 0.25, 0.35], [1, 1, 0.9]);
-  const yIdeas = useTransform(smoothProgress, [0, 0.25, 0.35], [0, 0, -50]);
-  const blurIdeas = useTransform(smoothProgress, [0, 0.25, 0.35], ["blur(0px)", "blur(0px)", "blur(10px)"]);
+  // --- STAGE 1: IDEAS (0.0 to 0.33) ---
+  const opacityIdeas = useTransform(smoothProgress, [0, 0.22, 0.33], [1, 1, 0]);
+  const scaleIdeas = useTransform(smoothProgress, [0, 0.22, 0.33], [1, 1, 0.9]);
+  const yIdeas = useTransform(smoothProgress, [0, 0.22, 0.33], [0, 0, -40]);
+  const blurIdeas = useTransform(smoothProgress, [0, 0.22, 0.33], ["blur(0px)", "blur(0px)", "blur(8px)"]);
 
-  // --- STAGE 2: TECHNOLOGY (0.3 to 0.7) ---
-  const opacityTech = useTransform(smoothProgress, [0.3, 0.42, 0.58, 0.7], [0, 1, 1, 0]);
-  const scaleTech = useTransform(smoothProgress, [0.3, 0.42, 0.58, 0.7], [0.9, 1, 1, 0.9]);
-  const yTech = useTransform(smoothProgress, [0.3, 0.42, 0.58, 0.7], [50, 0, 0, -50]);
-  const blurTech = useTransform(smoothProgress, [0.3, 0.42, 0.58, 0.7], ["blur(10px)", "blur(0px)", "blur(0px)", "blur(10px)"]);
+  // --- STAGE 2: TECHNOLOGY (0.28 to 0.68) ---
+  const opacityTech = useTransform(smoothProgress, [0.28, 0.38, 0.58, 0.68], [0, 1, 1, 0]);
+  const scaleTech = useTransform(smoothProgress, [0.28, 0.38, 0.58, 0.68], [0.9, 1, 1, 0.9]);
+  const yTech = useTransform(smoothProgress, [0.28, 0.38, 0.58, 0.68], [40, 0, 0, -40]);
+  const blurTech = useTransform(smoothProgress, [0.28, 0.38, 0.58, 0.68], ["blur(8px)", "blur(0px)", "blur(0px)", "blur(8px)"]);
 
-  // --- STAGE 3: STRATEGY (0.65 to 1.0) ---
-  const opacityStrat = useTransform(smoothProgress, [0.65, 0.78, 1], [0, 1, 1]);
-  const scaleStrat = useTransform(smoothProgress, [0.65, 0.78, 1], [0.9, 1, 1]);
-  const yStrat = useTransform(smoothProgress, [0.65, 0.78, 1], [50, 0, 0]);
-  const blurStrat = useTransform(smoothProgress, [0.65, 0.78, 1], ["blur(10px)", "blur(0px)", "blur(0px)"]);
+  // --- STAGE 3: STRATEGY (0.63 to 1.0) ---
+  const opacityStrat = useTransform(smoothProgress, [0.63, 0.73, 1], [0, 1, 1]);
+  const scaleStrat = useTransform(smoothProgress, [0.63, 0.73, 1], [0.9, 1, 1]);
+  const yStrat = useTransform(smoothProgress, [0.63, 0.73, 1], [40, 0, 0]);
+  const blurStrat = useTransform(smoothProgress, [0.63, 0.73, 1], ["blur(8px)", "blur(0px)", "blur(0px)"]);
 
   return (
-    <section ref={containerRef} className="relative h-[320vh] bg-terrain-deepBlack overflow-hidden" id="foundations">
+    <section ref={containerRef} className="relative h-[200vh] bg-terrain-deepBlack overflow-hidden" id="foundations">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
         {/* Ambient white radial background glow */}
