@@ -120,14 +120,14 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-xl bg-white/[0.02] backdrop-blur-xl border border-purple-500/20 p-8 sm:p-12 rounded-3xl shadow-[0_0_50px_rgba(157,0,255,0.15)]">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.02] backdrop-blur-xl border border-purple-500/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(157,0,255,0.15)]">
             <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3.5 py-1.5 rounded-full mb-6">
               <Sparkles size={13} /> Discovery Phase
             </span>
-            <h2 className="font-heading font-extrabold text-4xl sm:text-6xl text-terrain-softWhite mb-4 tracking-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">
               IDEAS
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg leading-relaxed">
+            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
               Discovery and early-stage thinking. Unstructured vision seeking direction, pattern recognition, and form.
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function Foundations() {
         >
           {/* Cybernetic grid network */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[320px] h-[320px] sm:w-[500px] sm:h-[500px] border border-purple-500/20 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-purple-950/10">
+            <div className="w-[320px] h-[320px] sm:w-[540px] sm:h-[540px] border border-purple-500/20 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-purple-950/10">
               {Array.from({ length: 16 }).map((_, i) => (
                 <div key={i} className="border border-purple-500/10 relative flex items-center justify-center">
                   <motion.div
@@ -156,14 +156,14 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-xl bg-terrain-deepBlack/90 backdrop-blur-xl border border-purple-500/30 p-8 sm:p-12 rounded-3xl shadow-[0_0_50px_rgba(34,211,238,0.15)]">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-terrain-deepBlack/90 backdrop-blur-xl border border-purple-500/30 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(34,211,238,0.15)]">
             <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-1.5 rounded-full mb-6">
               <Cpu size={13} /> Engineering Matrix
             </span>
-            <h2 className="font-heading font-extrabold text-4xl sm:text-6xl text-terrain-softWhite mb-4 tracking-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight whitespace-nowrap">
               TECHNOLOGY
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg leading-relaxed">
+            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
               Structured digital grids. Connected nodes forming scalable systems, robust architecture, and high-speed execution.
             </p>
           </div>
@@ -194,14 +194,14 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-xl bg-white/[0.03] backdrop-blur-xl border border-purple-500/40 p-8 sm:p-12 rounded-3xl shadow-[0_0_60px_rgba(157,0,255,0.25)]">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.03] backdrop-blur-xl border border-purple-500/40 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_60px_rgba(157,0,255,0.25)]">
             <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full mb-6">
               <Compass size={13} /> Clear Direction
             </span>
-            <h2 className="font-heading font-extrabold text-4xl sm:text-6xl text-terrain-softWhite mb-4 tracking-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">
               STRATEGY
             </h2>
-            <p className="text-terrain-midGrey text-base sm:text-lg leading-relaxed">
+            <p className="text-terrain-midGrey text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
               Paths converge. One clear direction highlighted for sustainable business growth, market distinction, and lasting impact.
             </p>
           </div>
