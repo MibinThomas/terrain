@@ -4,39 +4,60 @@ import Footer from "@/components/layout/Footer";
 import TrustBadges from "@/components/sections/TrustBadges";
 import FaqSection from "@/components/sections/FaqSection";
 import Link from "next/link";
-import { Code2, Palette, ShoppingBag, Cpu, ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  Code2,
+  Palette,
+  ShoppingBag,
+  Cpu,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  Layers,
+  Rocket,
+  Globe2,
+} from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services & Capabilities",
   description:
-    "Explore Terrain's digital capabilities — Web Engineering, UI/UX Product Design, E-Commerce, Brand Identity Systems, and Custom AI/Software Solutions.",
+    "Explore Terrain's digital capabilities — Web Engineering, UI/UX Product Architecture, E-Commerce Platforms, and Bespoke AI Software Solutions.",
 };
 
 const SERVICES = [
   {
     id: "web-engineering",
     icon: Code2,
+    accent: "from-purple-500 to-indigo-500",
+    glowColor: "rgba(157, 0, 255, 0.15)",
+    badgeColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
     title: "Web Engineering & Next.js",
     short: "High-performance web applications engineered for speed, scale, and search dominance.",
     description:
-      "We write clean, modular Next.js and React code structured for maximum Google Search indexing, sub-second TTFB, and zero layout shift.",
+      "We write clean, modular Next.js 16 and React code structured for maximum Google Search indexing, sub-second TTFB, and zero layout shift.",
+    techStack: ["Next.js 16", "React 19", "TypeScript", "TailwindCSS", "Node.js"],
     deliverables: [
-      "Next.js / React Architecture",
+      "Next.js / React Architecture & SSR",
       "API Integrations & Server Actions",
-      "Performance & Core Web Vitals Optimization",
+      "Core Web Vitals & Speed Optimization",
       "SEO-Ready Headless Architecture",
     ],
   },
   {
     id: "ui-ux-design",
     icon: Palette,
+    accent: "from-pink-500 to-purple-500",
+    glowColor: "rgba(236, 72, 153, 0.15)",
+    badgeColor: "text-pink-400 bg-pink-500/10 border-pink-500/20",
     title: "UI/UX Product Architecture",
     short: "Bespoke design systems that engage users and elevate digital brand perception.",
     description:
       "From wireframing and user journey mapping to comprehensive design systems in Figma, we design interfaces that feel fluid, modern, and intuitive.",
+    techStack: ["Figma Systems", "Framer Motion", "Micro-Interactions", "Design Tokens"],
     deliverables: [
       "User Journey & UX Wireframing",
-      "Figma Component Systems",
+      "Figma Component & Token Systems",
       "Micro-Animations & Motion Prototyping",
       "Design System Documentation",
     ],
@@ -44,98 +65,200 @@ const SERVICES = [
   {
     id: "ecommerce",
     icon: ShoppingBag,
+    accent: "from-emerald-400 to-teal-500",
+    glowColor: "rgba(16, 185, 129, 0.15)",
+    badgeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
     title: "E-Commerce Solutions",
     short: "Revenue-generating storefronts engineered to maximize visitor-to-buyer conversion.",
     description:
       "End-to-end e-commerce platforms featuring split payment gateways (Tabby/Stripe), multi-vendor cart architecture, and rapid checkout experiences.",
+    techStack: ["Shopify Headless", "Payload CMS", "Stripe API", "Tabby BNPL"],
     deliverables: [
-      "Headless Storefronts & Shopify",
-      "Multi-Vendor Split Architecture",
-      "Payment Gateway Integrations",
+      "Headless Storefronts & Custom Themes",
+      "Multi-Vendor Split Cart Architecture",
+      "Regional Payment Gateway Integrations",
       "Custom Product Configurators",
     ],
   },
   {
     id: "ai-software",
     icon: Cpu,
+    accent: "from-cyan-400 to-blue-500",
+    glowColor: "rgba(34, 211, 238, 0.15)",
+    badgeColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
     title: "AI & Bespoke Software",
     short: "Intelligent software systems that automate manual workflows and empower decisions.",
     description:
       "Custom software engineering tailored to your operational bottlenecks. We build custom APIs, LLM/AI integrations, and automated backends.",
+    techStack: ["Python / FastAPI", "OpenAI / LLMs", "PostgreSQL", "Docker / AWS"],
     deliverables: [
-      "LLM & AI API Integrations",
+      "LLM & Custom AI API Integrations",
       "Bespoke Dashboard & SaaS Tools",
       "Automated Workflow Pipelines",
-      "Secure Database Architecture",
+      "Secure Database & Cloud Architecture",
     ],
+  },
+];
+
+const PROTOCOL_STEPS = [
+  {
+    num: "01",
+    title: "Discovery & Blueprinting",
+    desc: "We analyze business requirements, user journeys, and technical bottlenecks to create an architectural blueprint.",
+  },
+  {
+    num: "02",
+    title: "Design System & Motion",
+    desc: "Crafting scalable Figma design tokens, fluid UI components, and micro-animations tailored to your brand identity.",
+  },
+  {
+    num: "03",
+    title: "Next.js & API Engineering",
+    desc: "Writing clean, type-safe Next.js and TypeScript code with sub-second response times and bulletproof API integration.",
+  },
+  {
+    num: "04",
+    title: "Testing & Global Launch",
+    desc: "Comprehensive cross-device QA, Core Web Vitals optimization, SEO verification, and automated cloud deployment.",
   },
 ];
 
 export default function ServicesPage() {
   return (
-    <main className="relative min-h-screen bg-terrain-deepBlack text-terrain-softWhite">
+    <main className="relative min-h-screen bg-terrain-deepBlack text-terrain-softWhite overflow-hidden">
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-40 pb-20 border-b border-white/5 relative overflow-hidden">
+      <section className="pt-44 pb-24 border-b border-white/5 relative">
+        {/* Ambient Radial Background Glow */}
+        <div
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] opacity-20 pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, #9D00FF 0%, transparent 70%)",
+            filter: "blur(90px)",
+          }}
+        />
+
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-6">
-            Capabilities & Services
+          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-4 py-1.5 rounded-full mb-6 font-semibold">
+            <Sparkles size={14} /> Capabilities & Digital Services
           </span>
-          <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-6">
+
+          <h1 className="font-heading font-extrabold text-4xl sm:text-6xl lg:text-7xl max-w-4xl leading-tight text-terrain-softWhite mb-6 tracking-tight">
             Digital Engineering Built for <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
               Measurable Growth.
             </span>
           </h1>
-          <p className="text-terrain-midGrey text-lg max-w-2xl leading-relaxed">
-            Every service we offer is designed to deliver immediate digital competitive advantage, flawless user experience, and enterprise scalability.
+
+          <p className="text-terrain-midGrey text-lg sm:text-xl max-w-2xl leading-relaxed mb-10">
+            Every capability we deliver combines aesthetic design perfection, cutting-edge software architecture, and speed optimization.
           </p>
+
+          {/* Quick Metrics Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl pt-6 border-t border-white/10">
+            {[
+              { val: "99.9%", label: "Uptime & Reliability" },
+              { val: "< 0.5s", label: "Page Load Speed" },
+              { val: "100%", label: "SEO Structured Data" },
+              { val: "24/7", label: "Engineering Support" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-center">
+                <span className="font-heading font-extrabold text-xl sm:text-2xl text-purple-400 block">
+                  {stat.val}
+                </span>
+                <span className="text-[10px] text-terrain-midGrey uppercase tracking-wider block mt-1">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Services List */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 md:px-12 space-y-8">
+      {/* Detailed Services Grid */}
+      <section className="py-28 relative">
+        <div className="container mx-auto px-6 md:px-12 space-y-12">
           {SERVICES.map((s) => {
             const Icon = s.icon;
             return (
               <div
                 key={s.id}
                 id={s.id}
-                className="bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-3xl p-8 md:p-12 transition-all duration-300 group"
+                className="group relative bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-purple-500/40 rounded-3xl p-8 sm:p-12 transition-all duration-500 hover:shadow-[0_0_50px_rgba(157,0,255,0.12)] overflow-hidden"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  <div className="lg:col-span-8 space-y-4">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                      <Icon size={24} className="text-purple-400" />
+                {/* Dynamic Subtle Hover Glow */}
+                <div
+                  className="absolute top-0 right-0 w-96 h-96 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full"
+                  style={{
+                    background: `radial-gradient(circle, ${s.glowColor} 0%, transparent 70%)`,
+                    filter: "blur(60px)",
+                  }}
+                />
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
+                  {/* Service Core Info */}
+                  <div className="lg:col-span-7 space-y-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 flex items-center justify-center shadow-inner">
+                        <Icon size={28} className="text-purple-300" />
+                      </div>
+                      <span className={`text-xs uppercase tracking-widest font-bold px-3 py-1 rounded-full border ${s.badgeColor}`}>
+                        {s.id.replace("-", " ")}
+                      </span>
                     </div>
-                    <h2 className="font-heading font-bold text-2xl sm:text-3xl text-terrain-softWhite">
-                      {s.title}
-                    </h2>
-                    <p className="text-purple-300 text-sm font-semibold">{s.short}</p>
-                    <p className="text-terrain-midGrey text-base leading-relaxed">
-                      {s.description}
-                    </p>
+
+                    <div>
+                      <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-terrain-softWhite mb-3">
+                        {s.title}
+                      </h2>
+                      <p className="text-purple-300 text-sm font-semibold mb-4">
+                        {s.short}
+                      </p>
+                      <p className="text-terrain-midGrey text-base leading-relaxed">
+                        {s.description}
+                      </p>
+                    </div>
+
+                    {/* Tech Stack Badges */}
+                    <div>
+                      <span className="text-[11px] uppercase tracking-wider text-terrain-midGrey font-semibold block mb-3">
+                        Technologies & Tools
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {s.techStack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="bg-white/[0.04] border border-white/10 text-terrain-softWhite text-xs font-semibold px-3 py-1.5 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="lg:col-span-4 bg-white/[0.02] border border-white/5 rounded-2xl p-6">
-                    <h3 className="text-xs uppercase tracking-wider text-terrain-midGrey font-semibold mb-4">
-                      Key Deliverables
-                    </h3>
-                    <ul className="space-y-2.5 text-sm text-terrain-softWhite">
-                      {s.deliverables.map((item) => (
-                        <li key={item} className="flex items-center gap-2.5">
-                          <CheckCircle2 size={16} className="text-purple-400 shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Deliverables Box */}
+                  <div className="lg:col-span-5 bg-white/[0.03] border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col justify-between h-full">
+                    <div>
+                      <h3 className="text-xs uppercase tracking-widest text-terrain-midGrey font-bold mb-5 flex items-center gap-2">
+                        <Layers size={14} className="text-purple-400" /> Core Deliverables
+                      </h3>
+                      <ul className="space-y-3.5 text-sm text-terrain-softWhite">
+                        {s.deliverables.map((item) => (
+                          <li key={item} className="flex items-start gap-3">
+                            <CheckCircle2 size={18} className="text-purple-400 shrink-0 mt-0.5" />
+                            <span className="leading-snug">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
                     <Link
                       href="/contact"
-                      className="mt-6 w-full bg-white/5 hover:bg-purple-600 hover:text-white text-terrain-softWhite text-xs font-bold py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 border border-white/10"
+                      className="mt-8 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(157,0,255,0.3)]"
                     >
-                      Inquire About This Service <ArrowRight size={14} />
+                      Request a Consultation <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>
@@ -145,9 +268,79 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Engineering Protocol Section */}
+      <section className="py-24 bg-terrain-nearBlack border-t border-white/5 relative">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-4 font-semibold">
+              <Zap size={14} /> Execution Standard
+            </span>
+            <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-terrain-softWhite mb-4">
+              Our 4-Step Engineering Protocol
+            </h2>
+            <p className="text-terrain-midGrey text-sm sm:text-base">
+              A systematic workflow designed to minimize project risk and guarantee sub-second digital performance.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PROTOCOL_STEPS.map((step) => (
+              <div
+                key={step.num}
+                className="bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300"
+              >
+                <span className="font-heading font-extrabold text-3xl text-purple-500/40 block mb-4">
+                  {step.num}
+                </span>
+                <h3 className="font-heading font-bold text-lg text-terrain-softWhite mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-terrain-midGrey text-xs leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* High Impact Call To Action Banner */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="relative rounded-3xl bg-gradient-to-r from-purple-900/40 via-purple-950/30 to-indigo-900/40 border border-purple-500/30 p-10 sm:p-16 text-center overflow-hidden shadow-[0_0_80px_rgba(157,0,255,0.2)]">
+            <div className="relative z-10 max-w-2xl mx-auto space-y-6">
+              <span className="text-xs uppercase tracking-widest text-purple-300 font-semibold border border-purple-400/30 px-3.5 py-1.5 rounded-full inline-block">
+                Start Your Digital Transformation
+              </span>
+              <h2 className="font-heading font-extrabold text-3xl sm:text-5xl text-terrain-softWhite leading-tight">
+                Ready to Build Your Next Product?
+              </h2>
+              <p className="text-terrain-midGrey text-sm sm:text-base leading-relaxed">
+                Connect with our strategy team in Dubai to discuss your digital engineering requirements.
+              </p>
+              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_30px_rgba(157,0,255,0.4)] flex items-center gap-2"
+                >
+                  Schedule a Consultation <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/work"
+                  className="bg-white/5 hover:bg-white/10 text-terrain-softWhite border border-white/10 font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300"
+                >
+                  Explore Case Studies
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <TrustBadges />
       <FaqSection />
       <Footer />
     </main>
   );
 }
+
