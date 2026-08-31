@@ -51,7 +51,7 @@ export default function AboutPage() {
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-6">
             Architecting the Future of <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
               Digital Experience.
             </span>
           </h1>
@@ -77,7 +77,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_0_25px_rgba(157,0,255,0.3)]"
+                className="inline-flex items-center gap-2 bg-white hover:bg-neutral-200 text-black font-bold px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.2)]"
               >
                 Work With Us <ArrowRight size={16} />
               </Link>
@@ -94,7 +94,7 @@ export default function AboutPage() {
                   key={label}
                   className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 text-center"
                 >
-                  <h3 className="font-heading font-extrabold text-3xl text-purple-400 mb-1">
+                  <h3 className="font-heading font-extrabold text-3xl text-white mb-1">
                     {val}
                   </h3>
                   <p className="text-xs text-terrain-midGrey uppercase tracking-wider">{label}</p>
@@ -121,14 +121,14 @@ export default function AboutPage() {
               return (
                 <div
                   key={p.num}
-                  className="bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-2xl p-8 transition-all duration-300 group"
+                  className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-2xl p-8 transition-all duration-300 group"
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-heading font-extrabold text-2xl text-purple-500/40">
+                    <span className="font-heading font-extrabold text-2xl text-white/30">
                       {p.num}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
-                      <Icon size={20} className="text-purple-400" />
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                      <Icon size={20} className="text-white" />
                     </div>
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-3 text-terrain-softWhite">

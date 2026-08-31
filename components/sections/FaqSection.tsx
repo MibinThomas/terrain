@@ -47,7 +47,7 @@ export default function FaqSection() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-4">
-            <HelpCircle size={14} className="text-purple-400" />
+            <HelpCircle size={14} className="text-white" />
             Frequently Asked Questions
           </span>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-terrain-softWhite">
@@ -66,8 +66,8 @@ export default function FaqSection() {
                 key={faq.question}
                 className={`rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? "bg-white/[0.04] border-purple-500/40 shadow-[0_0_30px_rgba(157,0,255,0.1)]"
-                    : "bg-white/[0.02] border-white/5 hover:border-white/15"
+                    ? "bg-white/[0.04] border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.08)]"
+                    : "bg-white/[0.02] border-white/5 hover:border-white/20"
                 }`}
               >
                 <button
@@ -79,7 +79,7 @@ export default function FaqSection() {
                   <ChevronDown
                     size={20}
                     className={`text-terrain-midGrey transition-transform duration-300 shrink-0 ${
-                      isOpen ? "rotate-180 text-purple-400" : ""
+                      isOpen ? "rotate-180 text-white" : ""
                     }`}
                   />
                 </button>

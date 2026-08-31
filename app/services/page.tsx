@@ -13,10 +13,7 @@ import {
   CheckCircle2,
   Sparkles,
   Zap,
-  ShieldCheck,
   Layers,
-  Rocket,
-  Globe2,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -29,9 +26,7 @@ const SERVICES = [
   {
     id: "web-engineering",
     icon: Code2,
-    accent: "from-purple-500 to-indigo-500",
-    glowColor: "rgba(157, 0, 255, 0.15)",
-    badgeColor: "text-purple-400 bg-purple-500/10 border-purple-500/20",
+    badgeColor: "text-white bg-white/10 border-white/20",
     title: "Web Engineering & Next.js",
     short: "High-performance web applications engineered for speed, scale, and search dominance.",
     description:
@@ -47,9 +42,7 @@ const SERVICES = [
   {
     id: "ui-ux-design",
     icon: Palette,
-    accent: "from-pink-500 to-purple-500",
-    glowColor: "rgba(236, 72, 153, 0.15)",
-    badgeColor: "text-pink-400 bg-pink-500/10 border-pink-500/20",
+    badgeColor: "text-white bg-white/10 border-white/20",
     title: "UI/UX Product Architecture",
     short: "Bespoke design systems that engage users and elevate digital brand perception.",
     description:
@@ -65,9 +58,7 @@ const SERVICES = [
   {
     id: "ecommerce",
     icon: ShoppingBag,
-    accent: "from-emerald-400 to-teal-500",
-    glowColor: "rgba(16, 185, 129, 0.15)",
-    badgeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+    badgeColor: "text-white bg-white/10 border-white/20",
     title: "E-Commerce Solutions",
     short: "Revenue-generating storefronts engineered to maximize visitor-to-buyer conversion.",
     description:
@@ -83,9 +74,7 @@ const SERVICES = [
   {
     id: "ai-software",
     icon: Cpu,
-    accent: "from-cyan-400 to-blue-500",
-    glowColor: "rgba(34, 211, 238, 0.15)",
-    badgeColor: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20",
+    badgeColor: "text-white bg-white/10 border-white/20",
     title: "AI & Bespoke Software",
     short: "Intelligent software systems that automate manual workflows and empower decisions.",
     description:
@@ -130,23 +119,23 @@ export default function ServicesPage() {
 
       {/* Hero Section */}
       <section className="pt-44 pb-24 border-b border-white/5 relative">
-        {/* Ambient Radial Background Glow */}
+        {/* Ambient White Background Glow */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] opacity-20 pointer-events-none"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] opacity-10 pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 50% 50%, #9D00FF 0%, transparent 70%)",
+            background: "radial-gradient(circle at 50% 50%, #FFFFFF 0%, transparent 70%)",
             filter: "blur(90px)",
           }}
         />
 
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-4 py-1.5 rounded-full mb-6 font-semibold">
+          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-white/10 border border-white/20 px-4 py-1.5 rounded-full mb-6 font-semibold">
             <Sparkles size={14} /> Capabilities & Digital Services
           </span>
 
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl lg:text-7xl max-w-4xl leading-tight text-terrain-softWhite mb-6 tracking-tight">
             Digital Engineering Built for <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
               Measurable Growth.
             </span>
           </h1>
@@ -164,7 +153,7 @@ export default function ServicesPage() {
               { val: "24/7", label: "Engineering Support" },
             ].map((stat) => (
               <div key={stat.label} className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-center">
-                <span className="font-heading font-extrabold text-xl sm:text-2xl text-purple-400 block">
+                <span className="font-heading font-extrabold text-xl sm:text-2xl text-white block">
                   {stat.val}
                 </span>
                 <span className="text-[10px] text-terrain-midGrey uppercase tracking-wider block mt-1">
@@ -185,23 +174,14 @@ export default function ServicesPage() {
               <div
                 key={s.id}
                 id={s.id}
-                className="group relative bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-purple-500/40 rounded-3xl p-8 sm:p-12 transition-all duration-500 hover:shadow-[0_0_50px_rgba(157,0,255,0.12)] overflow-hidden"
+                className="group relative bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-white/30 rounded-3xl p-8 sm:p-12 transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)] overflow-hidden"
               >
-                {/* Dynamic Subtle Hover Glow */}
-                <div
-                  className="absolute top-0 right-0 w-96 h-96 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full"
-                  style={{
-                    background: `radial-gradient(circle, ${s.glowColor} 0%, transparent 70%)`,
-                    filter: "blur(60px)",
-                  }}
-                />
-
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start relative z-10">
                   {/* Service Core Info */}
                   <div className="lg:col-span-7 space-y-6">
                     <div className="flex items-center gap-3">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 flex items-center justify-center shadow-inner">
-                        <Icon size={28} className="text-purple-300" />
+                      <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-inner">
+                        <Icon size={28} className="text-white" />
                       </div>
                       <span className={`text-xs uppercase tracking-widest font-bold px-3 py-1 rounded-full border ${s.badgeColor}`}>
                         {s.id.replace("-", " ")}
@@ -212,7 +192,7 @@ export default function ServicesPage() {
                       <h2 className="font-heading font-extrabold text-3xl sm:text-4xl text-terrain-softWhite mb-3">
                         {s.title}
                       </h2>
-                      <p className="text-purple-300 text-sm font-semibold mb-4">
+                      <p className="text-terrain-lightGrey text-sm font-semibold mb-4">
                         {s.short}
                       </p>
                       <p className="text-terrain-midGrey text-base leading-relaxed">
@@ -242,12 +222,12 @@ export default function ServicesPage() {
                   <div className="lg:col-span-5 bg-white/[0.03] border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col justify-between h-full">
                     <div>
                       <h3 className="text-xs uppercase tracking-widest text-terrain-midGrey font-bold mb-5 flex items-center gap-2">
-                        <Layers size={14} className="text-purple-400" /> Core Deliverables
+                        <Layers size={14} className="text-white" /> Core Deliverables
                       </h3>
                       <ul className="space-y-3.5 text-sm text-terrain-softWhite">
                         {s.deliverables.map((item) => (
                           <li key={item} className="flex items-start gap-3">
-                            <CheckCircle2 size={18} className="text-purple-400 shrink-0 mt-0.5" />
+                            <CheckCircle2 size={18} className="text-white shrink-0 mt-0.5" />
                             <span className="leading-snug">{item}</span>
                           </li>
                         ))}
@@ -256,7 +236,7 @@ export default function ServicesPage() {
 
                     <Link
                       href="/contact"
-                      className="mt-8 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(157,0,255,0.3)]"
+                      className="mt-8 w-full bg-white hover:bg-neutral-200 text-black text-xs font-bold py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                     >
                       Request a Consultation <ArrowRight size={14} />
                     </Link>
@@ -272,7 +252,7 @@ export default function ServicesPage() {
       <section className="py-24 bg-terrain-nearBlack border-t border-white/5 relative">
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-4 font-semibold">
+            <span className="text-xs uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-4 font-semibold">
               <Zap size={14} /> Execution Standard
             </span>
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-terrain-softWhite mb-4">
@@ -287,9 +267,9 @@ export default function ServicesPage() {
             {PROTOCOL_STEPS.map((step) => (
               <div
                 key={step.num}
-                className="bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300"
+                className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-2xl p-6 transition-all duration-300"
               >
-                <span className="font-heading font-extrabold text-3xl text-purple-500/40 block mb-4">
+                <span className="font-heading font-extrabold text-3xl text-white/30 block mb-4">
                   {step.num}
                 </span>
                 <h3 className="font-heading font-bold text-lg text-terrain-softWhite mb-2">
@@ -307,9 +287,9 @@ export default function ServicesPage() {
       {/* High Impact Call To Action Banner */}
       <section className="py-20 relative">
         <div className="container mx-auto px-6 md:px-12">
-          <div className="relative rounded-3xl bg-gradient-to-r from-purple-900/40 via-purple-950/30 to-indigo-900/40 border border-purple-500/30 p-10 sm:p-16 text-center overflow-hidden shadow-[0_0_80px_rgba(157,0,255,0.2)]">
+          <div className="relative rounded-3xl bg-neutral-900/80 border border-white/20 p-10 sm:p-16 text-center overflow-hidden shadow-[0_0_80px_rgba(255,255,255,0.1)]">
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-              <span className="text-xs uppercase tracking-widest text-purple-300 font-semibold border border-purple-400/30 px-3.5 py-1.5 rounded-full inline-block">
+              <span className="text-xs uppercase tracking-widest text-terrain-midGrey font-semibold border border-white/20 px-3.5 py-1.5 rounded-full inline-block">
                 Start Your Digital Transformation
               </span>
               <h2 className="font-heading font-extrabold text-3xl sm:text-5xl text-terrain-softWhite leading-tight">
@@ -321,7 +301,7 @@ export default function ServicesPage() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_30px_rgba(157,0,255,0.4)] flex items-center gap-2"
+                  className="bg-white hover:bg-neutral-200 text-black font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2"
                 >
                   Schedule a Consultation <ArrowRight size={16} />
                 </Link>
@@ -343,4 +323,3 @@ export default function ServicesPage() {
     </main>
   );
 }
-

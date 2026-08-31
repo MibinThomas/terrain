@@ -18,11 +18,11 @@ export default function Footer() {
 
   return (
     <footer className="bg-terrain-nearBlack pt-20 pb-10 border-t border-white/5 relative overflow-hidden">
-      {/* Subtle purple radial background glow */}
+      {/* Subtle white radial background glow */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] opacity-15 pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] opacity-10 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, #9D00FF 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, #FFFFFF 0%, transparent 70%)",
           filter: "blur(70px)",
         }}
       />
@@ -49,7 +49,7 @@ export default function Footer() {
                 Subscribe to Digital Insights
               </label>
               {subscribed ? (
-                <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3">
+                <div className="flex items-center gap-2 text-xs text-white bg-white/10 border border-white/20 rounded-xl px-4 py-3">
                   <CheckCircle2 size={16} /> Thank you! You're subscribed to Terrain Insights.
                 </div>
               ) : (
@@ -60,11 +60,11 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your work email..."
-                    className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-terrain-softWhite outline-none focus:border-purple-500 transition-colors"
+                    className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
                   />
                   <button
                     type="submit"
-                    className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(157,0,255,0.3)]"
+                    className="bg-white hover:bg-neutral-200 text-black px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                   >
                     Subscribe <Send size={12} />
                   </button>
@@ -74,7 +74,7 @@ export default function Footer() {
 
             {/* Regional Badge */}
             <div className="flex items-center gap-2 text-xs text-terrain-midGrey pt-2">
-              <MapPin size={14} className="text-purple-400 shrink-0" />
+              <MapPin size={14} className="text-white shrink-0" />
               <span>Headquartered in Dubai, UAE · Serving GCC & Global Enterprise</span>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-purple-400 transition-colors flex items-center gap-2"
+                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
                 <span>LinkedIn</span> ↗
               </a>
@@ -148,7 +148,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-purple-400 transition-colors flex items-center gap-2"
+                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
                 <span>Twitter / X</span> ↗
               </a>
@@ -156,7 +156,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-purple-400 transition-colors flex items-center gap-2"
+                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
                 <span>Instagram</span> ↗
               </a>

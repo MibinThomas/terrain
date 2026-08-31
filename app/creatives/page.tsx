@@ -6,15 +6,12 @@ import FaqSection from "@/components/sections/FaqSection";
 import Link from "next/link";
 import {
   Sparkles,
-  Layers,
   Palette,
   Film,
   CreditCard,
   FileText,
   ArrowRight,
   CheckCircle2,
-  Download,
-  Eye,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -109,21 +106,21 @@ export default function CreativesPage() {
       {/* Hero Section */}
       <section className="pt-44 pb-20 border-b border-white/5 relative">
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20 pointer-events-none"
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-10 pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 50% 50%, #9D00FF 0%, transparent 70%)",
+            background: "radial-gradient(circle at 50% 50%, #FFFFFF 0%, transparent 70%)",
             filter: "blur(100px)",
           }}
         />
 
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-4xl">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-4 py-1.5 rounded-full mb-6 font-semibold">
+          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-white/10 border border-white/20 px-4 py-1.5 rounded-full mb-6 font-semibold">
             <Sparkles size={14} /> Brand Media & Design Showcase
           </span>
 
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl lg:text-7xl leading-tight text-terrain-softWhite mb-6 tracking-tight">
             Creatives, Mockups & <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
               Visual Brand Systems.
             </span>
           </h1>
@@ -135,7 +132,7 @@ export default function CreativesPage() {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-3.5 rounded-xl text-sm transition-all duration-300 shadow-[0_0_25px_rgba(157,0,255,0.4)] flex items-center gap-2"
+              className="bg-white hover:bg-neutral-200 text-black font-bold px-8 py-3.5 rounded-xl text-sm transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] flex items-center gap-2"
             >
               Order Custom Creatives <ArrowRight size={16} />
             </Link>
@@ -158,12 +155,12 @@ export default function CreativesPage() {
             return (
               <div
                 key={item.id}
-                className="group bg-white/[0.02] border border-white/5 hover:border-purple-500/40 rounded-3xl p-6 sm:p-10 transition-all duration-500 hover:shadow-[0_0_50px_rgba(157,0,255,0.15)]"
+                className="group bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-3xl p-6 sm:p-10 transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,255,255,0.08)]"
               >
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center ${isEven ? "" : "lg:flex-row-reverse"}`}>
                   {/* Visual Preview Container */}
                   <div className={`lg:col-span-7 ${isEven ? "lg:order-1" : "lg:order-2"}`}>
-                    <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 group-hover:border-purple-500/30 transition-all duration-500 bg-terrain-nearBlack">
+                    <div className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 group-hover:border-white/40 transition-all duration-500 bg-terrain-nearBlack">
                       <img
                         src={item.image}
                         alt={item.title}
@@ -176,10 +173,10 @@ export default function CreativesPage() {
                   {/* Info Column */}
                   <div className={`lg:col-span-5 space-y-6 ${isEven ? "lg:order-2" : "lg:order-1"}`}>
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                        <Icon size={24} className="text-purple-400" />
+                      <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+                        <Icon size={24} className="text-white" />
                       </div>
-                      <span className="text-xs uppercase tracking-widest font-bold text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full">
+                      <span className="text-xs uppercase tracking-widest font-bold text-white bg-white/10 border border-white/20 px-3 py-1 rounded-full">
                         {item.tag}
                       </span>
                     </div>
@@ -201,7 +198,7 @@ export default function CreativesPage() {
                       <div className="grid grid-cols-2 gap-2.5">
                         {item.specs.map((spec) => (
                           <div key={spec} className="flex items-center gap-2 text-xs text-terrain-softWhite">
-                            <CheckCircle2 size={14} className="text-purple-400 shrink-0" />
+                            <CheckCircle2 size={14} className="text-white shrink-0" />
                             <span>{spec}</span>
                           </div>
                         ))}
@@ -210,7 +207,7 @@ export default function CreativesPage() {
 
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-purple-300 hover:text-white transition-colors pt-2"
+                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-terrain-lightGrey transition-colors pt-2"
                     >
                       Request Mockup Pack <ArrowRight size={14} />
                     </Link>
@@ -226,7 +223,7 @@ export default function CreativesPage() {
       <section className="py-24 bg-terrain-nearBlack border-t border-white/5 relative">
         <div className="container mx-auto px-6 md:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3.5 py-1.5 rounded-full inline-block font-semibold mb-4">
+            <span className="text-xs uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full inline-block font-semibold mb-4">
               Complete Creative Suite
             </span>
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-terrain-softWhite mb-4">
@@ -241,16 +238,16 @@ export default function CreativesPage() {
             {CAPABILITIES.map((cap) => (
               <div
                 key={cap.category}
-                className="bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-3xl p-8 transition-all duration-300"
+                className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-3xl p-8 transition-all duration-300"
               >
                 <h3 className="font-heading font-bold text-xl text-terrain-softWhite mb-6 flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-purple-400" />
+                  <div className="w-2 h-2 rounded-full bg-white" />
                   {cap.category}
                 </h3>
                 <ul className="space-y-3.5 text-sm text-terrain-midGrey">
                   {cap.items.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-terrain-softWhite">
-                      <CheckCircle2 size={16} className="text-purple-400 shrink-0 mt-0.5" />
+                      <CheckCircle2 size={16} className="text-white shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -264,9 +261,9 @@ export default function CreativesPage() {
       {/* CTA Banner */}
       <section className="py-20 relative">
         <div className="container mx-auto px-6 md:px-12">
-          <div className="relative rounded-3xl bg-gradient-to-r from-purple-900/40 via-purple-950/30 to-indigo-900/40 border border-purple-500/30 p-10 sm:p-16 text-center overflow-hidden shadow-[0_0_80px_rgba(157,0,255,0.2)]">
+          <div className="relative rounded-3xl bg-neutral-900/80 border border-white/20 p-10 sm:p-16 text-center overflow-hidden shadow-[0_0_80px_rgba(255,255,255,0.1)]">
             <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-              <span className="text-xs uppercase tracking-widest text-purple-300 font-semibold border border-purple-400/30 px-3.5 py-1.5 rounded-full inline-block">
+              <span className="text-xs uppercase tracking-widest text-terrain-midGrey font-semibold border border-white/20 px-3.5 py-1.5 rounded-full inline-block">
                 Elevate Your Brand Identity
               </span>
               <h2 className="font-heading font-extrabold text-3xl sm:text-5xl text-terrain-softWhite leading-tight">
@@ -278,7 +275,7 @@ export default function CreativesPage() {
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_30px_rgba(157,0,255,0.4)] flex items-center gap-2"
+                  className="bg-white hover:bg-neutral-200 text-black font-bold px-8 py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2"
                 >
                   Start Your Design Project <ArrowRight size={16} />
                 </Link>

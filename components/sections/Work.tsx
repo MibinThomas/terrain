@@ -75,7 +75,7 @@ export default function Work() {
             >
               <a href={project.link} target="_blank" rel="noopener noreferrer" className="block">
                 {/* Image Container */}
-                <div className="w-full aspect-[16/9] bg-terrain-nearBlack relative overflow-hidden mb-6 rounded-2xl border border-white/10 group-hover:border-purple-500/50 transition-all duration-500">
+                <div className="w-full aspect-[16/9] bg-terrain-nearBlack relative overflow-hidden mb-6 rounded-2xl border border-white/10 group-hover:border-white/40 transition-all duration-500">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -89,7 +89,7 @@ export default function Work() {
                 </div>
 
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-heading text-xl md:text-2xl text-terrain-pureWhite group-hover:text-purple-300 transition-colors">
+                  <h3 className="font-heading text-xl md:text-2xl text-terrain-pureWhite group-hover:text-white transition-colors">
                     {project.title}
                   </h3>
                   <span className="text-terrain-midGrey text-xs md:text-sm font-heading">
@@ -98,7 +98,7 @@ export default function Work() {
                 </div>
 
                 <div className="flex gap-2 mb-4">
-                  <span className="text-[11px] text-purple-300 bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-full font-medium">
+                  <span className="text-[11px] text-white bg-white/10 border border-white/20 px-2.5 py-1 rounded-full font-medium">
                     {project.category}
                   </span>
                   <span className="text-[11px] text-terrain-midGrey border border-white/10 px-2.5 py-1 rounded-full">
@@ -110,7 +110,7 @@ export default function Work() {
                   {project.summary}
                 </p>
 
-                <div className="text-purple-400 text-sm font-semibold flex items-center gap-2 group-hover:text-purple-300">
+                <div className="text-white text-sm font-semibold flex items-center gap-2 group-hover:text-terrain-lightGrey">
                   Visit Live Project ↗
                 </div>
               </a>

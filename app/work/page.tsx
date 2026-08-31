@@ -67,7 +67,7 @@ export default function WorkPage() {
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-6">
             Featured Projects & <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
               Case Studies.
             </span>
           </h1>
@@ -84,7 +84,7 @@ export default function WorkPage() {
             {PROJECTS.map((p) => (
               <div
                 key={p.id}
-                className="group bg-white/[0.02] border border-white/5 hover:border-purple-500/30 rounded-3xl overflow-hidden transition-all duration-500 flex flex-col justify-between"
+                className="group bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-3xl overflow-hidden transition-all duration-500 flex flex-col justify-between"
               >
                 <div className="relative aspect-[2.2/1] overflow-hidden bg-terrain-nearBlack">
                   <img
@@ -106,10 +106,10 @@ export default function WorkPage() {
 
                 <div className="p-8 flex flex-col justify-between flex-grow">
                   <div>
-                    <span className="text-xs uppercase tracking-widest text-purple-400 font-semibold block mb-2">
+                    <span className="text-xs uppercase tracking-widest text-white font-semibold block mb-2">
                       {p.category}
                     </span>
-                    <h3 className="font-heading font-bold text-2xl text-terrain-softWhite mb-3 group-hover:text-purple-300 transition-colors">
+                    <h3 className="font-heading font-bold text-2xl text-terrain-softWhite mb-3 group-hover:text-white transition-colors">
                       {p.title}
                     </h3>
                     <p className="text-terrain-midGrey text-sm leading-relaxed mb-6">
@@ -126,7 +126,7 @@ export default function WorkPage() {
                       href={p.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-full bg-white/5 group-hover:bg-purple-600 flex items-center justify-center text-terrain-softWhite group-hover:text-white transition-all duration-300 shrink-0"
+                      className="w-9 h-9 rounded-full bg-white/10 group-hover:bg-white group-hover:text-black flex items-center justify-center text-terrain-softWhite transition-all duration-300 shrink-0"
                     >
                       <ArrowUpRight size={16} />
                     </a>

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <Header />
       <section className="pt-40 pb-24">
         <div className="container mx-auto px-6 md:px-12 max-w-4xl">
-          <span className="text-xs uppercase tracking-widest text-purple-400 font-semibold mb-2 block">
+          <span className="text-xs uppercase tracking-widest text-white font-semibold mb-2 block">
             Legal & Compliance
           </span>
           <h1 className="font-heading font-bold text-4xl mb-8">Privacy Policy</h1>

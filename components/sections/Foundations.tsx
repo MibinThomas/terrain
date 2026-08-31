@@ -40,11 +40,11 @@ export default function Foundations() {
     <section ref={containerRef} className="relative h-[320vh] bg-terrain-deepBlack" id="foundations">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
-        {/* Ambient background glow */}
+        {/* Ambient white radial background glow */}
         <div
-          className="absolute inset-0 opacity-25 pointer-events-none"
+          className="absolute inset-0 opacity-15 pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 50% 50%, rgba(157, 0, 255, 0.15) 0%, rgba(8, 8, 8, 0) 70%)",
+            background: "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(8, 8, 8, 0) 70%)",
           }}
         />
 
@@ -62,7 +62,7 @@ export default function Foundations() {
                   key={stg.label}
                   className="px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-heading font-semibold uppercase tracking-wider text-terrain-midGrey flex items-center gap-1.5 transition-colors"
                 >
-                  <Icon size={13} className="text-purple-400" />
+                  <Icon size={13} className="text-white" />
                   <span>{stg.label}</span>
                 </div>
               );
@@ -71,7 +71,7 @@ export default function Foundations() {
         </div>
 
         {/* =================================================== */}
-        {/* STAGE 1: IDEAS (Nebula Particles & Unstructured Form) */}
+        {/* STAGE 1: IDEAS (Monochrome Nebula & Form) */}
         {/* =================================================== */}
         <motion.div
           style={{ opacity: opacityIdeas, scale: scaleIdeas, y: yIdeas, filter: blurIdeas }}
@@ -89,7 +89,7 @@ export default function Foundations() {
             ].map((pt, i) => (
               <motion.div
                 key={i}
-                className="absolute rounded-full bg-purple-400/60 shadow-[0_0_15px_rgba(157,0,255,0.8)]"
+                className="absolute rounded-full bg-white/70 shadow-[0_0_15px_rgba(255,255,255,0.8)]"
                 style={{
                   top: pt.top,
                   left: pt.left,
@@ -113,15 +113,15 @@ export default function Foundations() {
 
             {/* Glowing central orb */}
             <motion.div
-              animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+              animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-80 h-80 rounded-full bg-purple-600/20 blur-[90px] absolute"
+              className="w-80 h-80 rounded-full bg-white/20 blur-[90px] absolute"
             />
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.02] backdrop-blur-xl border border-purple-500/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(157,0,255,0.15)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3.5 py-1.5 rounded-full mb-6">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.02] backdrop-blur-xl border border-white/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
               <Sparkles size={13} /> Discovery Phase
             </span>
             <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">
@@ -134,7 +134,7 @@ export default function Foundations() {
         </motion.div>
 
         {/* =================================================== */}
-        {/* STAGE 2: TECHNOLOGY (Cybernetic Grid & Node Matrix) */}
+        {/* STAGE 2: TECHNOLOGY (Monochrome Cybernetic Matrix) */}
         {/* =================================================== */}
         <motion.div
           style={{ opacity: opacityTech, scale: scaleTech, y: yTech, filter: blurTech }}
@@ -142,13 +142,13 @@ export default function Foundations() {
         >
           {/* Cybernetic grid network */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[320px] h-[320px] sm:w-[540px] sm:h-[540px] border border-purple-500/20 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-purple-950/10">
+            <div className="w-[320px] h-[320px] sm:w-[540px] sm:h-[540px] border border-white/15 grid grid-cols-4 grid-rows-4 relative rounded-2xl overflow-hidden bg-white/[0.01]">
               {Array.from({ length: 16 }).map((_, i) => (
-                <div key={i} className="border border-purple-500/10 relative flex items-center justify-center">
+                <div key={i} className="border border-white/10 relative flex items-center justify-center">
                   <motion.div
                     animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.8, 0.2] }}
                     transition={{ repeat: Infinity, duration: 2.5, delay: (i % 4) * 0.2 }}
-                    className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(157,0,255,1)]"
+                    className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)]"
                   />
                 </div>
               ))}
@@ -156,8 +156,8 @@ export default function Foundations() {
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-terrain-deepBlack/90 backdrop-blur-xl border border-purple-500/30 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(34,211,238,0.15)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3.5 py-1.5 rounded-full mb-6">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-terrain-deepBlack/90 backdrop-blur-xl border border-white/20 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.08)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
               <Cpu size={13} /> Engineering Matrix
             </span>
             <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight whitespace-nowrap">
@@ -178,24 +178,24 @@ export default function Foundations() {
         >
           {/* Laser trajectory SVG */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[600px] opacity-40">
+            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[600px] opacity-30">
               <motion.path
                 d="M 100 500 L 300 200 L 500 500"
                 fill="none"
-                stroke="#9D00FF"
+                stroke="#FFFFFF"
                 strokeWidth="2"
                 strokeDasharray="6 6"
                 animate={{ strokeDashoffset: [0, -24] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
-              <circle cx="300" cy="200" r="10" fill="#9D00FF" className="animate-ping" />
+              <circle cx="300" cy="200" r="10" fill="#FFFFFF" className="animate-ping" />
               <circle cx="300" cy="200" r="5" fill="#ffffff" />
             </svg>
           </div>
 
           {/* Card Content */}
-          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.03] backdrop-blur-xl border border-purple-500/40 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_60px_rgba(157,0,255,0.25)]">
-            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full mb-6">
+          <div className="relative z-10 text-center max-w-3xl w-full mx-4 bg-white/[0.03] backdrop-blur-xl border border-white/25 p-8 sm:px-16 sm:py-12 rounded-3xl shadow-[0_0_60px_rgba(255,255,255,0.12)]">
+            <span className="inline-flex items-center gap-1.5 text-xs font-heading uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full mb-6 font-semibold">
               <Compass size={13} /> Clear Direction
             </span>
             <h2 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-terrain-softWhite mb-4 tracking-tight">

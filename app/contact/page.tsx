@@ -56,7 +56,7 @@ export default function ContactPage() {
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-4">
             Let's Build Something <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
               Extraordinary.
             </span>
           </h1>
@@ -80,9 +80,9 @@ export default function ContactPage() {
               </p>
 
               {submitted ? (
-                <div className="text-center py-12 bg-white/[0.02] border border-emerald-500/30 rounded-2xl p-8">
-                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 size={32} className="text-emerald-400" />
+                <div className="text-center py-12 bg-white/[0.02] border border-white/20 rounded-2xl p-8">
+                  <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 size={32} className="text-white" />
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-2 text-terrain-softWhite">
                     Message Delivered!
@@ -92,7 +92,7 @@ export default function ContactPage() {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-xs text-purple-400 underline font-semibold hover:text-purple-300"
+                    className="text-xs text-white underline font-semibold hover:text-neutral-300"
                   >
                     Send another inquiry
                   </button>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                         type="text"
                         {...register("name")}
                         placeholder="e.g. Ahmad Al-Rashid"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-purple-500 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
                       />
                       {errors.name && <p className="text-[10px] text-red-400 mt-1">{errors.name.message}</p>}
                     </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                         type="email"
                         {...register("email")}
                         placeholder="name@company.com"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-purple-500 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
                       />
                       {errors.email && <p className="text-[10px] text-red-400 mt-1">{errors.email.message}</p>}
                     </div>
@@ -136,7 +136,7 @@ export default function ContactPage() {
                         type="text"
                         {...register("company")}
                         placeholder="Your Company / Brand"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-purple-500 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
                       />
                     </div>
 
@@ -146,7 +146,7 @@ export default function ContactPage() {
                       </label>
                       <select
                         {...register("service")}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-purple-500 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
                       >
                         <option value="" className="bg-terrain-nearBlack">Select a service...</option>
                         {SERVICE_OPTIONS.map((opt) => (
@@ -167,7 +167,7 @@ export default function ContactPage() {
                       {...register("message")}
                       rows={5}
                       placeholder="Describe your project requirements, goals, and target timeline..."
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-purple-500 transition-colors resize-none"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors resize-none"
                     />
                     {errors.message && <p className="text-[10px] text-red-400 mt-1">{errors.message.message}</p>}
                   </div>
@@ -175,7 +175,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_25px_rgba(157,0,255,0.3)] flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full bg-white hover:bg-neutral-200 text-black font-bold py-4 rounded-xl text-sm transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <Loader2 size={16} className="animate-spin" />
@@ -197,22 +197,22 @@ export default function ContactPage() {
 
                 <div className="space-y-5">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                      <Mail size={18} className="text-purple-400" />
+                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                      <Mail size={18} className="text-white" />
                     </div>
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
                         Email Inquiry
                       </span>
-                      <a href="mailto:hello@terrainbusiness.com" className="text-sm font-semibold text-terrain-softWhite hover:text-purple-300">
+                      <a href="mailto:hello@terrainbusiness.com" className="text-sm font-semibold text-terrain-softWhite hover:text-white">
                         hello@terrainbusiness.com
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                      <Phone size={18} className="text-purple-400" />
+                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                      <Phone size={18} className="text-white" />
                     </div>
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
@@ -225,8 +225,8 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                      <MapPin size={18} className="text-purple-400" />
+                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                      <MapPin size={18} className="text-white" />
                     </div>
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
@@ -241,7 +241,7 @@ export default function ContactPage() {
               </div>
 
               {/* Fast Response Guarantee */}
-              <div className="bg-gradient-to-br from-purple-900/20 to-indigo-900/10 border border-purple-500/20 rounded-3xl p-6">
+              <div className="bg-white/[0.03] border border-white/10 rounded-3xl p-6">
                 <h4 className="font-heading font-bold text-base text-terrain-softWhite mb-2">
                   ⚡ 24-Hour Guarantee
                 </h4>
