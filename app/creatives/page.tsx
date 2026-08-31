@@ -12,6 +12,8 @@ import {
   FileText,
   ArrowRight,
   CheckCircle2,
+  Layers,
+  Wrench,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -19,6 +21,17 @@ export const metadata: Metadata = {
   description:
     "Explore Terrain's design showcase — Modern UI/UX Mockups, Motion Graphics, Executive Business Cards, Flyers, and Brand Posters.",
 };
+
+const CREATIVE_TOOLS = [
+  { name: "Figma", category: "UI/UX & Systems", desc: "Design systems, auto-layout UI & component libraries" },
+  { name: "After Effects", category: "Motion Graphics", desc: "60FPS keyframe animation & UI micro-interactions" },
+  { name: "Photoshop", category: "Visual Mockups", desc: "High-resolution brand collateral & photo compositing" },
+  { name: "Illustrator", category: "Vector Branding", desc: "Logos, custom iconography & CMYK print flyers" },
+  { name: "Blender 3D", category: "3D Rendering", desc: "Photorealistic product mockups & spatial renders" },
+  { name: "Cinema 4D", category: "Motion Design", desc: "Complex 3D motion graphics & geometric animation" },
+  { name: "Lottie", category: "Web Animation", desc: "Lightweight fluid SVG animation keyframe code" },
+  { name: "Spline 3D", category: "Interactive 3D", desc: "Real-time WebGL canvas & 3D browser experiences" },
+];
 
 const CREATIVE_CATEGORIES = [
   {
@@ -142,6 +155,45 @@ export default function CreativesPage() {
             >
               Explore Gallery
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Creative Tools & Software Ecosystem Section */}
+      <section className="py-20 border-b border-white/5 bg-terrain-nearBlack relative">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-xs uppercase tracking-widest text-white bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 font-semibold mb-4">
+              <Wrench size={13} /> Design Stack & Software
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-terrain-softWhite mb-3">
+              Tools We Master for Brand Creatives
+            </h2>
+            <p className="text-terrain-midGrey text-sm">
+              We leverage industry-standard design, motion, 3D, and prototyping software to deliver pixel-perfect assets.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {CREATIVE_TOOLS.map((tool) => (
+              <div
+                key={tool.name}
+                className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-2xl p-5 transition-all duration-300 group hover:bg-white/[0.04]"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey font-semibold bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                    {tool.category}
+                  </span>
+                  <div className="w-2 h-2 rounded-full bg-white opacity-40 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-terrain-softWhite mb-1 group-hover:text-white">
+                  {tool.name}
+                </h3>
+                <p className="text-terrain-midGrey text-xs leading-relaxed">
+                  {tool.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
