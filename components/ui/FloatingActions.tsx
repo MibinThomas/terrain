@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUp, MessageCircle, X } from "lucide-react";
+import { ArrowUp, X } from "lucide-react";
 
 export default function FloatingActions() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -45,7 +45,7 @@ export default function FloatingActions() {
             >
               <div className="flex items-center justify-between">
                 <span className="font-heading font-bold text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                   Terrain Strategy Team
                 </span>
                 <button
@@ -67,16 +67,30 @@ export default function FloatingActions() {
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setShowTooltip(true)}
-          className="group relative flex items-center gap-3 bg-terrain-nearBlack/90 backdrop-blur-xl border border-white/20 hover:border-white/50 text-white px-4 py-3 rounded-full shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-95"
+          className="group relative flex items-center gap-3 bg-terrain-nearBlack/90 backdrop-blur-xl border border-white/20 hover:border-white/50 text-white px-4 py-3 rounded-full shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(255,255,255,0.2)] transition-all duration-300 active:scale-95"
           aria-label="Chat on WhatsApp"
         >
-          {/* Pulsing Status Dot */}
+          {/* Pulsing White Status Dot */}
           <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
           </span>
 
-          <MessageCircle size={18} className="text-emerald-400 group-hover:scale-110 transition-transform" />
+          {/* White WhatsApp SVG Logo */}
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-white group-hover:scale-110 transition-transform fill-white"
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path d="M12 2a10 10 0 0 0-8.625 15.08L2 22l4.98-1.306A10 10 0 1 0 12 2z" />
+          </svg>
 
           <span className="font-heading text-xs font-bold uppercase tracking-wider hidden sm:inline-block text-white">
             Chat on WhatsApp
