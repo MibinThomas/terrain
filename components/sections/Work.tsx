@@ -46,15 +46,15 @@ const projects = [
 
 export default function Work() {
   return (
-    <section id="work" className="py-32 bg-terrain-deepBlack border-t border-white/5">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-16 md:mb-24 gap-6">
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-terrain-pureWhite tracking-tight">
+    <section id="work" className="py-16 sm:py-24 lg:py-32 bg-terrain-deepBlack border-t border-white/5">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 sm:mb-16 md:mb-24 gap-4 sm:gap-6">
+          <h2 className="font-heading text-2xl sm:text-4xl lg:text-5xl text-terrain-pureWhite tracking-tight">
             SELECTED WORK
           </h2>
           <a
             href="/work"
-            className="flex items-center gap-2 text-terrain-pureWhite font-semibold text-sm hover:opacity-70 transition-opacity"
+            className="flex items-center gap-2 text-terrain-pureWhite font-semibold text-xs sm:text-sm hover:opacity-70 transition-opacity"
           >
             View All Projects
             <div className="w-4 h-4 border border-current flex items-center justify-center rotate-45">
@@ -88,16 +88,16 @@ export default function Work() {
                   </div>
                 </div>
 
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-heading text-xl md:text-2xl text-terrain-pureWhite group-hover:text-white transition-colors">
+                <div className="flex items-start justify-between mb-3 gap-2">
+                  <h3 className="font-heading text-lg sm:text-xl md:text-2xl text-terrain-pureWhite group-hover:text-white transition-colors">
                     {project.title}
                   </h3>
-                  <span className="text-terrain-midGrey text-xs md:text-sm font-heading">
+                  <span className="text-terrain-midGrey text-xs sm:text-sm font-heading shrink-0">
                     {project.year}
                   </span>
                 </div>
 
-                <div className="flex gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4">
                   <span className="text-[11px] text-white bg-white/10 border border-white/20 px-2.5 py-1 rounded-full font-medium">
                     {project.category}
                   </span>
@@ -106,11 +106,11 @@ export default function Work() {
                   </span>
                 </div>
 
-                <p className="text-terrain-midGrey text-sm leading-relaxed mb-6">
+                <p className="text-terrain-midGrey text-xs sm:text-sm leading-relaxed mb-6">
                   {project.summary}
                 </p>
 
-                <div className="text-white text-sm font-semibold flex items-center gap-2 group-hover:text-terrain-lightGrey">
+                <div className="text-white text-xs sm:text-sm font-semibold flex items-center gap-2 group-hover:text-terrain-lightGrey">
                   Visit Live Project ↗
                 </div>
               </a>

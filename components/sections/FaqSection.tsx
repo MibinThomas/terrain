@@ -41,24 +41,24 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="py-24 bg-terrain-nearBlack relative border-t border-white/5 overflow-hidden" id="faq">
+    <section className="py-16 sm:py-24 bg-terrain-nearBlack relative border-t border-white/5 overflow-hidden" id="faq">
       <FaqJsonLd faqs={FAQS} />
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-4">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-4">
             <HelpCircle size={14} className="text-white" />
             Frequently Asked Questions
           </span>
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-terrain-softWhite">
+          <h2 className="font-heading text-2xl sm:text-4xl font-bold text-terrain-softWhite">
             Got Questions? We Have Answers.
           </h2>
-          <p className="text-terrain-midGrey text-sm mt-3">
+          <p className="text-terrain-midGrey text-xs sm:text-sm mt-3">
             Everything you need to know about partnering with Terrain Business Solutions.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-3.5">
           {FAQS.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
@@ -72,12 +72,12 @@ export default function FaqSection() {
               >
                 <button
                   onClick={() => toggle(idx)}
-                  className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 font-heading font-semibold text-terrain-softWhite text-base sm:text-lg focus:outline-none"
+                  className="w-full py-4 px-5 sm:py-5 sm:px-6 text-left flex items-center justify-between gap-3 font-heading font-semibold text-terrain-softWhite text-sm sm:text-base md:text-lg focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span>{faq.question}</span>
+                  <span className="leading-snug">{faq.question}</span>
                   <ChevronDown
-                    size={20}
+                    size={18}
                     className={`text-terrain-midGrey transition-transform duration-300 shrink-0 ${
                       isOpen ? "rotate-180 text-white" : ""
                     }`}
@@ -92,7 +92,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 pt-1 text-terrain-midGrey text-sm leading-relaxed border-t border-white/5">
+                      <div className="px-5 pb-5 pt-1 sm:px-6 sm:pb-6 text-terrain-midGrey text-xs sm:text-sm leading-relaxed border-t border-white/5">
                         {faq.answer}
                       </div>
                     </motion.div>
