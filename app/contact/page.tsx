@@ -218,9 +218,9 @@ export default function ContactPage() {
                       <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
                         Phone & WhatsApp
                       </span>
-                      <span className="text-sm font-semibold text-terrain-softWhite">
-                        +971 4 XXX XXXX
-                      </span>
+                      <a href="tel:+971524145668" className="text-sm font-semibold text-terrain-softWhite hover:text-white">
+                        +971 52 414 5668
+                      </a>
                     </div>
                   </div>
 

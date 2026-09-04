@@ -24,6 +24,7 @@ export function OrganizationJsonLd() {
       "@type": "ContactPoint",
       contactType: "customer support",
       email: "hello@terrainbusiness.com",
+      telephone: "+971524145668",
     },
   };
 

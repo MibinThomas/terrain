@@ -61,11 +61,11 @@ export default function Contact() {
             <div className="space-y-6 border-t border-terrain-deepBlack/10 pt-8">
               <div>
                 <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">Email</span>
-                <a href="mailto:hello@terrain.com" className="text-lg font-medium hover:opacity-70">hello@terrain.com</a>
+                <a href="mailto:hello@terrainbusiness.com" className="text-lg font-medium hover:opacity-70">hello@terrainbusiness.com</a>
               </div>
               <div>
                 <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">Phone</span>
-                <a href="tel:+1234567890" className="text-lg font-medium hover:opacity-70">+1 (234) 567-890</a>
+                <a href="tel:+971524145668" className="text-lg font-medium hover:opacity-70">+971 52 414 5668</a>
               </div>
               <div>
                 <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">LinkedIn</span>
