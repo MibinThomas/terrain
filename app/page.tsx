@@ -16,7 +16,7 @@ import FaqSection from "@/components/sections/FaqSection";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen selection:bg-terrain-pureWhite selection:text-terrain-deepBlack">
+    <main className="relative min-h-screen selection:bg-terrain-accent selection:text-terrain-pureWhite">
       <CustomCursor />
       <Header />
       
