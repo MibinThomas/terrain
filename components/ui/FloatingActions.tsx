@@ -45,7 +45,7 @@ export default function FloatingActions() {
             >
               <div className="flex items-center justify-between">
                 <span className="font-heading font-bold text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-terrain-accentLight animate-pulse" />
                   Terrain Strategy Team
                 </span>
                 <button
@@ -68,7 +68,7 @@ export default function FloatingActions() {
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setShowTooltip(true)}
-          className="group relative flex items-center gap-2.5 sm:gap-3 bg-terrain-nearBlack/90 backdrop-blur-xl border border-white/20 hover:border-white/50 text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(255,255,255,0.2)] transition-all duration-300 active:scale-95"
+          className="group relative flex items-center gap-2.5 sm:gap-3 bg-terrain-nearBlack/90 backdrop-blur-xl border border-white/20 hover:border-terrain-accentLight text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(77,38,129,0.6)] transition-all duration-300 active:scale-95"
           aria-label="Chat on WhatsApp"
         >
           {/* Pulsing White Status Dot */}
@@ -108,7 +108,7 @@ export default function FloatingActions() {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ duration: 0.2 }}
             onClick={scrollToTop}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-neutral-200 text-black flex items-center justify-center shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all duration-300 active:scale-90"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white hover:bg-neutral-200 text-black flex items-center justify-center shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:shadow-[0_0_28px_rgba(77,38,129,0.8)] transition-all duration-300 active:scale-90"
             aria-label="Back to Top"
             title="Back to Top"
           >

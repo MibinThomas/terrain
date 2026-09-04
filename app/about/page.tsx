@@ -46,7 +46,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="pt-40 pb-20 border-b border-white/5 relative overflow-hidden">
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-6">
+          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-terrain-accent/60 px-3.5 py-1.5 rounded-full mb-6">
             Who We Are
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-6">

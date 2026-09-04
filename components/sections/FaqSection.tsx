@@ -46,7 +46,7 @@ export default function FaqSection() {
 
       <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-4">
+          <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-widest text-terrain-midGrey border border-terrain-accent/60 px-3.5 py-1.5 rounded-full mb-4">
             <HelpCircle size={14} className="text-white" />
             Frequently Asked Questions
           </span>
@@ -66,8 +66,8 @@ export default function FaqSection() {
                 key={faq.question}
                 className={`rounded-2xl border transition-all duration-300 ${
                   isOpen
-                    ? "bg-white/[0.04] border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.08)]"
-                    : "bg-white/[0.02] border-white/5 hover:border-white/20"
+                    ? "bg-white/[0.04] border-terrain-accent shadow-[0_0_30px_rgba(77,38,129,0.35)]"
+                    : "bg-white/[0.02] border-white/5 hover:border-terrain-accent/50"
                 }`}
               >
                 <button
@@ -79,7 +79,7 @@ export default function FaqSection() {
                   <ChevronDown
                     size={18}
                     className={`text-terrain-midGrey transition-transform duration-300 shrink-0 ${
-                      isOpen ? "rotate-180 text-white" : ""
+                      isOpen ? "rotate-180 text-terrain-accentLight" : ""
                     }`}
                   />
                 </button>
@@ -92,7 +92,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-5 pt-1 sm:px-6 sm:pb-6 text-terrain-midGrey text-xs sm:text-sm leading-relaxed border-t border-white/5">
+                      <div className="px-5 pb-5 pt-1 sm:px-6 sm:pb-6 text-terrain-midGrey text-xs sm:text-sm leading-relaxed border-t border-terrain-accent/30">
                         {faq.answer}
                       </div>
                     </motion.div>

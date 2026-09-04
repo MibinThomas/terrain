@@ -28,7 +28,7 @@ export default function Manifesto() {
             viewport={{ once: true, margin: "-100px" }}
             className="flex items-center gap-4 mb-8"
           >
-            <div className="w-2 h-2 bg-terrain-pureWhite" />
+            <div className="w-2 h-2 bg-terrain-accentLight shadow-[0_0_10px_rgba(140,78,202,0.9)]" />
             <span className="font-heading uppercase tracking-widest text-sm font-medium">Manifesto</span>
           </motion.div>
           
@@ -43,27 +43,27 @@ export default function Manifesto() {
           {/* Connecting Path Line */}
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] bg-white/10 hidden md:block">
             <motion.div 
-              className="absolute top-0 left-0 w-full bg-terrain-pureWhite"
+              className="absolute top-0 left-0 w-full bg-gradient-to-b from-terrain-pureWhite via-terrain-accentLight to-terrain-accent"
               style={{ height: useTransform(scrollYProgress, [0, 0.8], ["0%", "100%"]) }}
             />
           </div>
 
           <motion.div style={{ y: y1 }} className="md:w-1/2 md:pr-16 self-start">
-            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-white/10 pb-4">01</span>
+            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-terrain-accent/50 pb-4">01</span>
             <p className="text-2xl md:text-3xl leading-relaxed text-terrain-softWhite font-light">
               Terrain Business Solutions is a multidisciplinary creative technology studio dedicated to crafting exceptional digital products and brand experiences.
             </p>
           </motion.div>
 
           <motion.div style={{ y: y2 }} className="md:w-1/2 md:pl-16 self-end">
-            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-white/10 pb-4 text-right">02</span>
+            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-terrain-accent/50 pb-4 text-right">02</span>
             <p className="text-2xl md:text-3xl leading-relaxed text-terrain-softWhite font-light">
               We combine strategic thinking, user-centred design and modern technology to help organisations innovate with confidence.
             </p>
           </motion.div>
 
           <motion.div style={{ y: y3 }} className="md:w-1/2 md:pr-16 self-start">
-            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-white/10 pb-4">03</span>
+            <span className="text-terrain-midGrey text-sm font-heading tracking-widest block mb-4 border-b border-terrain-accent/50 pb-4">03</span>
             <p className="text-2xl md:text-3xl leading-relaxed text-terrain-softWhite font-light">
               Every project begins with understanding people, their needs, behaviours and goals. From research and strategy to design, development and launch, Terrain delivers solutions that are functional, scalable and visually remarkable.
             </p>

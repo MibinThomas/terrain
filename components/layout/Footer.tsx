@@ -20,9 +20,9 @@ export default function Footer() {
     <footer className="bg-terrain-nearBlack pt-16 sm:pt-20 pb-10 border-t border-white/5 relative overflow-hidden">
       {/* Subtle white radial background glow */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] opacity-10 pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] opacity-20 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, #FFFFFF 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, #8C4ECA 0%, #4D2681 45%, transparent 70%)",
           filter: "blur(70px)",
         }}
       />
@@ -60,11 +60,11 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your work email..."
-                    className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
+                    className="flex-grow bg-white/[0.03] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.35)] transition-all"
                   />
                   <button
                     type="submit"
-                    className="bg-white hover:bg-neutral-200 text-black px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                    className="bg-white hover:bg-neutral-200 text-black px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_22px_rgba(77,38,129,0.7)]"
                   >
                     Subscribe <Send size={12} />
                   </button>
@@ -74,7 +74,7 @@ export default function Footer() {
 
             {/* Regional Badge */}
             <div className="flex items-center gap-2 text-xs text-terrain-midGrey pt-2">
-              <MapPin size={14} className="text-white shrink-0" />
+              <MapPin size={14} className="text-terrain-accentLight shrink-0" />
               <span>Headquartered in Dubai, UAE · Serving GCC & Global Enterprise</span>
             </div>
           </div>
@@ -140,32 +140,33 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
+                className="group text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
-                <span>LinkedIn</span> ↗
+                <span>LinkedIn</span> <span className="text-terrain-midGrey group-hover:text-terrain-accentLight transition-colors">↗</span>
               </a>
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
+                className="group text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
-                <span>Twitter / X</span> ↗
+                <span>Twitter / X</span> <span className="text-terrain-midGrey group-hover:text-terrain-accentLight transition-colors">↗</span>
               </a>
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
+                className="group text-terrain-midGrey hover:text-white transition-colors flex items-center gap-2"
               >
-                <span>Instagram</span> ↗
+                <span>Instagram</span> <span className="text-terrain-midGrey group-hover:text-terrain-accentLight transition-colors">↗</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[11px] sm:text-xs text-terrain-midGrey gap-4 text-center md:text-left">
+        <div className="h-[1px] w-24 mx-auto accent-rule mb-[-1px]" />
+        <div className="relative flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[11px] sm:text-xs text-terrain-midGrey gap-4 text-center md:text-left">
           <p>© {new Date().getFullYear()} Terrain Business Solutions. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-terrain-softWhite transition-colors">

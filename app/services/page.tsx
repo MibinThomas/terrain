@@ -26,7 +26,7 @@ const SERVICES = [
   {
     id: "web-engineering",
     icon: Code2,
-    badgeColor: "text-white bg-white/10 border-white/20",
+    badgeColor: "text-white bg-terrain-accent/25 border-terrain-accent/60",
     title: "Web Engineering & Next.js",
     short: "High-performance web applications engineered for speed, scale, and search dominance.",
     description:
@@ -42,7 +42,7 @@ const SERVICES = [
   {
     id: "ui-ux-design",
     icon: Palette,
-    badgeColor: "text-white bg-white/10 border-white/20",
+    badgeColor: "text-white bg-terrain-accent/25 border-terrain-accent/60",
     title: "UI/UX Product Architecture",
     short: "Bespoke design systems that engage users and elevate digital brand perception.",
     description:
@@ -58,7 +58,7 @@ const SERVICES = [
   {
     id: "ecommerce",
     icon: ShoppingBag,
-    badgeColor: "text-white bg-white/10 border-white/20",
+    badgeColor: "text-white bg-terrain-accent/25 border-terrain-accent/60",
     title: "E-Commerce Solutions",
     short: "Revenue-generating storefronts engineered to maximize visitor-to-buyer conversion.",
     description:
@@ -74,7 +74,7 @@ const SERVICES = [
   {
     id: "ai-software",
     icon: Cpu,
-    badgeColor: "text-white bg-white/10 border-white/20",
+    badgeColor: "text-white bg-terrain-accent/25 border-terrain-accent/60",
     title: "AI & Bespoke Software",
     short: "Intelligent software systems that automate manual workflows and empower decisions.",
     description:
@@ -209,7 +209,7 @@ export default function ServicesPage() {
                         {s.techStack.map((tech) => (
                           <span
                             key={tech}
-                            className="bg-white/[0.04] border border-white/10 text-terrain-softWhite text-xs font-semibold px-3 py-1.5 rounded-full"
+                            className="bg-white/[0.04] border border-white/10 hover:border-terrain-accentLight hover:bg-terrain-accent/20 text-terrain-softWhite text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200"
                           >
                             {tech}
                           </span>

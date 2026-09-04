@@ -52,7 +52,16 @@
     --foreground: #F1F2F3;
     --font-heading: 'ROSTEX', sans-serif;
     --font-body: 'Artifictrial', sans-serif;
+    /* Brand violet accent */
+    --accent: #4D2681;
+    --accent-light: #8C4ECA;
   }
+}
+
+/* Accent-tinted text selection */
+::selection {
+  background: var(--accent);
+  color: #FFFFFF;
 }
 
 body {
@@ -80,7 +89,17 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #444444;
+  background: var(--accent);
+}
+
+/* Hairline rule that fades in from the brand violet at its centre */
+.accent-rule {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(77, 38, 129, 0.55) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
 }
 
 /* Base utility for hiding scrollbar if needed */

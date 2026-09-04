@@ -51,7 +51,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="pt-40 pb-16 border-b border-white/5 relative overflow-hidden">
         <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-white/10 px-3.5 py-1.5 rounded-full mb-6">
+          <span className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-terrain-midGrey border border-terrain-accent/60 px-3.5 py-1.5 rounded-full mb-6">
             Get In Touch
           </span>
           <h1 className="font-heading font-extrabold text-4xl sm:text-6xl max-w-4xl leading-tight text-terrain-softWhite mb-4">
@@ -81,7 +81,7 @@ export default function ContactPage() {
 
               {submitted ? (
                 <div className="text-center py-12 bg-white/[0.02] border border-white/20 rounded-2xl p-8">
-                  <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-14 h-14 rounded-full bg-terrain-accent/25 border border-terrain-accent/50 flex items-center justify-center mx-auto mb-4 shadow-[0_0_25px_rgba(77,38,129,0.4)]">
                     <CheckCircle2 size={32} className="text-white" />
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-2 text-terrain-softWhite">
@@ -108,7 +108,7 @@ export default function ContactPage() {
                         type="text"
                         {...register("name")}
                         placeholder="e.g. Ahmad Al-Rashid"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.3)] transition-all"
                       />
                       {errors.name && <p className="text-[10px] text-red-400 mt-1">{errors.name.message}</p>}
                     </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                         type="email"
                         {...register("email")}
                         placeholder="name@company.com"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.3)] transition-all"
                       />
                       {errors.email && <p className="text-[10px] text-red-400 mt-1">{errors.email.message}</p>}
                     </div>
@@ -136,7 +136,7 @@ export default function ContactPage() {
                         type="text"
                         {...register("company")}
                         placeholder="Your Company / Brand"
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.3)] transition-all"
                       />
                     </div>
 
@@ -146,7 +146,7 @@ export default function ContactPage() {
                       </label>
                       <select
                         {...register("service")}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.3)] transition-all"
                       >
                         <option value="" className="bg-terrain-nearBlack">Select a service...</option>
                         {SERVICE_OPTIONS.map((opt) => (
@@ -167,7 +167,7 @@ export default function ContactPage() {
                       {...register("message")}
                       rows={5}
                       placeholder="Describe your project requirements, goals, and target timeline..."
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-white/40 transition-colors resize-none"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-terrain-softWhite outline-none focus:border-terrain-accentLight focus:shadow-[0_0_0_3px_rgba(77,38,129,0.3)] transition-all resize-none"
                     />
                     {errors.message && <p className="text-[10px] text-red-400 mt-1">{errors.message.message}</p>}
                   </div>
@@ -191,17 +191,17 @@ export default function ContactPage() {
             {/* Sidebar Details */}
             <div className="lg:col-span-5 space-y-6">
               <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 space-y-6">
-                <h3 className="font-heading font-bold text-lg text-terrain-softWhite border-b border-white/5 pb-4">
+                <h3 className="font-heading font-bold text-lg text-terrain-softWhite border-b border-terrain-accent/40 pb-4">
                   Contact Information
                 </h3>
 
                 <div className="space-y-5">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-terrain-accent/25 border border-terrain-accent/50 flex items-center justify-center shrink-0">
                       <Mail size={18} className="text-white" />
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
+                      <span className="text-[10px] uppercase tracking-wider text-terrain-accentLight block font-semibold">
                         Email Inquiry
                       </span>
                       <a href="mailto:hello@terrainbusiness.com" className="text-sm font-semibold text-terrain-softWhite hover:text-white">
@@ -211,11 +211,11 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-terrain-accent/25 border border-terrain-accent/50 flex items-center justify-center shrink-0">
                       <Phone size={18} className="text-white" />
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
+                      <span className="text-[10px] uppercase tracking-wider text-terrain-accentLight block font-semibold">
                         Phone & WhatsApp
                       </span>
                       <a href="tel:+971524145668" className="text-sm font-semibold text-terrain-softWhite hover:text-white">
@@ -225,11 +225,11 @@ export default function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-terrain-accent/25 border border-terrain-accent/50 flex items-center justify-center shrink-0">
                       <MapPin size={18} className="text-white" />
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-terrain-midGrey block font-semibold">
+                      <span className="text-[10px] uppercase tracking-wider text-terrain-accentLight block font-semibold">
                         Office Location
                       </span>
                       <span className="text-sm font-semibold text-terrain-softWhite">

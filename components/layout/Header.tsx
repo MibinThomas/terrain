@@ -57,15 +57,17 @@ export default function Header() {
               key={link.name}
               href={link.href}
               data-interactive="true"
-              className="text-xs lg:text-sm font-medium text-terrain-midGrey hover:text-terrain-pureWhite transition-colors"
+              className="group relative text-xs lg:text-sm font-medium text-terrain-midGrey hover:text-terrain-pureWhite transition-colors"
             >
               {link.name}
+              {/* Violet hover underline */}
+              <span className="absolute -bottom-1.5 left-0 h-[1.5px] w-0 bg-terrain-accentLight group-hover:w-full transition-all duration-300 ease-out" />
             </Link>
           ))}
           <Link
             href="/contact"
             data-interactive="true"
-            className="text-xs lg:text-sm font-semibold text-terrain-deepBlack bg-terrain-pureWhite px-4 lg:px-5 py-2.5 rounded-md hover:bg-terrain-softWhite hover:scale-[1.02] transition-all"
+            className="text-xs lg:text-sm font-semibold text-terrain-deepBlack bg-terrain-pureWhite px-4 lg:px-5 py-2.5 rounded-md hover:bg-terrain-softWhite hover:scale-[1.02] hover:shadow-[0_0_22px_rgba(77,38,129,0.65)] transition-all"
           >
             Start a Project
           </Link>
@@ -98,7 +100,7 @@ export default function Header() {
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-lg font-heading text-terrain-softWhite uppercase tracking-wider py-1 border-b border-white/5"
+              className="text-lg font-heading text-terrain-softWhite uppercase tracking-wider py-1 border-b border-white/5 hover:border-terrain-accentLight transition-colors"
             >
               {link.name}
             </Link>
@@ -106,7 +108,7 @@ export default function Header() {
           <Link
             href="/contact"
             onClick={() => setMobileMenuOpen(false)}
-            className="text-center text-sm font-heading font-bold text-terrain-deepBlack bg-terrain-pureWhite px-6 py-3.5 rounded-lg mt-2 shadow-lg"
+            className="text-center text-sm font-heading font-bold text-terrain-deepBlack bg-terrain-pureWhite px-6 py-3.5 rounded-lg mt-2 shadow-[0_0_22px_rgba(77,38,129,0.5)]"
           >
             Start a Project
           </Link>

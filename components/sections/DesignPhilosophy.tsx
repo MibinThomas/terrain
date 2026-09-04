@@ -12,7 +12,7 @@ export default function DesignPhilosophy() {
         <div className="max-w-5xl mx-auto">
           
           <div className="flex items-center gap-4 mb-12">
-            <div className="w-2 h-2 bg-terrain-deepBlack" />
+            <div className="w-2 h-2 bg-terrain-accent" />
             <span className="font-heading uppercase tracking-widest text-sm font-bold">Philosophy</span>
           </div>
 
@@ -21,9 +21,9 @@ export default function DesignPhilosophy() {
             <AnimatedText text="INTELLIGENT DIGITAL EXPERIENCES." el="h2" mode="word" delay={0.2} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-terrain-deepBlack/10 pt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-terrain-accent/25 pt-16">
             <p className="text-2xl md:text-3xl leading-snug font-light">
-              We design digital experiences that feel <span className="font-medium font-heading">intuitive</span> from the first interaction.
+              We design digital experiences that feel <span className="font-medium font-heading text-terrain-accent">intuitive</span> from the first interaction.
             </p>
             <p className="text-lg md:text-xl text-terrain-deepBlack/70 leading-relaxed">
               Every screen is built on a foundation of user research and iterative testing, so the interface does not only look good; it guides people naturally towards their goal. Functional, scalable, and visually remarkable.

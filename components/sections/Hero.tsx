@@ -26,11 +26,11 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8"
           >
-            <div className="h-[1px] w-6 sm:w-8 bg-terrain-midGrey" />
+            <div className="h-[1px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-terrain-accentLight" />
             <span className="font-heading uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[10px] sm:text-xs text-terrain-midGrey font-medium">
               Terrain Business Solutions
             </span>
-            <div className="h-[1px] w-6 sm:w-8 bg-terrain-midGrey" />
+            <div className="h-[1px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-terrain-accentLight" />
           </motion.div>
 
           <h1 className="font-heading text-2xl sm:text-4xl md:text-5xl lg:text-7xl leading-[1.05] sm:leading-[0.95] tracking-tight text-terrain-pureWhite mb-6 sm:mb-8 px-2">
@@ -71,14 +71,14 @@ export default function Hero() {
             <a
               href="#contact"
               data-interactive="true"
-              className="px-8 py-4 bg-terrain-pureWhite text-terrain-deepBlack font-semibold text-sm hover:scale-105 transition-transform duration-300 w-full sm:w-auto text-center rounded-sm"
+              className="px-8 py-4 bg-terrain-pureWhite text-terrain-deepBlack font-semibold text-sm hover:scale-105 hover:shadow-[0_0_30px_rgba(77,38,129,0.55)] transition-all duration-300 w-full sm:w-auto text-center rounded-sm"
             >
               Start a Project
             </a>
             <a
               href="#capabilities"
               data-interactive="true"
-              className="px-8 py-4 border border-terrain-midGrey text-terrain-pureWhite font-semibold text-sm hover:border-terrain-pureWhite hover:bg-white/5 transition-all duration-300 w-full sm:w-auto text-center rounded-sm"
+              className="px-8 py-4 border border-terrain-midGrey text-terrain-pureWhite font-semibold text-sm hover:border-terrain-accentLight hover:bg-terrain-accent/15 transition-all duration-300 w-full sm:w-auto text-center rounded-sm"
             >
               Explore Our Capabilities
             </a>
@@ -98,7 +98,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: ["-100%", "200%"] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            className="absolute top-0 left-0 w-full h-1/2 bg-terrain-pureWhite"
+            className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-terrain-pureWhite to-terrain-accentLight"
           />
         </div>
       </motion.div>

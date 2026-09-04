@@ -98,7 +98,7 @@ export default function Work() {
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-[11px] text-white bg-white/10 border border-white/20 px-2.5 py-1 rounded-full font-medium">
+                  <span className="text-[11px] text-white bg-terrain-accent/30 border border-terrain-accent/60 px-2.5 py-1 rounded-full font-medium">
                     {project.category}
                   </span>
                   <span className="text-[11px] text-terrain-midGrey border border-white/10 px-2.5 py-1 rounded-full">

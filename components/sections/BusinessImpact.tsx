@@ -33,10 +33,10 @@ export default function BusinessImpact() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               onAnimationComplete={() => setActiveNodes(prev => Math.max(prev, index + 1))}
-              className="border border-white/10 bg-terrain-nearBlack p-6 md:p-8 hover:bg-white/5 transition-colors group"
+              className="border border-white/10 bg-terrain-nearBlack p-6 md:p-8 hover:bg-white/5 hover:border-terrain-accent/70 transition-colors group"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className={`w-3 h-3 transition-colors duration-500 ${activeNodes > index ? 'bg-terrain-pureWhite' : 'bg-terrain-midGrey/30'}`} />
+                <div className={`w-3 h-3 transition-all duration-500 ${activeNodes > index ? 'bg-terrain-accentLight shadow-[0_0_12px_rgba(140,78,202,0.9)]' : 'bg-terrain-midGrey/30'}`} />
                 <div className="text-terrain-midGrey font-heading text-xs tracking-widest">OUTCOME {index + 1}</div>
               </div>
               <p className="text-terrain-softWhite text-lg md:text-xl font-light group-hover:text-terrain-pureWhite transition-colors">
@@ -55,7 +55,7 @@ export default function BusinessImpact() {
               key={i}
               d={`M0 ${300 - i * 40} Q250 ${200 + (i%2 === 0 ? 50 : -50)} 500 ${250 - i * 20} T1000 ${300 - i * 30}`}
               fill="none"
-              stroke="#FFFFFF"
+              stroke={i % 2 === 0 ? "#8C4ECA" : "#FFFFFF"}
               strokeWidth={activeNodes > i ? "1.5" : "0.5"}
               initial={{ pathLength: 0, opacity: 0.2 }}
               animate={activeNodes > i ? { pathLength: 1, opacity: 1 } : { opacity: 0.2 }}

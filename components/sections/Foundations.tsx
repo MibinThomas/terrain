@@ -44,7 +44,7 @@ export default function Foundations() {
         <div
           className="absolute inset-0 opacity-15 pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(8, 8, 8, 0) 70%)",
+            background: "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.10) 0%, rgba(77, 38, 129, 0.22) 38%, rgba(8, 8, 8, 0) 70%)",
           }}
         />
 
@@ -89,7 +89,7 @@ export default function Foundations() {
             ].map((pt, i) => (
               <motion.div
                 key={i}
-                className="absolute rounded-full bg-white/70 shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                className={`absolute rounded-full ${i % 3 === 1 ? "bg-terrain-accentLight/90 shadow-[0_0_18px_rgba(140,78,202,0.9)]" : "bg-white/70 shadow-[0_0_15px_rgba(255,255,255,0.8)]"}`}
                 style={{
                   top: pt.top,
                   left: pt.left,
@@ -115,7 +115,7 @@ export default function Foundations() {
             <motion.div
               animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-white/20 blur-[90px] absolute"
+              className="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-terrain-accent/40 blur-[90px] absolute"
             />
           </div>
 
@@ -148,7 +148,7 @@ export default function Foundations() {
                   <motion.div
                     animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.8, 0.2] }}
                     transition={{ repeat: Infinity, duration: 2.5, delay: (i % 4) * 0.2 }}
-                    className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)]"
+                    className={`w-1.5 h-1.5 rounded-full ${i % 5 === 0 ? "bg-terrain-accentLight shadow-[0_0_12px_rgba(140,78,202,1)]" : "bg-white shadow-[0_0_10px_rgba(255,255,255,1)]"}`}
                   />
                 </div>
               ))}
@@ -178,18 +178,18 @@ export default function Foundations() {
         >
           {/* Laser trajectory SVG */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[500px] sm:max-w-[600px] opacity-30">
+            <svg width="600" height="600" viewBox="0 0 600 600" className="w-full h-full max-w-[500px] sm:max-w-[600px] opacity-60">
               <motion.path
                 d="M 100 500 L 300 200 L 500 500"
                 fill="none"
-                stroke="#FFFFFF"
+                stroke="#8C4ECA"
                 strokeWidth="2"
                 strokeDasharray="6 6"
                 animate={{ strokeDashoffset: [0, -24] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
               />
-              <circle cx="300" cy="200" r="10" fill="#FFFFFF" className="animate-ping" />
-              <circle cx="300" cy="200" r="5" fill="#ffffff" />
+              <circle cx="300" cy="200" r="10" fill="#4D2681" className="animate-ping" />
+              <circle cx="300" cy="200" r="5" fill="#8C4ECA" />
             </svg>
           </div>
 

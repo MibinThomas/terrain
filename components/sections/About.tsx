@@ -37,11 +37,11 @@ export default function About() {
             </div>
 
             {/* Technology Capability Badges */}
-            <div className="pt-8 border-t border-white/10 flex flex-wrap gap-4 text-xs font-heading text-terrain-midGrey tracking-wider">
-              <span className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white">
+            <div className="pt-8 border-t border-terrain-accent/30 flex flex-wrap gap-4 text-xs font-heading text-terrain-midGrey tracking-wider">
+              <span className="bg-terrain-accent/20 border border-terrain-accent/50 px-3 py-1.5 rounded-full text-white">
                 Next.js 16 & React 19 Architecture
               </span>
-              <span className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white">
+              <span className="bg-terrain-accent/20 border border-terrain-accent/50 px-3 py-1.5 rounded-full text-white">
                 Sub-Second Core Web Vitals
               </span>
             </div>

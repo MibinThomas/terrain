@@ -49,7 +49,7 @@ export default function Services() {
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
                   }}
-                  className="group relative border-b border-white/10"
+                  className="group relative border-b border-white/10 hover:border-terrain-accent/70 transition-colors duration-500"
                   onMouseEnter={() => setActiveService(index)}
                   onMouseLeave={() => setActiveService(null)}
                 >
@@ -59,8 +59,8 @@ export default function Services() {
                         {service}
                       </h3>
                       <div className="w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="w-full h-[2px] bg-terrain-pureWhite relative">
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 border-t-2 border-r-2 border-terrain-pureWhite rotate-45 transform origin-center translate-x-1" />
+                        <div className="w-full h-[2px] bg-terrain-accentLight relative">
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 border-t-2 border-r-2 border-terrain-accentLight rotate-45 transform origin-center translate-x-1" />
                         </div>
                       </div>
                     </div>
@@ -71,7 +71,7 @@ export default function Services() {
                     initial={{ scaleY: 0 }}
                     animate={{ scaleY: activeService === index ? 1 : 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute inset-0 bg-white/[0.02] origin-bottom z-0"
+                    className="absolute inset-0 bg-gradient-to-r from-terrain-accent/20 to-transparent origin-bottom z-0"
                   />
                 </motion.div>
               ))}
@@ -83,7 +83,7 @@ export default function Services() {
       {/* Background ambient interaction based on hover */}
       <motion.div
         animate={{ opacity: activeService !== null ? 0.5 : 0 }}
-        className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-terrain-pureWhite/5 to-transparent pointer-events-none transition-opacity duration-1000"
+        className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-terrain-accent/25 to-transparent pointer-events-none transition-opacity duration-1000"
       />
     </section>
   );

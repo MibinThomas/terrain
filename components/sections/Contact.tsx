@@ -58,18 +58,18 @@ export default function Contact() {
               Have an idea, product or business challenge? Let&apos;S turn it into a clear, intelligent and scalable solution.
             </p>
 
-            <div className="space-y-6 border-t border-terrain-deepBlack/10 pt-8">
+            <div className="space-y-6 border-t border-terrain-accent/25 pt-8">
               <div>
-                <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">Email</span>
-                <a href="mailto:hello@terrainbusiness.com" className="text-lg font-medium hover:opacity-70">hello@terrainbusiness.com</a>
+                <span className="block text-xs font-heading tracking-widest text-terrain-accent uppercase mb-1">Email</span>
+                <a href="mailto:hello@terrainbusiness.com" className="text-lg font-medium hover:text-terrain-accent transition-colors">hello@terrainbusiness.com</a>
               </div>
               <div>
-                <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">Phone</span>
-                <a href="tel:+971524145668" className="text-lg font-medium hover:opacity-70">+971 52 414 5668</a>
+                <span className="block text-xs font-heading tracking-widest text-terrain-accent uppercase mb-1">Phone</span>
+                <a href="tel:+971524145668" className="text-lg font-medium hover:text-terrain-accent transition-colors">+971 52 414 5668</a>
               </div>
               <div>
-                <span className="block text-xs font-heading tracking-widest text-terrain-midGrey uppercase mb-1">LinkedIn</span>
-                <a href="#" className="text-lg font-medium hover:opacity-70">Terrain Business Solutions</a>
+                <span className="block text-xs font-heading tracking-widest text-terrain-accent uppercase mb-1">LinkedIn</span>
+                <a href="#" className="text-lg font-medium hover:text-terrain-accent transition-colors">Terrain Business Solutions</a>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function Contact() {
                   exit={{ opacity: 0, y: -20 }}
                   className="bg-terrain-nearBlack text-terrain-pureWhite p-12 h-full flex flex-col justify-center items-center text-center"
                 >
-                  <div className="w-16 h-16 border-2 border-terrain-pureWhite flex items-center justify-center rounded-full mb-6">
+                  <div className="w-16 h-16 border-2 border-terrain-accentLight flex items-center justify-center rounded-full mb-6 shadow-[0_0_25px_rgba(140,78,202,0.5)]">
                     <svg className="w-8 h-8 text-terrain-pureWhite" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -107,7 +107,7 @@ export default function Contact() {
                         type="text" 
                         placeholder="Name *" 
                         {...register("name")}
-                        className={`w-full bg-transparent border-b ${errors.name ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors`}
+                        className={`w-full bg-transparent border-b ${errors.name ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors`}
                       />
                       {errors.name && <span className="text-red-500 text-xs mt-1 block px-2">{errors.name.message}</span>}
                     </div>
@@ -116,7 +116,7 @@ export default function Contact() {
                         type="text" 
                         placeholder="Company" 
                         {...register("company")}
-                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors"
+                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors"
                       />
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export default function Contact() {
                         type="email" 
                         placeholder="Email *" 
                         {...register("email")}
-                        className={`w-full bg-transparent border-b ${errors.email ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors`}
+                        className={`w-full bg-transparent border-b ${errors.email ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors`}
                       />
                       {errors.email && <span className="text-red-500 text-xs mt-1 block px-2">{errors.email.message}</span>}
                     </div>
@@ -136,7 +136,7 @@ export default function Contact() {
                         type="tel" 
                         placeholder="Phone" 
                         {...register("phone")}
-                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors"
+                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors"
                       />
                     </div>
                   </div>
@@ -146,7 +146,7 @@ export default function Contact() {
                       <select 
                         defaultValue=""
                         {...register("service")}
-                        className={`w-full bg-transparent border-b ${errors.service ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors appearance-none`}
+                        className={`w-full bg-transparent border-b ${errors.service ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors appearance-none`}
                       >
                         <option value="" disabled>Service Required *</option>
                         <option value="ui-ux">UI/UX Design</option>
@@ -160,7 +160,7 @@ export default function Contact() {
                       <select 
                         defaultValue=""
                         {...register("budget")}
-                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors appearance-none"
+                        className="w-full bg-transparent border-b border-terrain-deepBlack/20 py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors appearance-none"
                       >
                         <option value="" disabled>Estimated Budget</option>
                         <option value="under-10k">Under $10k</option>
@@ -175,7 +175,7 @@ export default function Contact() {
                       placeholder="Project Description *" 
                       rows={4}
                       {...register("description")}
-                      className={`w-full bg-transparent border-b ${errors.description ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-deepBlack transition-colors resize-none`}
+                      className={`w-full bg-transparent border-b ${errors.description ? 'border-red-500' : 'border-terrain-deepBlack/20'} py-4 px-2 focus:outline-none focus:border-terrain-accent transition-colors resize-none`}
                     />
                     {errors.description && <span className="text-red-500 text-xs mt-1 block px-2">{errors.description.message}</span>}
                   </div>
@@ -188,7 +188,7 @@ export default function Contact() {
                       className="mt-1"
                     />
                     <label htmlFor="consent" className="text-sm text-terrain-deepBlack/70">
-                      I agree to the <a href="/privacy" className="underline hover:text-terrain-deepBlack">Privacy Policy</a> and consent to my data being processed.
+                      I agree to the <a href="/privacy" className="underline decoration-terrain-accent/60 underline-offset-2 hover:text-terrain-accent transition-colors">Privacy Policy</a> and consent to my data being processed.
                       {errors.consent && <span className="text-red-500 text-xs block mt-1">{errors.consent.message}</span>}
                     </label>
                   </div>
@@ -199,11 +199,11 @@ export default function Contact() {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-terrain-deepBlack text-terrain-pureWhite font-semibold py-4 mt-8 hover:bg-terrain-nearBlack transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+                    className="w-full bg-terrain-deepBlack text-terrain-pureWhite font-semibold py-4 mt-8 hover:bg-terrain-accent transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white/20 border-t-terrain-pureWhite rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-white/20 border-t-terrain-accentLight rounded-full animate-spin" />
                         Submitting...
                       </>
                     ) : (

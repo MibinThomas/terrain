@@ -36,10 +36,10 @@ export default function TrustBadges() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 sm:p-6 text-center hover:border-white/30 transition-all duration-300 group"
+                className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 sm:p-6 text-center hover:border-terrain-accent hover:shadow-[0_0_28px_rgba(77,38,129,0.35)] transition-all duration-300 group"
               >
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Icon size={20} className="text-white" />
+                <div className="w-10 h-10 rounded-xl bg-white/10 group-hover:bg-terrain-accent/30 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-all duration-300">
+                  <Icon size={20} className="text-white group-hover:text-terrain-accentLight transition-colors" />
                 </div>
                 <h3 className="font-heading font-extrabold text-xl sm:text-3xl text-terrain-softWhite mb-1">
                   {item.val}
@@ -61,7 +61,7 @@ export default function TrustBadges() {
             {TECH_BADGES.map((tech) => (
               <span
                 key={tech}
-                className="bg-white/[0.03] border border-white/10 text-terrain-softWhite text-[11px] sm:text-xs font-semibold px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full hover:border-white/40 hover:bg-white/10 transition-all duration-200"
+                className="bg-white/[0.03] border border-white/10 text-terrain-softWhite text-[11px] sm:text-xs font-semibold px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full hover:border-terrain-accentLight hover:bg-terrain-accent/25 transition-all duration-200"
               >
                 {tech}
               </span>

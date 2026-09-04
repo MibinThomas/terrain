@@ -342,7 +342,7 @@ export default function CreativesPage() {
                 className="bg-white/[0.02] border border-white/5 hover:border-white/30 rounded-3xl p-8 transition-all duration-300"
               >
                 <h3 className="font-heading font-bold text-xl text-terrain-softWhite mb-6 flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-white" />
+                  <div className="w-2 h-2 rounded-full bg-terrain-accentLight shadow-[0_0_10px_rgba(140,78,202,0.9)]" />
                   {cap.category}
                 </h3>
                 <ul className="space-y-3.5 text-sm text-terrain-midGrey">

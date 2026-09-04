@@ -15,6 +15,11 @@ const config: Config = {
           pureWhite: "#FFFFFF",
           midGrey: "#8A8A8A",
           lightGrey: "#D8DADD",
+          /* Brand violet accent — used sparingly for decorative dots,
+             hover states, connecting lines and subtle glows. */
+          accent: "#4D2681",
+          accentLight: "#8C4ECA",
+          accentDim: "#2A1547",
         },
       },
       fontFamily: {
