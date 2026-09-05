@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp, X } from "lucide-react";
+import { trackMeta } from "@/lib/meta/track";
 
 export default function FloatingActions() {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -68,6 +69,11 @@ export default function FloatingActions() {
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setShowTooltip(true)}
+          onClick={() =>
+            trackMeta("Contact", {
+              customData: { content_name: "WhatsApp Floating CTA" },
+            })
+          }
           className="group relative flex items-center gap-2.5 sm:gap-3 bg-terrain-nearBlack/90 backdrop-blur-xl border border-white/20 hover:border-terrain-accentLight text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(77,38,129,0.6)] transition-all duration-300 active:scale-95"
           aria-label="Chat on WhatsApp"
         >

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
 import FloatingActions from "@/components/ui/FloatingActions";
+import MetaPixel from "@/components/analytics/MetaPixel";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://terrainbusiness.com"),
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body className={`font-body bg-terrain-deepBlack text-terrain-softWhite antialiased`}>
         {children}
         <FloatingActions />
+        <MetaPixel />
       </body>
     </html>
   );

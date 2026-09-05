@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackMeta } from "@/lib/meta/track";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -39,6 +40,15 @@ export default function Contact() {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
     console.log("Form data submitted:", data);
+
+    trackMeta("Lead", {
+      userData: { email: data.email, phone: data.phone, firstName: data.name },
+      customData: {
+        content_name: "Homepage Contact Form",
+        content_category: data.service,
+      },
+    });
+
     setIsSubmitting(false);
     setIsSuccess(true);
     reset();

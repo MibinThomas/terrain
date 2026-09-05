@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import TrustBadges from "@/components/sections/TrustBadges";
 import { Mail, MapPin, Send, CheckCircle2, Loader2, Phone } from "lucide-react";
+import { trackMeta } from "@/lib/meta/track";
 
 const schema = z.object({
   name: z.string().min(2, "Please enter your name"),
@@ -40,6 +41,15 @@ export default function ContactPage() {
 
   const onSubmit = async (data: FormData) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    trackMeta("Lead", {
+      userData: { email: data.email, firstName: data.name },
+      customData: {
+        content_name: "Contact Page Form",
+        content_category: data.service,
+      },
+    });
+
     setSubmitted(true);
     reset();
   };

@@ -37,7 +37,7 @@ export default function Foundations() {
   const blurStrat = useTransform(smoothProgress, [0.64, 0.82, 1], ["blur(8px)", "blur(0px)", "blur(0px)"]);
 
   return (
-    <section ref={containerRef} className="relative h-[160vh] bg-terrain-deepBlack overflow-hidden" id="foundations">
+    <section ref={containerRef} className="relative h-[220vh] bg-terrain-deepBlack" id="foundations">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
         {/* Ambient white radial background glow */}

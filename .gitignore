@@ -26,3 +26,8 @@ dist-ssr
 .vercel
 .next/
 tsconfig.tsbuildinfo
+
+# Environment variables (never commit secrets)
+.env
+.env.*
+!.env.example
