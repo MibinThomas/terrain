@@ -62,10 +62,10 @@ export default function Contact() {
           
           <div>
             <h2 className="font-heading text-4xl md:text-6xl leading-[0.95] tracking-tight mb-8">
-              LET&apos;S SHAPE<br />WHAT&apos;S NEXT.
+              LET’S SHAPE<br />WHAT’S NEXT.
             </h2>
             <p className="text-xl text-terrain-deepBlack/70 mb-16 max-w-md">
-              Have an idea, product or business challenge? Let&apos;S turn it into a clear, intelligent and scalable solution.
+              Have an idea, product or business challenge? Let’s turn it into a clear, intelligent and scalable solution.
             </p>
 
             <div className="space-y-6 border-t border-terrain-accent/25 pt-8">
