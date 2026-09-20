@@ -8,6 +8,7 @@ import { trackMeta } from "@/lib/meta/track";
 export default function FloatingActions() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,8 +19,17 @@ export default function FloatingActions() {
       }
     };
 
+    const handleMenuChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ open: boolean }>;
+      setIsMenuOpen(Boolean(customEvent.detail?.open));
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("terrain-menu-change", handleMenuChange);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("terrain-menu-change", handleMenuChange);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -31,6 +41,8 @@ export default function FloatingActions() {
 
   const whatsappUrl =
     "https://wa.me/971524145668?text=Hello%20Terrain%20Business%20Solutions%2C%20I%20would%20like%20to%20inquire%20about%20your%20digital%20services.";
+
+  if (isMenuOpen) return null;
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-3 pointer-events-auto">

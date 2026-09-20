@@ -37,8 +37,10 @@ export default function Header() {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
+      window.dispatchEvent(new CustomEvent("terrain-menu-change", { detail: { open: true } }));
     } else {
       document.body.style.overflow = "";
+      window.dispatchEvent(new CustomEvent("terrain-menu-change", { detail: { open: false } }));
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,6 +53,7 @@ export default function Header() {
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      window.dispatchEvent(new CustomEvent("terrain-menu-change", { detail: { open: false } }));
     };
   }, [menuOpen]);
 
