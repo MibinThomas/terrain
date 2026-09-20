@@ -477,14 +477,8 @@ export default function Header() {
 
               <div className="flex items-center gap-4">
                 <p className="font-mono text-[11px]">
-                  © {new Date().getFullYear()} Terrain Business Solutions
+                  © {new Date().getFullYear()} Terrain Business Solutions. All rights reserved.
                 </p>
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="text-[11px] font-mono uppercase tracking-widest text-terrain-accentLight hover:underline"
-                >
-                  [ Close Drawer ]
-                </button>
               </div>
             </div>
           </motion.div>
